@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrecisionTurn Dashboard</title>
+
+    <link rel="stylesheet" href="sidebar.css">
+    <script src="sidebar.js" defer></script>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+       .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .dashboard-item {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .metric {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .description {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Sidebar will be loaded here -->
+        <div id="sidebar-container"></div>
+        <div class="main-content">
+            <h1 class="dashboard-title">{{ currentPage }}</h1>
+            <div v-if="currentPage === 'Dashboard'" class="dashboard-grid">
+                <div class="dashboard-item" v-for="item in dashboardItems" :key="item.title">
+                    <h3>{{ item.title }}</h3>
+                    <div class="metric">{{ item.metric }}</div>
+                    <div class="description">{{ item.description }}</div>
+                </div>
+            </div>
+            <div v-else>
+                <p>Content for {{ currentPage }} goes here.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                currentPage: 'Dashboard',
+                dashboardItems: [
+                    { title: 'Turnaround Progress', metric: '68%', description: '2 days ahead of schedule' },
+                    { title: 'Budget Status', metric: '$4.2M / $5M', description: '15% under budget' },
+                    { title: 'Safety Incidents', metric: '0', description: 'Last incident: 45 days ago' },
+                    { title: 'Active Tasks', metric: '24 / 50', description: '3 critical path tasks in progress' },
+                    { title: 'Health & Safety', metric: '98%', description: 'PPE Compliance Rate' },
+                    { title: 'Energy Consumption', metric: '15,000 kWh', description: '5% below forecast' }
+                ]
+            }
+        });
+    </script>
+</body>
+</html>
