@@ -13,19 +13,22 @@
 
     <style>
         .main-content {
-            padding: 20px;
-        }
+        padding: 20px;
+            }
+
         .copilot-container {
             display: flex;
             flex-direction: column;
-            height: calc(100vh - 100px);
+            height: calc(100vh - 200px); /* Adjust height as needed */
         }
+
         .chart-container {
             width: 100%;
-            max-width: 700px; /* Increase the width */
-            height: 300px; /* Increase the height */
+            max-width: 600px;
+            height: 300px;
             margin: 20px auto;
         }
+
         .chat-container {
             flex: 1;
             display: flex;
@@ -33,23 +36,29 @@
             border: 1px solid #e0e0e0;
             border-radius: 5px;
             overflow: hidden;
+            background-color: white; /* Add background color to ensure visibility */
         }
+
         .chat-messages {
             flex: 1;
             overflow-y: auto;
             padding: 20px;
         }
+
         .chat-input {
             display: flex;
             padding: 10px;
             border-top: 1px solid #e0e0e0;
+            background-color: white; /* Ensure chat-input stays at the bottom */
         }
+
         .chat-input input {
             flex: 1;
             padding: 10px;
             border: 1px solid #e0e0e0;
             border-radius: 5px;
         }
+
         .chat-input button {
             margin-left: 10px;
             padding: 10px 20px;
@@ -59,6 +68,22 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
+        /* New styles for voice features */
+        .voice-features {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .alert {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #ffe6e6;
+            border: 1px solid #ff9999;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -67,6 +92,16 @@
        <div id="sidebar-container"></div> 
         <div class="main-content">
             <h1 id="turnaround-copilot" class="dashboard-title">Turnaround Copilot</h1>
+
+            <!-- New voice features section -->
+            <div class="voice-features">
+                <h3>Voice Assistant
+                <button @click="requestBriefing">Request Audio Briefing</button></h3>
+                <div v-if="latestAlert" class="alert">
+                <strong>Latest Alert:</strong> {{ latestAlert }}
+                </div>
+            </div>
+
             <div class="copilot-container">
                 <div class="chat-container">
                     <div class="chat-messages" ref="chatMessages">
@@ -81,7 +116,6 @@
                     <div class="chat-input">
                         <input v-model="userInput" @keyup.enter="sendMessage" placeholder="Ask about turnaround procedures, data, or documents...">
                         <button @click="sendMessage">Send</button>
-                        <button @click="speakText">Speak</button>
                     </div>
                 </div>
             </div>
@@ -95,7 +129,8 @@
                 chatMessages: [
                     { id: 1, sender: "System", text: "Welcome to Turnaround Copilot. How can I assist you today?" }
                 ],
-                userInput: ""
+                userInput: "",
+                latestAlert: "" // Add this line to define the latestAlert property
             },
             methods: {
                 sendMessage() {
@@ -193,10 +228,18 @@
                         chatContainer.scrollTop = chatContainer.scrollHeight;
                     }, 100); // Adjust timeout if necessary
                 },
-                speakText() {
-                    if (!this.userInput.trim()) return;
-                    const text = this.userInput;
 
+                requestBriefing() {
+                    const briefing = "Here's your daily briefing: You have 5 tasks scheduled for today. The critical path task is the inspection of the main turbine. Safety reminder: Always wear proper PPE in designated areas.";
+                    this.speakResponse(briefing);
+                    this.latestAlert = "Daily briefing delivered.";
+
+                    // Remove the alert after 5 seconds
+                    setTimeout(() => {
+                        this.latestAlert = "";
+                    }, 17000);
+                },
+                speakResponse(text) {
                     fetch('https://api.elevenlabs.io/v1/text-to-speech/pjcYQlDFKMbcOUp6F5GD', {
                         method: 'POST',
                         headers: {
@@ -221,6 +264,7 @@
                         console.error('Error:', error);
                     });
                 }
+
             }
         });
     </script>
