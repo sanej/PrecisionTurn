@@ -12,7 +12,6 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <style>
-        
         .main-content {
             padding: 20px;
         }
@@ -27,7 +26,6 @@
             height: 300px; /* Increase the height */
             margin: 20px auto;
         }
-    
         .chat-container {
             flex: 1;
             display: flex;
@@ -61,7 +59,6 @@
             border-radius: 5px;
             cursor: pointer;
         }
-       
     </style>
 </head>
 <body>
@@ -75,13 +72,16 @@
                     <div class="chat-messages" ref="chatMessages">
                         <div v-for="message in chatMessages" :key="message.id" class="message">
                             <strong>{{ message.sender }}:</strong>
-                            <div>{{ message.text }}</div>
+                             <!--  <div>{{ message.text }}</div> -->
+                            <div v-html="message.text"></div>
                             <canvas v-if="message.chartId" :id="message.chartId" class="chart-container"></canvas>
                         </div>
                     </div>
+                    
                     <div class="chat-input">
                         <input v-model="userInput" @keyup.enter="sendMessage" placeholder="Ask about turnaround procedures, data, or documents...">
                         <button @click="sendMessage">Send</button>
+                        <button @click="speakText">Speak</button>
                     </div>
                 </div>
             </div>
@@ -137,18 +137,40 @@
                                 }
                             });
                         } else if (this.userInput.toLowerCase().includes("standard operating procedure")) {
+                            const response = `
+                                <p>The standard operating procedure for equipment shutdown during turnaround includes the following key steps:</p>
+                                <ol>
+                                    <li>Conduct a pre-shutdown safety meeting with all involved personnel.</li>
+                                    <li>Verify all necessary permits are in place and up-to-date.</li>
+                                    <li>Follow the specific shutdown sequence for each piece of equipment as outlined in the equipment manual.</li>
+                                    <li>Ensure proper lockout/tagout procedures are followed for all energy sources.</li>
+                                    <li>Conduct post-shutdown checks to verify all systems are properly isolated and de-energized.</li>
+                                </ol>
+                                <p>Always refer to the detailed SOP document for comprehensive instructions and safety precautions.</p>
+                            `;
                             const copilotMessage = { 
                                 id: this.chatMessages.length + 1, 
                                 sender: "Copilot", 
-                                text: "The standard operating procedure for equipment shutdown includes the following key steps: Pre-shutdown safety meeting, verification of permits, shutdown sequence, lockout/tagout procedures, and post-shutdown checks."
+                                text: response
                             };
                             this.chatMessages.push(copilotMessage);
                             this.$nextTick(this.scrollToBottom);
                         } else if (this.userInput.toLowerCase().includes("top five items by spend")) {
+                            const response = `
+                                <p>Based on the current turnaround data, the top five items by spend are:</p>
+                                <ol>
+                                    <li>Equipment Rental: $1.2M</li>
+                                    <li>Contractor Labor: $950K</li>
+                                    <li>Replacement Parts: $780K</li>
+                                    <li>Scaffolding: $450K</li>
+                                    <li>Specialized Tools: $320K</li>
+                                </ol>
+                                <p>These items account for approximately 74% of the total turnaround budget.</p>
+                            `;
                             const copilotMessage = { 
                                 id: this.chatMessages.length + 1, 
                                 sender: "Copilot", 
-                                text: "The top five items by spend are: Equipment Rental ($1.2M), Contractor Labor ($950K), Replacement Parts ($780K), Scaffolding ($450K), and Specialized Tools ($320K)."
+                                text: response
                             };
                             this.chatMessages.push(copilotMessage);
                             this.$nextTick(this.scrollToBottom);
@@ -170,6 +192,34 @@
                     setTimeout(() => {
                         chatContainer.scrollTop = chatContainer.scrollHeight;
                     }, 100); // Adjust timeout if necessary
+                },
+                speakText() {
+                    if (!this.userInput.trim()) return;
+                    const text = this.userInput;
+
+                    fetch('https://api.elevenlabs.io/v1/text-to-speech/pjcYQlDFKMbcOUp6F5GD', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'xi-api-key': 'sk_cef8183a5b1d9d16e6d80327c0cf9e707d8ab8a59b756c75'  // Replace with your actual API key
+                        },
+                        body: JSON.stringify({
+                            text: text,
+                            voice_settings: {
+                                stability: 0.5,
+                                similarity_boost: 0.5
+                            }
+                        })
+                    })
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const url = URL.createObjectURL(blob);
+                        const audio = new Audio(url);
+                        audio.play();
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
                 }
             }
         });
