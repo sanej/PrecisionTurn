@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Executive Dashboard</title>
+    <link rel="stylesheet" href="sidebar.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Sidebar will be loaded here -->
+        <div id="sidebar-container"></div>
+        <div class="main-content">
+            <h1 class="dashboard-title">Executive Dashboard</h1>
+            <div id="react-root"></div>
+        </div>
+    </div>
+
+    <!-- Load React and ReactDOM -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    
+    <!-- Add your compiled React components here -->
+    <script src="executive-dashboard.tsx"></script>
+    <script src="ai-insights.tsx"></script>
+    <script src="shareholder-return-dashboard.tsx"></script>
+    <script src="cost-reduction-tracker.tsx"></script>
+    <script src="production-tracker.tsx"></script>
+    <script src="safety-module.tsx"></script>
+
+    <script>
+        // Render your React component to the DOM
+        ReactDOM.render(
+            React.createElement(ExecutiveDashboard),
+            document.getElementById('react-root')
+        );
+    </script>
+</body>
+</html>
