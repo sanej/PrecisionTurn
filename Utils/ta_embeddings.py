@@ -1,114 +1,73 @@
-# Import the required libraries
-import json  # Add this import at the top
-from io import BytesIO
-import PyPDF2
-
-# Import Google Cloud Storage and Vertex AI libraries
-from google.cloud import storage
+import os
+import tempfile
+import json
 import vertexai
-from vertexai.language_models import TextEmbeddingModel
-
+from google.cloud import storage
+from langchain_google_vertexai import VertexAIEmbeddings
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_community.document_loaders import PyPDFLoader
 
 # Configuration
-
-PROJECT_ID = 'precisionturn'  # Replace with your actual project ID
+PROJECT_ID = 'precisionturn'
 BUCKET_NAME = 'precisionturn-bucket'
-FOLDER_PATH = 'turnaround-docs'
-#FOLDER_PATH = 'Sample-Text'
-LOCATION = 'us-central1'  # Or your preferred region
+SOURCE_FOLDER = 'turnaround-docs'
+EMBEDDINGS_FOLDER = 'turnaround-docs-embeddings'
+CHUNK_SIZE = 1000
+CHUNK_OVERLAP = 200
 
-# Embeddings Configuration
-EMBEDDINGS_FOLDER = 'turnaround-docs-embeddings/'  # Folder to store embeddings
+# Initialize Vertex AI Client
+vertexai.init(project=PROJECT_ID)
 
 # Initialize clients
-
-print("Calling GCP clients and models Initilization")
-
 storage_client = storage.Client(project=PROJECT_ID)
-vertexai.init(project=PROJECT_ID, location=LOCATION)
-embedding_model = TextEmbeddingModel.from_pretrained("textembedding-gecko@001")
+embeddings = VertexAIEmbeddings(model_name="textembedding-gecko@001")
 
-print("Initialized GCP clients and models")
+def process_pdf(blob):
+    # Download PDF to a temporary file
+    _, temp_local_filename = tempfile.mkstemp()
+    blob.download_to_filename(temp_local_filename)
 
-# Split PDF into chunks
+    # Load and split the PDF
+    loader = PyPDFLoader(temp_local_filename)
+    documents = loader.load()
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP)
+    chunks = text_splitter.split_documents(documents)
 
-def split_pdf(pdf_content, max_pages=5):
-    """Splits a PDF into chunks of up to `max_pages`."""
-    pdf_reader = PyPDF2.PdfReader(BytesIO(pdf_content))
-    total_pages = len(pdf_reader.pages)
-    print(f"Total pages: {total_pages}")
-    chunks = []
-    print(f"Splitting PDF into chunks... ")
+    # Generate embeddings for each chunk
+    for i, chunk in enumerate(chunks):
+        embedding = embeddings.embed_query(chunk.page_content)
+        
+        # Prepare embedding data in the format expected by Vector Search
+        embedding_data = {
+            "id": f"{blob.name}_chunk_{i}",
+            "embedding": embedding,
+            "metadata": {
+                "source": blob.name,
+                "chunk": i,
+                "page": chunk.metadata.get('page', 0),
+                "content": chunk.page_content[:10]  # Store a snippet of the content
+            }
+        }
 
-    for start_page in range(0, total_pages, max_pages):
-        end_page = min(start_page + max_pages, total_pages)
-        chunk = BytesIO()
-        pdf_writer = PyPDF2.PdfWriter()
-        for page_num in range(start_page, end_page):
-            pdf_writer.add_page(pdf_reader.pages[page_num])
-        pdf_writer.write(chunk)
-        chunk.seek(0)
-        chunks.append(chunk)
-    print(f"Number of chunks: {len(chunks)}")
+        # Store embedding in GCS
+        relative_path = os.path.relpath(blob.name, SOURCE_FOLDER)
+        embedding_blob_name = os.path.join(EMBEDDINGS_FOLDER, f"{relative_path}_chunk_{i}.json")
 
-    return chunks
+        embedding_blob = storage_client.bucket(BUCKET_NAME).blob(embedding_blob_name)
+        embedding_blob.upload_from_string(json.dumps(embedding_data), content_type='application/json')
 
-def extract_text_from_pdf(pdf_stream):
-    """Extracts text from a PDF chunk using PyPDF2."""
-    print("Extracting text from PDF...")
-    pdf_reader = PyPDF2.PdfReader(pdf_stream)
-    text = ""
-    for page in pdf_reader.pages:
-        text += page.extract_text()
-    return text
+    print(f"Processed {blob.name}: {len(chunks)} chunks created and embedded")
 
-def process_pdfs():
-    bucket = storage_client.get_bucket(BUCKET_NAME)
-    blobs = bucket.list_blobs(prefix=FOLDER_PATH)
+    # Clean up the temporary file
+    os.remove(temp_local_filename)
 
-    print(f"Processing files... from bucket {bucket.name}")
+def main():
+    bucket = storage_client.bucket(BUCKET_NAME)
+    blobs = bucket.list_blobs(prefix=SOURCE_FOLDER)
 
     for blob in blobs:
         if blob.name.endswith('.pdf'):
-            try:
-                
-                # ... (download and split PDF)
-
-                pdf_content = blob.download_as_bytes()
-                pdf_chunks = split_pdf(pdf_content) 
-
-                # Construct the base path for embeddings of this PDF
-                #base_embedding_path = f"{EMBEDDINGS_FOLDER}{blob.name.replace('.pdf', '')}"
-                base_embedding_path = f"{EMBEDDINGS_FOLDER}{blob.name.replace('turnaround-docs/', '').replace('.pdf', '')}" 
-
-
-                for chunk_number, chunk in enumerate(pdf_chunks):  # Enumerate to get chunk_number
-                    extracted_text = extract_text_from_pdf(chunk)
-
-                    if extracted_text:
-                        try:
-                            embeddings = embedding_model.get_embeddings([extracted_text])
-
-                           # Store embeddings in Cloud Storage
-                            embedding_data = {
-                                "blob_name": blob.name,
-                                "id": chunk_number,  # You'll need to track chunk numbers
-                                "embedding": embeddings[0].values  # Extract the embeddings
-                            }
-
-                            # Construct the full blob name using the base path
-                            blob_name = f"{base_embedding_path}_chunk_{chunk_number}..json"
-                            blob = bucket.blob(blob_name)
-
-                            blob.upload_from_string(json.dumps(embedding_data), content_type='application/json')
-
-                            print(f"Generated and stored embeddings for {blob.name} (chunk {chunk_number})")
-
-                        except Exception as e:
-                            print(f"Error generating embeddings for {blob.name}: {e}")
-
-            except Exception as e:
-                print(f"Error processing {blob.name}: {e}")
+            process_pdf(blob)
 
 if __name__ == "__main__":
-    process_pdfs()
+    main()
