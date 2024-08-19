@@ -14,6 +14,7 @@ from vertexai.language_models import TextEmbeddingModel
 PROJECT_ID = 'precisionturn'  # Replace with your actual project ID
 BUCKET_NAME = 'precisionturn-bucket'
 FOLDER_PATH = 'turnaround-docs'
+#FOLDER_PATH = 'Sample-Text'
 LOCATION = 'us-central1'  # Or your preferred region
 
 # Embeddings Configuration
@@ -91,7 +92,7 @@ def process_pdfs():
                            # Store embeddings in Cloud Storage
                             embedding_data = {
                                 "blob_name": blob.name,
-                                "chunk_number": chunk_number,  # You'll need to track chunk numbers
+                                "id": chunk_number,  # You'll need to track chunk numbers
                                 "embedding": embeddings[0].values  # Extract the embeddings
                             }
 
