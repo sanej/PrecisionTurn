@@ -210,13 +210,25 @@
                             this.chatMessages.push(copilotMessage);
                             this.$nextTick(this.scrollToBottom);
                         } else {
-                            const copilotMessage = { 
-                                id: this.chatMessages.length + 1, 
-                                sender: "Copilot", 
-                                text: "I'm sorry, I don't have specific information about that. Can you try asking about top spend items, spend trends, or standard operating procedures?" 
-                            };
-                            this.chatMessages.push(copilotMessage);
-                            this.$nextTick(this.scrollToBottom);
+                            const question = this.userInput;  // Assuming userInput holds the user's question
+                            callRAGFunction(question).then(data => {
+                                if (data.error) {
+                                    const copilotMessage = { 
+                                        id: this.chatMessages.length + 1, 
+                                        sender: "Copilot", 
+                                        text: "I'm sorry, I don't have specific information about that. Can you try asking about top spend items, spend trends, or standard operating procedures?" 
+                                    };
+                                    this.chatMessages.push(copilotMessage);
+                                } else {
+                                    const copilotMessage = { 
+                                        id: this.chatMessages.length + 1, 
+                                        sender: "Copilot", 
+                                        text: data.answer  // Assuming the response has an 'answer' field
+                                    };
+                                    this.chatMessages.push(copilotMessage);
+                                }
+                                this.$nextTick(this.scrollToBottom);
+                            });
                         }
                         
                         this.userInput = "";
@@ -267,6 +279,25 @@
 
             }
         });
+    </script>
+    <!-- New Script Section for Calling the RAG Functionality -->
+    <script>
+        async function callRAGFunction(question) {
+            try {
+                const response = await fetch('http://localhost:8001/query', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ question })
+                });
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error calling RAG function:', error);
+                return { error: 'Failed to get response from backend' };
+            }
+        }
     </script>
 </body>
 </html>
