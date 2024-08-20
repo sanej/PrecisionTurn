@@ -81,15 +81,9 @@ def ask_question(question):
         # Prepare context from the results
         context = "\n".join([f"- {item.id}: {item.distance}" for item in results])
 
-
          # Generate answer using the RunnableSequence
         response = sequence.invoke({"context": context, "question": question})
-
-        #### Generate answer using the LLM chain
-        #response = llm_chain.run(context=context, question=question)
-
-        # Post-process the response to ensure proper formatting
-
+        
         formatted_response = post_process_response(response)
 
         return formatted_response
