@@ -1,0 +1,181 @@
+pre-shutdown-admin:
+  - name: "Review and validation of MOP conducted by the Chief Engineer and MOP Manager"
+    date: "2024-08-25"
+    time: "10:00"
+    priority: "High"
+    notify: false
+    completed: false
+  - name: "Verify with updated one-lines"
+    date: "2024-08-25"
+    time: "10:30"
+    priority: "High"
+    notify: false
+    completed: false
+  - name: "Conduct a physical walk down"
+    date: "2024-08-26"
+    time: "11:00"
+    priority: "Medium"
+    notify: false
+    completed: false
+  - name: "Submit recommended changes to the engineering firm for inclusion into the MOP"
+    date: "2024-08-26"
+    time: "11:30"
+    priority: "Medium"
+    notify: false
+    completed: false
+  - name: "Provide Maintenance/MOP Pre-Planning Checklist to the engineering firm/vendor preparing the MOP"
+    date: "2024-08-26"
+    time: "12:00"
+    priority: "Medium"
+    notify: false
+    completed: false
+  - name: "All expected outside vendors have conducted CES training prior to arriving to the site"
+    date: "2024-08-27"
+    time: "09:00"
+    priority: "Low"
+    notify: false
+    completed: false
+  - name: "Approval for all expected contractors to come on-site has been submitted"
+    date: "2024-08-27"
+    time: "09:30"
+    priority: "Low"
+    notify: false
+    completed: false
+
+pre-shutdown-safety:
+  - name: "Ensure MOP lists identified vendors that will be participating in maintenance, including verifying valid contact information"
+    date: "2024-08-28"
+    time: "10:00"
+    priority: "High"
+    notify: false
+    completed: false
+  - name: "Contracted employees have met JP Morgan Chase pre-qualification requirements"
+    date: "2024-08-28"
+    time: "11:00"
+    priority: "Medium"
+    notify: false
+    completed: false
+  - name: "Send E-mail letter to all vendor point of contacts addressing employees expected onsite"
+    date: "2024-08-29"
+    time: "09:00"
+    priority: "High"
+    notify: false
+    completed: false
+  - name: "Request for a list of employees expected onsite"
+    date: "2024-08-29"
+    time: "09:30"
+    priority: "High"
+    notify: false
+    completed: false
+  - name: "Tool equipment inventory (attach an electronic copy of Tool Inventory Form)"
+    date: "2024-08-29"
+    time: "10:00"
+    priority: "Medium"
+    notify: false
+    completed: false
+  - name: "Requirement that each employee must have their own LOTO personal lock(s)"
+    date: "2024-08-29"
+    time: "10:30"
+    priority: "Medium"
+    notify: false
+    completed: false
+  - name: "Attach an electronic copy of LOTO Record Sheet Form"
+    date: "2024-08-29"
+    time: "11:00"
+    priority: "Medium"
+    notify: false
+    completed: false
+  - name: "Group lock process"
+    date: "2024-08-30"
+    time: "09:00"
+    priority: "High"
+    notify: false
+    completed: false
+  - name: "Use of properly tested voltage rated gloves"
+    date: "2024-08-30"
+    time: "09:30"
+    priority: "Medium"
+    notify: false
+    completed: false
+  - name: "Use of calibrated meters"
+    date: "2024-08-30"
+    time: "10:00"
+    priority: "Medium"
+    notify: false
+    completed: false
+  - name: "Unique flammable, chemical, and hazardous material to be used and MSDS availability"
+    date: "2024-08-30"
+    time: "10:30"
+    priority: "High"
+    notify: false
+    completed: false
+  - name: "GFCI requirements for electrical cords or cord connected tools"
+    date: "2024-08-30"
+    time: "11:00"
+    priority: "Medium"
+    notify: false
+    completed: false
+  - name: "Use of only vendor-supplied ladders that are electrically safe"
+    date: "2024-08-30"
+    time: "11:30"
+    priority: "Medium"
+    notify: false
+    completed: false
+  - name: "Site's PPE requirements for switching and/or other electrical work expected to perform"
+    date: "2024-08-31"
+    time: "09:00"
+    priority: "High"
+    notify: false
+    completed: false
+  - name: "Known site-specific hazards related to the work to be conducted (NFPA 70E 110.5)"
+    date: "2024-08-31"
+    time: "09:30"
+    priority: "High"
+    notify: false
+    completed: false
+  - name: "Any unique hazards that may be introduced by contractor's work be relayed to the site"
+    date: "2024-08-31"
+    time: "10:00"
+    priority: "Medium"
+    notify: false
+    completed: false
+
+shutdown-execution:
+  - name: Coordinate the shutdown of critical systems
+    date: 2024-08-30
+    time: 08:00
+    priority: High
+    notify: true
+    completed: false
+  - name: Monitor system shutdown progress
+    date: 2024-08-30
+    time: 09:30
+    priority: Medium
+    notify: false
+    completed: false
+  - name: Finalize equipment isolation procedures
+    date: 2024-08-30
+    time: 10:00
+    priority: High
+    notify: false
+    completed: false
+
+post-shutdown-review:
+  - name: Conduct post-shutdown safety review
+    date: 2024-09-01
+    time: 08:00
+    priority: High
+    notify: true
+    completed: false
+  - name: Review shutdown performance metrics
+    date: 2024-09-01
+    time: 09:00
+    priority: Medium
+    notify: false
+    completed: false
+  - name: Document lessons learned from the shutdown
+    date: 2024-09-01
+    time: 10:00
+    priority: High
+    notify: false
+    completed: false'''
