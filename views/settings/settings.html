@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - PrecisionTurn</title>
+
+    
+    <!--   External style refenrences -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Precision Turn Internal style references -->
+    <link rel="stylesheet" href="../../components/sidebar/sidebar.css">
+    <link rel="stylesheet" href="settings.css">
+    
+    <!--   External JS refenrences -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Precision Turn Internal JS references -->
+    <script  src="settings.js" defer></script>
+    <script src="../../components/sidebar/sidebar.js" defer></script>
+
+</head>
+<body>
+    <div id="app">
+        <div id="sidebar-container"></div>
+        <div class="main-content">
+            <h1 class="dashboard-title">Settings</h1>
+
+            <!-- User Preferences Section -->
+            <div class="settings-section">
+                <h2>User Preferences</h2>
+                <label for="notifications">Notifications:</label>
+                <select id="notifications">
+                    <option value="enabled">Enabled</option>
+                    <option value="disabled">Disabled</option>
+                </select>
+                <label for="theme">Theme:</label>
+                <select id="theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                </select>
+            </div>
+
+            <!-- System Settings Section -->
+            <div class="settings-section">
+                <h2>System Settings</h2>
+                <label for="timeZone">Time Zone:</label>
+                <select id="timeZone">
+                    <option value="UTC">UTC</option>
+                    <option value="PST">PST</option>
+                    <option value="EST">EST</option>
+                </select>
+                <label for="language">Language:</label>
+                <select id="language">
+                    <option value="en">English</option>
+                    <option value="es">Spanish</option>
+                    <option value="fr">French</option>
+                </select>
+            </div>
+
+            <!-- Security Settings Section -->
+            <div class="settings-section">
+                <h2>Security Settings</h2>
+                <label for="password">Change Password:</label>
+                <input type="password" id="password" placeholder="Enter new password">
+                <label for="twoFactorAuth">Two-Factor Authentication:</label>
+                <select id="twoFactorAuth">
+                    <option value="enabled">Enabled</option>
+                    <option value="disabled">Disabled</option>
+                </select>
+            </div>
+
+            <!-- Save Button -->
+            <div class="settings-save">
+                <button id="saveSettings">Save Changes</button>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documents - PrecisionTurn</title>
+
+     <!--   External style refenrences -->
+     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+     <!-- Precision Turn Internal style references -->
+     <link rel="stylesheet" href="../../components/sidebar/sidebar.css">
+     <link rel="stylesheet" href="documents.css">
+
+ 
+     <!--   External JS refenrences -->
+     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+     
+     <!--   External JS refenrences -->
+     <script src="../../components/sidebar/sidebar.js" defer></script>
+     <script src="documents.js" defer></script>
+
+</head>
+<body>
+    <div id="app">
+        <div id="sidebar-container"></div>
+        <div class="main-content">
+            <h1 class="dashboard-title">Documents</h1>
+
+            <!-- Search and Filter Section -->
+            <div class="search-filter">
+                <input type="text" placeholder="Search Documents..." id="searchDocuments">
+            </div>
+
+            <!-- Document Categories -->
+            <div class="document-categories">
+                <button class="category-btn">Operational Manuals</button>
+                <button class="category-btn">Compliance Documents</button>
+                <button class="category-btn">Technical Drawings</button>
+                <!-- Add more categories as needed -->
+            </div>
+
+            <!-- Documents List -->
+            <div class="document-list">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Document Name</th>
+                            <th>Type</th>
+                            <th>Upload Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Shutdown Procedure Manual</td>
+                            <td>PDF</td>
+                            <td>2024-08-25</td>
+                            <td>
+                                <button class="action-btn">View</button>
+                                <button class="action-btn">Download</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Environmental Compliance Report</td>
+                            <td>DOCX</td>
+                            <td>2024-08-23</td>
+                            <td>
+                                <button class="action-btn">View</button>
+                                <button class="action-btn">Download</button>
+                            </td>
+                        </tr>
+                        <!-- Add more documents as needed -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="../../components/sidebar/sidebar.js" defer></script>
+</body>
+</html>

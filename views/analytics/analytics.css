@@ -1,0 +1,33 @@
+/* analytics.css */
+.main-content {
+    padding: 20px;
+}
+
+.dashboard-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.analytics-filters {
+    margin-bottom: 20px;
+}
+
+.analytics-filters select {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.charts-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.chart-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}

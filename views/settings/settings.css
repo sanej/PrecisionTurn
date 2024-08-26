@@ -1,0 +1,52 @@
+/* settings.css */
+.main-content {
+    padding: 20px;
+}
+
+.dashboard-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.settings-section {
+    margin-bottom: 30px;
+}
+
+.settings-section h2 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.settings-section label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.settings-section select, 
+.settings-section input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.settings-save {
+    text-align: right;
+}
+
+.settings-save button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #2196f3;
+    color: #fff;
+    cursor: pointer;
+}
+
+.settings-save button:hover {
+    background-color: #1976d2;
+}

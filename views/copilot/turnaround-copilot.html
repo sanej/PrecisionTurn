@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turnaround Copilot - PrecisionTurn</title>
+    
+    <!--   External style refenrences -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Precision Turn Internal style references -->
+    <link rel="stylesheet" href="turnaround-copilot.css">
+    <link rel="stylesheet" href="../../components/sidebar/sidebar.css">
+    
+    <!--   External JS refenrences -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Precision Turn Internal JS references -->
+    <script  src="turnaround-copilot.js" defer></script>
+    <script src="../../components/sidebar/sidebar.js" defer></script>
+
+</head>
+<body>
+    <div id="app">
+       <!-- Sidebar will be loaded here -->
+       <div id="sidebar-container"></div> 
+        <div class="main-content">
+            <h1 id="turnaround-copilot" class="dashboard-title">Turnaround Copilot</h1>
+
+            <!-- New voice features section -->
+            <div class="voice-features">
+                <h3>Voice Assistant
+                <button @click="requestBriefing">Request Audio Briefing</button></h3>
+                <div v-if="latestAlert" class="alert">
+                <strong>Latest Alert:</strong> {{ latestAlert }}
+                </div>
+            </div>
+
+            <div class="copilot-container">
+                <div class="chat-container">
+                    <div class="chat-messages" ref="chatMessages">
+                        <div v-for="message in chatMessages" :key="message.id" class="message">
+                            <strong>{{ message.sender }}:</strong>
+                             <!--  <div>{{ message.text }}</div> -->
+                            <div v-html="message.text"></div>
+                            <canvas v-if="message.chartId" :id="message.chartId" class="chart-container"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input">
+                        <input v-model="userInput" @keyup.enter="sendMessage" placeholder="Ask about turnaround procedures, data, or documents...">
+                        <button @click="sendMessage">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+</body>
+</html>

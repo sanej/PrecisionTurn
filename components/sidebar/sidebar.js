@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const sidebarContainer = document.getElementById('sidebar-container');
-    fetch('sidebar.html')
+    fetch('../../components/sidebar/sidebar.html')
         .then(response => response.text())
         .then(data => {
             sidebarContainer.innerHTML = data;

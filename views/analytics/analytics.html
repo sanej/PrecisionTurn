@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - PrecisionTurn</title>
+   
+    <!--   External style refenrences -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Precision Turn Internal style references -->
+    <link rel="stylesheet" href="../../components/sidebar/sidebar.css">
+    <link rel="stylesheet" href="analytics.css">
+        
+    <!--   External JS refenrences -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    
+    <!-- Precision Turn Internal JS references -->
+    <script src="../../components/sidebar/sidebar.js" defer></script>
+    <script src="analytics.js" defer></script>
+    
+</head>
+<body>
+    <div id="app">
+        <div id="sidebar-container"></div>
+        <div class="main-content">
+            <h1 class="dashboard-title">Analytics</h1>
+
+            <!-- Filters Section -->
+            <div class="analytics-filters">
+                <select id="timeFrameSelect">
+                    <option value="last7days">Last 7 Days</option>
+                    <option value="last30days">Last 30 Days</option>
+                    <option value="last6months">Last 6 Months</option>
+                    <option value="last12months">Last 12 Months</option>
+                </select>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="charts-section">
+                <div class="chart-container">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="budgetChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="taskCompletionChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="safetyIncidentsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

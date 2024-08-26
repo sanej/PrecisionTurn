@@ -70,8 +70,8 @@ createApp({
                 completed: false
             };
         },
-        notifySiteLead() {
-            console.log('Notifying site lead about critical task.');
+        notifyLead(task) {
+            console.log(`Notifying site lead about task: ${task.name}`);
             // Placeholder for SMS notification logic
         },
     },
