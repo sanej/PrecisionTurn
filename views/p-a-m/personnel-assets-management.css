@@ -2,9 +2,6 @@ body {
     font-family: Arial, sans-serif;
 }
 
-.main-content {
-    padding: 20px;
-}
 
 .dashboard-overview {
     display: flex;

@@ -1,0 +1,73 @@
+
+
+h1.dashboard-title {
+    color: #333;
+}
+
+p {
+    color: #666;
+}
+
+.integration-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+}
+
+.integration-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: calc(33.333% - 13.33px);
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.integration-card h3 {
+    margin-top: 0;
+    color: #2196f3;
+}
+
+.integration-card p {
+    flex-grow: 1;
+}
+
+.integration-card .actions {
+    display: flex;
+    gap: 10px;
+}
+
+.integration-card button {
+    background-color: #2196f3;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.integration-card button:hover {
+    background-color: #1976d2;
+}
+
+.integration-card button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.status-connected {
+    color: green;
+}
+
+.status-not-connected {
+    color: red;
+}
+
+.status-error {
+    color: orange;
+}
