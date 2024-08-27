@@ -12,104 +12,110 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         methods: {
             async sendMessage() {
-                if (this.userInput.trim()) {
-                    const userMessage = { id: this.chatMessages.length + 1, sender: "You", text: this.userInput };
-                    this.chatMessages.push(userMessage);
+                // Trim the user input and return if it's empty
+                const userQuestion = this.userInput.trim();
+                if (userQuestion === '') return;
+
+                // Add user's question to chat
+                this.chatMessages.push({
+                    id: Date.now(),
+                    sender: 'You',
+                    text: this.escapeHtml(userQuestion),
+                });
+
+                // Clear input field
+                this.userInput = '';
+
+                // Handle specific hardcoded responses
+                if (userQuestion.toLowerCase().includes("spend trend")) {
+                    const chartId = 'spendTrendChart' + this.chatMessages.length;
+                    const copilotMessage = { 
+                        id: this.chatMessages.length + 1, 
+                        sender: "Copilot", 
+                        text: "Here's the spend trend over the last 6 months:",
+                        chartId: chartId
+                    };
+                    this.chatMessages.push(copilotMessage);
                     
-                    if (this.userInput.toLowerCase().includes("spend trend")) {
-                        const chartId = 'spendTrendChart' + this.chatMessages.length;
-                        const copilotMessage = { 
-                            id: this.chatMessages.length + 1, 
-                            sender: "Copilot", 
-                            text: "Here's the spend trend over the last 6 months:",
-                            chartId: chartId
-                        };
-                        this.chatMessages.push(copilotMessage);
-                        
-                        this.$nextTick(() => {
-                            const ctx = document.getElementById(chartId);
-                            if (ctx) {
-                                new Chart(ctx, {
-                                    type: 'line',
-                                    data: {
-                                        labels: ['Month 1', 'Month 2', 'Month 3', 'Month 4', 'Month 5', 'Month 6'],
-                                        datasets: [{
-                                            label: 'Spend in $K',
-                                            data: [300, 450, 720, 980, 1250, 1500],
-                                            borderColor: 'rgb(75, 192, 192)',
-                                            tension: 0.1
-                                        }]
-                                    },
-                                    options: {
-                                        responsive: true,
-                                        maintainAspectRatio: true,
-                                        aspectRatio: 1.5,
-                                    }
-                                });
-                                this.scrollToBottom();
-                            }
-                        });
-                    } else if (this.userInput.toLowerCase().includes("standard operating procedure")) {
-                        const response = `
-                            <p>The standard operating procedure for equipment shutdown during turnaround includes the following key steps:</p>
-                            <ol>
-                                <li>Conduct a pre-shutdown safety meeting with all involved personnel.</li>
-                                <li>Verify all necessary permits are in place and up-to-date.</li>
-                                <li>Follow the specific shutdown sequence for each piece of equipment as outlined in the equipment manual.</li>
-                                <li>Ensure proper lockout/tagout procedures are followed for all energy sources.</li>
-                                <li>Conduct post-shutdown checks to verify all systems are properly isolated and de-energized.</li>
-                            </ol>
-                            <p>Always refer to the detailed SOP document for comprehensive instructions and safety precautions.</p>
-                        `;
-                        const copilotMessage = { 
-                            id: this.chatMessages.length + 1, 
-                            sender: "Copilot", 
-                            text: response
-                        };
-                        this.chatMessages.push(copilotMessage);
+                    this.$nextTick(() => {
+                        const ctx = document.getElementById(chartId);
+                        if (ctx) {
+                            new Chart(ctx, {
+                                type: 'line',
+                                data: {
+                                    labels: ['Month 1', 'Month 2', 'Month 3', 'Month 4', 'Month 5', 'Month 6'],
+                                    datasets: [{
+                                        label: 'Spend in $K',
+                                        data: [300, 450, 720, 980, 1250, 1500],
+                                        borderColor: 'rgb(75, 192, 192)',
+                                        tension: 0.1
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: true,
+                                    aspectRatio: 1.5,
+                                }
+                            });
+                            this.scrollToBottom();
+                        }
+                    });
+                } else if (userQuestion.toLowerCase().includes("standard operating procedure")) {
+                    const response = `
+                        ## Standard Operating Procedure
+                        The standard operating procedure for equipment shutdown during turnaround includes the following key steps:
+                        1. **Conduct a pre-shutdown safety meeting** with all involved personnel.
+                        2. **Verify all necessary permits** are in place and up-to-date.
+                        3. **Follow the specific shutdown sequence** for each piece of equipment as outlined in the equipment manual.
+                        4. **Ensure proper lockout/tagout procedures** are followed for all energy sources.
+                        5. **Conduct post-shutdown checks** to verify all systems are properly isolated and de-energized.
+                        Always refer to the detailed SOP document for comprehensive instructions and safety precautions.
+                    `;
+                    const copilotMessage = { 
+                        id: this.chatMessages.length + 1, 
+                        sender: "Copilot", 
+                        text: this.parseMarkdown(response)
+                    };
+                    this.chatMessages.push(copilotMessage);
+                    this.$nextTick(this.scrollToBottom);
+                } else if (userQuestion.toLowerCase().includes("top five items by spend")) {
+                    const response = `
+                        ## Top Five Items by Spend
+                        Based on the current turnaround data, the top five items by spend are:
+                        1. **Equipment Rental:** $1.2M
+                        2. **Contractor Labor:** $950K
+                        3. **Replacement Parts:** $780K
+                        4. **Scaffolding:** $450K
+                        5. **Specialized Tools:** $320K
+                        These items account for approximately 74% of the total turnaround budget.
+                    `;
+                    const copilotMessage = { 
+                        id: this.chatMessages.length + 1, 
+                        sender: "Copilot", 
+                        text: this.parseMarkdown(response)
+                    };
+                    this.chatMessages.push(copilotMessage);
+                    this.$nextTick(this.scrollToBottom);
+                } else {
+                    // Call the RAG function for other queries
+                    this.callRAGFunction(userQuestion).then(data => {
+                        if (data.error) {
+                            const copilotMessage = { 
+                                id: this.chatMessages.length + 1, 
+                                sender: "Copilot", 
+                                text: "I'm sorry, I don't have specific information about that. Can you try asking about top spend items, spend trends, or standard operating procedures?" 
+                            };
+                            this.chatMessages.push(copilotMessage);
+                        } else {
+                            const copilotMessage = { 
+                                id: this.chatMessages.length + 1, 
+                                sender: "Copilot", 
+                                text: this.parseMarkdown(data.answer)
+                            };
+                            this.chatMessages.push(copilotMessage);
+                        }
                         this.$nextTick(this.scrollToBottom);
-                    } else if (this.userInput.toLowerCase().includes("top five items by spend")) {
-                        const response = `
-                            <p>Based on the current turnaround data, the top five items by spend are:</p>
-                            <ol>
-                                <li>Equipment Rental: $1.2M</li>
-                                <li>Contractor Labor: $950K</li>
-                                <li>Replacement Parts: $780K</li>
-                                <li>Scaffolding: $450K</li>
-                                <li>Specialized Tools: $320K</li>
-                            </ol>
-                            <p>These items account for approximately 74% of the total turnaround budget.</p>
-                        `;
-                        const copilotMessage = { 
-                            id: this.chatMessages.length + 1, 
-                            sender: "Copilot", 
-                            text: response
-                        };
-                        this.chatMessages.push(copilotMessage);
-                        this.$nextTick(this.scrollToBottom);
-                    } else {
-                        const question = this.userInput;  // Assuming userInput holds the user's question
-                        this.callRAGFunction(question).then(data => {
-                            if (data.error) {
-                                const copilotMessage = { 
-                                    id: this.chatMessages.length + 1, 
-                                    sender: "Copilot", 
-                                    text: "I'm sorry, I don't have specific information about that. Can you try asking about top spend items, spend trends, or standard operating procedures?" 
-                                };
-                                this.chatMessages.push(copilotMessage);
-                            } else {
-                                const copilotMessage = { 
-                                    id: this.chatMessages.length + 1, 
-                                    sender: "Copilot", 
-                                    text: data.answer  // Assuming the response has an 'answer' field
-                                };
-                                this.chatMessages.push(copilotMessage);
-                            }
-                            this.$nextTick(this.scrollToBottom);
-                        });
-                    }
-                    
-                    this.userInput = "";
+                    });
                 }
             },
             scrollToBottom() {
@@ -169,6 +175,28 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.error('Error calling RAG function:', error);
                     return { error: 'Failed to get response from backend' };
                 }
+            },
+            // Utility method to escape HTML
+            escapeHtml(unsafe) {
+                return unsafe
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+            },
+
+            // Method to parse markdown into HTML
+            parseMarkdown(markdown) {
+                let html = markdown
+                    .replace(/^##\s?(.*)/gm, '<h3>$1</h3>')  // Change h2 to h3 for subsections
+                    .replace(/\*\*(.*)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*(.*)\*/g, '<em>$1</em>')
+                    .replace(/^([*-])\s(.*)$/gm, '<li>$2</li>')  // Convert single-line list items
+                    .replace(/(<li>.*<\/li>)\n/g, '<ul>$1</ul>')  // Wrap lists in <ul> tags
+                    .replace(/\n{2,}/g, '</p><p>')  // Convert multiple newlines to paragraph breaks
+                    .replace(/\n/g, ' ');  // Replace single newlines with spaces
+                return '<p>' + html + '</p>';  // Wrap the entire content in paragraphs
             }
         }
     });

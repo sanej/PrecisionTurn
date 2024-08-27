@@ -1,0 +1,96 @@
+.agent-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+}
+
+.agent-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: calc(33.333% - 13.33px); /* Adjusted to ensure three agents per row */
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s;
+}
+
+.agent-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.agent-card h3 {
+    margin-top: 0;
+    color: #2196f3;
+    display: flex;
+    align-items: center;
+}
+
+.agent-card h3::before {
+    content: '🔹'; /* Example icon */
+    margin-right: 8px;
+}
+
+.agent-card p {
+    flex-grow: 1;
+}
+
+.agent-card button {
+    background-color: #2196f3;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    align-self: flex-start;
+}
+
+.agent-card button.active {
+    background-color: #f44336;
+}
+
+.agent-card button:hover {
+    background-color: #1976d2;
+    transform: scale(1.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .agent-card {
+        width: calc(50% - 10px); /* Ensure two agents per row for medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .agent-card {
+        width: 100%; /* Full width for small screens */
+    }
+}
+
+/* Ensure last row aligns properly */
+.agent-list::after {
+    content: "";
+    flex: 0 1 calc(33.333% - 13.33px); /* Adjusted to ensure three agents per row */
+}
+
+@media (max-width: 1200px) {
+    .agent-list::after {
+        flex: 0 1 calc(50% - 10px); /* Ensure two agents per row for medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .agent-list::after {
+        display: none; /* No need for alignment fix on small screens */
+    }
+}
+
+.agent-category h2 {
+    border-bottom: 2px solid #2196f3;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+}

@@ -72,3 +72,39 @@
     border: 1px solid #ff9999;
     border-radius: 4px;
 }
+
+/* LLM Output Formatting Styles */
+.message {
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.message h3 {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.message p {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.message ul {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    padding-left: 20px;
+}
+
+.message li {
+    margin-bottom: 5px;
+}
+
+.message strong {
+    font-weight: 600;
+}
+
+.message em {
+    font-style: italic;
+}
