@@ -31,7 +31,7 @@ app.get('/generate-token', (req, res) => {
 // Task retrieval endpoint
 app.get('/tasks', (req, res) => {
     try {
-        const fileContents = fs.readFileSync('../Data/tasks.yaml', 'utf8');
+        const fileContents = fs.readFileSync('../data/tasks.yaml', 'utf8');
         const tasks = yaml.load(fileContents);
         //res.send(tasks);
         res.json(tasks);

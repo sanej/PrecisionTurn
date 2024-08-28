@@ -1,12 +1,20 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+
+
+#app {
     display: flex;
+    width: 100%;
 }
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 .content {
     flex: 1;
     padding: 20px;
+    overflow-y: auto; /* Added overflow handling */
 }
 
 h2 {

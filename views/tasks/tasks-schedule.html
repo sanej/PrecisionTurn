@@ -9,82 +9,84 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!--   Internal style references -->
-    <link rel="stylesheet" href="../../components/sidebar/sidebar.css">
     <link rel="stylesheet" href="tasks-schedule.css">
+    <link rel="stylesheet" href="../../components/sidebar/sidebar.css">
 
     <!--   External JS refenrences -->
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script> 
 
     <!--   Internal JS references -->
+    <script src="tasks-schedule.js" defer></script> 
     <script src="../../components/sidebar/sidebar.js" defer></script>
     
 </head>
 <body>
     <div id="app">
         <!-- Sidebar will be loaded here -->
-       <div id="sidebar-container"></div> 
+       <div id="sidebar-container"></div>    
+       <div class="main-content">
+            <div class="content">
+                <h1 id="turnaround-copilot-taskpage" class="dashboard-title">Tasks Schedule</h1>
 
-       <div class="content">
-        <h1 id="turnaround-copilot-taskpage" class="dashboard-title">Tasks Schedule</h1>
+                <div class="alert high-alert">
+                    <h3>High Alert</h3>
+                    <p>Critical Task: Inspect emergency shutdown procedures.</p>
+                    <button class="notify-button" @click="notifyLead({ name: 'Inspect emergency shutdown procedures' })">Notify Site Lead</button>
+                </div>
 
-        <div class="alert high-alert">
-            <h3>High Alert</h3>
-            <p>Critical Task: Inspect emergency shutdown procedures.</p>
-            <button class="notify-button" @click="notifyLead({ name: 'Inspect emergency shutdown procedures' })">Notify Site Lead</button>
-        </div>
+                <div class="create-task">
+                    <h3>Create a New Task</h3>
+                    <form @submit.prevent="addTask">
+                        <input type="text" v-model="newTask.name" placeholder="Task Name">
+                        <input type="date" v-model="newTask.date">
+                        <input type="time" v-model="newTask.time">
+                        <select v-model="newTask.priority">
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                        <select v-model="newTask.stage">
+                            <option value="pre-shutdown-admin">Pre-Shutdown Administrative Planning</option>
+                            <option value="pre-shutdown-safety">Pre-Shutdown Safety Planning</option>
+                            <option value="shutdown-execution">Shutdown Execution</option>
+                            <option value="post-shutdown-review">Post-Shutdown Review</option>
+                        </select>
+                        <label>
+                            <input type="checkbox" v-model="newTask.notify"> Send SMS Notification
+                        </label>
+                        <button type="submit" class="create-task-button">Create Task</button>
+                    </form>
+                </div>
 
-        <div class="create-task">
-            <h3>Create a New Task</h3>
-            <form @submit.prevent="addTask">
-                <input type="text" v-model="newTask.name" placeholder="Task Name">
-                <input type="date" v-model="newTask.date">
-                <input type="time" v-model="newTask.time">
-                <select v-model="newTask.priority">
-                    <option value="High">High</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Low">Low</option>
-                </select>
-                <select v-model="newTask.stage">
-                    <option value="pre-shutdown-admin">Pre-Shutdown Administrative Planning</option>
-                    <option value="pre-shutdown-safety">Pre-Shutdown Safety Planning</option>
-                    <option value="shutdown-execution">Shutdown Execution</option>
-                    <option value="post-shutdown-review">Post-Shutdown Review</option>
-                </select>
-                <label>
-                    <input type="checkbox" v-model="newTask.notify"> Send SMS Notification
-                </label>
-                <button type="submit" class="create-task-button">Create Task</button>
-            </form>
-        </div>
+                <div v-for="(tasks, stage) in tasksByStage" :key="stage">
+                    <h3>{{ stageTitles[stage] }}</h3>
+                    <table class="task-table">
+                        <thead>
+                            <tr>
+                                <th>Task Name</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Priority</th>
+                                <th>Completed</th>
+                                <th>Notify</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="task in tasks" :key="task.name">
+                                <td>{{ task.name }}</td>
+                                <td>{{ task.date }}</td>
+                                <td>{{ task.time }}</td>
+                                <td>{{ task.priority }}</td>
+                                <td><input type="checkbox" v-model="task.completed"></td>
+                                <td><button class="action-button notify-button" @click="notifyLead(task)">Notify</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div> <!-- content -->
+       </div> <!-- main-content -->
+    </div>  <!-- app -->
 
-        <div v-for="(tasks, stage) in tasksByStage" :key="stage">
-            <h3>{{ stageTitles[stage] }}</h3>
-            <table class="task-table">
-                <thead>
-                    <tr>
-                        <th>Task Name</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Priority</th>
-                        <th>Completed</th>
-                        <th>Notify</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="task in tasks" :key="task.name">
-                        <td>{{ task.name }}</td>
-                        <td>{{ task.date }}</td>
-                        <td>{{ task.time }}</td>
-                        <td>{{ task.priority }}</td>
-                        <td><input type="checkbox" v-model="task.completed"></td>
-                        <td><button class="action-button notify-button" @click="notifyLead(task)">Notify</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    </div>
-
-    <script src="tasks-schedule.js"></script> <!-- Link to your JavaScript file -->
+    
 </body>
 </html>
