@@ -5,5 +5,5 @@ window.config = {
 
 // If running in a production environment, override the base URL
 if (window.location.hostname !== 'localhost') {
-    window.config.baseUrl = 'http://storage.googleapis.com/precisionturn-frontend/frontend';
+    window.config.baseUrl = 'https://storage.googleapis.com/precisionturn-frontend/frontend';
 }
