@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', function() {
             sidebarContainer.innerHTML = data;
             const items = sidebarContainer.querySelectorAll('li[data-link]');
             items.forEach(item => {
+                const relativeLink = item.getAttribute('data-link');
+                const absoluteLink = new URL(relativeLink, window.config.baseUrl).href;
+                item.setAttribute('data-link', absoluteLink);
                 item.addEventListener('click', function() {
                     window.location.href = this.getAttribute('data-link');
                 });
