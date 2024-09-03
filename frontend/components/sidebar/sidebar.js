@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const sidebarContainer = document.getElementById('sidebar-container');
-    fetch(`${window.config.baseUrl}/components/sidebar/sidebar.html`)
+    const cacheBuster = `?v=${new Date().getTime()}`; // Cache-busting query parameter
+    fetch(`${window.config.baseUrl}/components/sidebar/sidebar.html${cacheBuster}`)
         .then(response => response.text())
         .then(data => {
             sidebarContainer.innerHTML = data;
