@@ -21,4 +21,5 @@ jobs:
         uses: google-github-actions/upload-cloud-storage@v1  # Updated to the latest version
         with:
           path: ./frontend  # Adjust to the correct directory where your frontend files are located
-          destination: gs://precisionturn-frontend/  # Replace with your actual bucket name and optional subdirectory
+          destination: precisionturn-frontend/  # Replace with your actual bucket name and optional subdirectory
+          process_gcloudignore: false  # Set to false if you don't have a .gcloudignore file
