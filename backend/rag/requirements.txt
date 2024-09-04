@@ -1,0 +1,8 @@
+flask
+flask-cors
+gemini_doc_query
+vertexai
+google-cloud
+langchain-google-vertexai
+langchain
+langchain_community.document_loaders

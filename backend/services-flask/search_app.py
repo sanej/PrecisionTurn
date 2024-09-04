@@ -1,7 +1,7 @@
+import os
 from flask import Flask, request, jsonify
 from gemini_doc_query import ask_question  # Assuming ask_question is defined in gemini_doc_query.py
 from flask_cors import CORS
-
 
 app = Flask(__name__)
 CORS(app)
@@ -24,4 +24,5 @@ def query():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(host='localhost', port=8001)
+    port = int(os.environ.get('PORT', 8001))
+    app.run(host='localhost', port=port)
