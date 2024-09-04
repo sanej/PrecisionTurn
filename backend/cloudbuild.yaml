@@ -1,3 +1,8 @@
 steps:
+- name: 'python:3.9'
+  entrypoint: pip
+  args: ['install', '-r', 'backend/flask/requirements.txt', '--user']
+
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['app', 'deploy', 'app.yaml']
+  args: ['app', 'deploy', 'backend/flask/app.yaml']
+  timeout: '1200s'
