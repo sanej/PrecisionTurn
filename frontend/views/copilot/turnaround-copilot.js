@@ -162,7 +162,9 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             async callRAGFunction(question) {
                 try {
-                    const response = await fetch('http://localhost:8001/query', {
+                    const apiUrl = window.config.apiUrl;
+
+                    const response = await fetch('${apiUrl}/query', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
