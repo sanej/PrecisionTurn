@@ -1,6 +1,6 @@
 flask
 flask-cors
-gemini_doc_query
-aiplatform
-langchain-google-vertexai
+google-cloud-aiplatform
 langchain
+langchain-google-vertexai
+gunicorn
