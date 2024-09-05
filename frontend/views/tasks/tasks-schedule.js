@@ -39,7 +39,7 @@ createApp({
     },
     methods: {
         fetchTasks() {
-            fetch('http://localhost:3000/tasks')
+            fetch(window.config.endpoints.tasks)
                 .then(response => {
                     console.log('Response:', response);
                     if (!response.ok) {
