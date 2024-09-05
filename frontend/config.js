@@ -7,6 +7,6 @@ window.config = {
 // If running in a production environment, override the base URL
 if (window.location.hostname !== 'localhost') {
     window.config.baseUrl = 'https://storage.googleapis.com/precisionturn-frontend/frontend';
-    window.config.apiUrl = 'https://precisionturn.ue.r.appspot.com'; // Replace <your-project-id> with your actual project ID
+    window.config.apiUrl = 'https://precisionturn.ue.r.appspot.com'; 
 
 }
