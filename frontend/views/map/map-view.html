@@ -59,7 +59,8 @@
                         return this.token; // Return the existing token if it exists
                     }
                     try {
-                      const response = await fetch('http://localhost:3000/generate-token');
+                      const response = await fetch(window.config.endpoints.generateToken);
+                      //const response = await fetch('http://localhost:8001/generate-token');
                       const data = await response.json();
                       this.token = data.token; // Store the fetched token
                       console.log('Token fetched:', this.token); // Log the fetched token

@@ -17,3 +17,31 @@
 __pycache__/
 # Ignored by the build system
 /setup.cfg
+
+# Ignore Python bytecode files
+__pycache__/
+*.py[cod]
+
+# Ignore virtual environment directories
+venv/
+env/
+
+# Ignore node_modules for frontend
+node_modules/
+
+# Ignore log files
+*.log
+
+# Ignore OS-specific files
+.DS_Store
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
+
+# Ignore build directories
+build/
+dist/
+
+# Ignore coverage reports
+coverage/
