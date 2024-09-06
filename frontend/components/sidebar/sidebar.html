@@ -1,8 +1,18 @@
 <!-- sidebar.html -->
+
+<!-- Set the homepage URL dynamically -->
+<script src="../../../frontend/config.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const homeLink = document.getElementById('home-link');
+        homeLink.href = window.config.baseUrl;
+    });
+</script>
+
 <div class="sidebar">
     <h2 style="color: #2196f3;">PrecisionTurn</h2>
     <ul>
-        <li data-link="http://localhost:8000/">
+        <li id="homeLink" data-link="#">
             <i class="material-icons">dashboard</i>
             Dashboard
         </li>
