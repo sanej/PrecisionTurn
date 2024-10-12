@@ -3,76 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PrecisionTurn Dashboard</title>
-
-   
+    <title>PrecisionTurn</title>
+    
+    <!-- Favicon -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="components/sidebar/sidebar.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <!-- Internal style references -->
+    <link rel="stylesheet" href="components/sidebar/sidebar.css">
+    <link rel="stylesheet" href="index.css">
+
+    
+    <!-- External style references -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
+
+    <!-- Internal JS references -->
+    <script src="index.js" defer></script>
     <script src="config.js"></script>
     <script src="components/sidebar/sidebar.js"></script>
 
+    <!-- External JS references -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <style>
-       .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        .dashboard-item {
-            background-color: #fff;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .metric {
-            font-size: 24px;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-        .description {
-            color: #666;
-        }
-    </style>
+
 </head>
 <body>
     <div id="app">
-        <!-- Sidebar will be loaded here -->
+        <!-- Sidebar will be dynamically loaded here -->
         <div id="sidebar-container"></div>
-        <div class="main-content">
-            <h1 class="dashboard-title">{{ currentPage }}</h1>
-            <div v-if="currentPage === 'Dashboard'" class="dashboard-grid">
-                <div class="dashboard-item" v-for="item in dashboardItems" :key="item.title">
-                    <h3>{{ item.title }}</h3>
-                    <div class="metric">{{ item.metric }}</div>
-                    <div class="description">{{ item.description }}</div>
-                </div>
-            </div>
-            <div v-else>
-                <p>Content for {{ currentPage }} goes here.</p>
+
+        <!-- Main content area where views will be rendered -->
+        <div id="view-container">
+            <!-- Dashboard and other views will be loaded here based on the routing -->
+            <div class="dashboard-container">
+                <h1 class="dashboard-title">Turnaround Performance Dashboard</h1>
+                
+                <!-- Key Performance Indicators Section -->
+                <section>
+                    <h2 class="section-title">Key Performance Indicators</h2>
+                    <div class="dashboard-grid">
+                        <div class="stat-card">
+                            <h2>Turnaround Performance Index</h2>
+                            <canvas id="tpiChart" class="chart-container"></canvas>
+                        </div>
+                        <div class="stat-card">
+                            <h2>Cost Performance Index</h2>
+                            <canvas id="cpiChart" class="chart-container"></canvas>
+                        </div>
+                        <div class="stat-card">
+                            <h2>Schedule Performance Index</h2>
+                            <canvas id="spiChart" class="chart-container"></canvas>
+                        </div>
+                        <div class="stat-card">
+                            <h2>Safety Metrics</h2>
+                            <canvas id="safetyChart" class="chart-container"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Important Metrics Section -->
+                <section>
+                    <h2 class="section-title">Important Metrics</h2>
+                    <div class="dashboard-grid">
+                        <div class="stat-card">
+                            <h2>Resource Allocation</h2>
+                            <canvas id="resourceChart" class="chart-container"></canvas>
+                        </div>
+                        <div class="stat-card">
+                            <h2>Resource Availability</h2>
+                            <canvas id="resourceAvailabilityChart" class="chart-container"></canvas>
+                        </div>
+                        <div class="stat-card">
+                            <h2>Active Tasks</h2>
+                            <canvas id="activeTasksChart" class="chart-container"></canvas>
+                        </div>
+                        <div class="stat-card">
+                            <h2>Energy Consumption & Emissions</h2>
+                            <canvas id="energyChart" class="chart-container"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Vendors and Teams Section -->
+                <section>
+                    <h2 class="section-title">Vendors and Teams</h2>
+                    <div class="dashboard-grid">
+                        <div class="stat-card">
+                            <h2>Top Vendor Spend</h2>
+                            <canvas id="vendorSpendChart" class="chart-container"></canvas>
+                        </div>
+                        <div class="stat-card">
+                            <h2>Tasks Progress by Team</h2>
+                            <canvas id="tasksProgressChart" class="chart-container"></canvas>
+                        </div>
+                        <div class="stat-card">
+                            <h2>Top Material Spend</h2>
+                            <canvas id="materialSpendChart" class="chart-container"></canvas>
+                        </div>
+                        <div class="stat-card">
+                            <h2>Material Usages Over Time</h2>
+                            <canvas id="materialUsageChart" class="chart-container"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Industry Updates Section -->
+                <section>
+                    <h2 class="section-title">Industry Updates</h2>
+                    <div class="dashboard-grid">
+                        <div class="stat-card">
+                            <h2>Turnaround Alerts</h2>
+                            <canvas id="turnaroundAlertsChart" class="chart-container"></canvas>
+                        </div>
+                        <div class="stat-card">
+                            <h2>Regulatory Alerts</h2>
+                            <canvas id="regulatoryAlertsChart" class="chart-container"></canvas>
+                        </div>
+                        <div class="stat-card">
+                            <h2>Oil Price</h2>
+                            <canvas id="oilPriceChart" class="chart-container"></canvas>
+                        </div>
+                        <div class="stat-card">
+                            <h2>Weather Alert</h2>
+                            <canvas id="weatherAlertChart" class="chart-container"></canvas>
+                        </div>
+                    </div>
+                </section>
             </div>
         </div>
     </div>
 
-    <script>
-        new Vue({
-            el: '#app',
-            data: {
-                currentPage: 'Dashboard',
-                dashboardItems: [
-                    { title: 'Turnaround Progress', metric: '68%', description: '2 days ahead of schedule' },
-                    { title: 'Budget Status', metric: '$4.2M / $5M', description: '15% under budget' },
-                    { title: 'Safety Incidents', metric: '0', description: 'Last incident: 45 days ago' },
-                    { title: 'Active Tasks', metric: '24 / 50', description: '3 critical path tasks in progress' },
-                    { title: 'Health & Safety', metric: '98%', description: 'PPE Compliance Rate' },
-                    { title: 'Energy Consumption', metric: '15,000 kWh', description: '5% below forecast' }
-                ]
-            }
-        });
-    </script>
-    <!-- Importing Apple Map and Sidebar Components -->
-    <script src="https://cdn.apple-mapkit.com/mk/5.x.x/mapkit.js"></script>
     
+</body>
 </html>

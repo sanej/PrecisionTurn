@@ -2,6 +2,7 @@
 window.config = {
     baseUrl: 'http://localhost:8000', // Default to local server
     apiUrl: 'http://localhost:8001',  // Default to local Flask server
+    viewsPath: 'frontend/views/',     // Base path for views
     endpoints: {
         generateToken: 'http://localhost:8001/generate-token',
         tasks: 'http://localhost:8001/tasks'

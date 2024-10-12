@@ -1,0 +1,139 @@
+/* Modernized Dashboard CSS */
+
+.dashboard-container {
+    font-family: 'Roboto', sans-serif;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #f0f2f5;
+}
+
+.dashboard-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #222;
+    text-align: center;
+}
+
+.section-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 30px 0 10px;
+    color: #333;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.stat-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.stat-card h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #1976D2;
+}
+
+.chart-container {
+    height: 250px;
+}
+
+@media (max-width: 1200px) {
+    .dashboard-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .dashboard-footer {
+        flex-direction: column;
+    }
+    
+    .kpi-container, .macro-trends {
+        margin-bottom: 15px;
+    }
+}
+
+.kpi-container, .macro-trends {
+    flex: 1;
+}
+
+.dashboard-footer {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.kpi-container h3, .macro-trends h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #444;
+}
+
+#cpiValue, #spiValue {
+    font-weight: bold;
+    color: #1976D2;
+}
+
+#macroTrends {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Card Icon Styling */
+.stat-card-icon {
+    font-size: 36px;
+    color: #1976D2;
+    margin-bottom: 10px;
+}
+
+/* Dark Mode Styling */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode .stat-card {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+body.dark-mode .dashboard-footer {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+body.dark-mode .stat-card h2 {
+    color: #BB86FC;
+}
+
+body.dark-mode .kpi-container h3, .macro-trends h3 {
+    color: #e0e0e0;
+}
+
+body.dark-mode .stat-card-icon {
+    color: #BB86FC;
+}
