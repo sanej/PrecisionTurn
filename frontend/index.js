@@ -1,88 +1,162 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Existing charts
-    createHeatmapChart("turnaroundPerformanceChart");
-    createLineChart("costPerformanceChart", "Cost Performance");
-    createLineChart("schedulePerformanceChart", "Schedule Performance");
-    createLineChart("safetyMetricsChart", "Safety Incidents");
-
-    // New charts
-    createBarChart("scopeDefinitionChart", "Scope Definition");
-    createBarChart("resourceAllocationChart", "Resource Allocation");
-    createBarChart("activeTasksChart", "Active Tasks");
-    createLineChart("energyConsumptionChart", "Energy Consumption");
-    createBarChart("topVendorChart", "Top Vendors");
-    createBarChart("tasksProgressChart", "Tasks Progress");
-    createBarChart("materialSpendChart", "Material Spend");
-    createLineChart("materialUsageChart", "Material Usage");
-    createBarChart("globalAlertsChart", "Global Alerts");
-    createBarChart("regulatoryAlertsChart", "Regulatory Alerts");
-    createLineChart("energyPriceChart", "Energy Price");
-    createBarChart("weatherAlertChart", "Weather Alert");
+    createPerformanceIndexChart();
+    createCostOverviewChart();
+    createScheduleProgressChart();
+    createSafetyPerformanceChart();
 });
 
-function createHeatmapChart(elementId) {
-    var options = {
+function createPerformanceIndexChart() {
+    const options = {
+        series: [{
+            name: 'Performance',
+            data: [85, 92, 88, 95, 90],
+        }],
         chart: {
-            type: 'heatmap',
             height: 350,
+            type: 'radar',
         },
-        series: [
-            {
-                name: 'Phase 1',
-                data: [7, 7, 7, 7]
+        xaxis: {
+            categories: ['Overall', 'Cost', 'Schedule', 'Safety', 'Quality']
+        },
+        yaxis: {
+            show: false,
+        },
+        markers: {
+            size: 4,
+            colors: ['#2196F3'],
+            strokeColors: '#fff',
+            strokeWidth: 2,
+        },
+        fill: {
+            opacity: 0.7
+        }
+    };
+
+    const chart = new ApexCharts(document.querySelector("#performanceIndexChart"), options);
+    chart.render();
+}
+
+function createCostOverviewChart() {
+    const options = {
+        series: [{
+            name: 'Actual Cost',
+            data: [30, 60, 100, 140]
+        }, {
+            name: 'Budget',
+            data: [35, 70, 105, 150]
+        }],
+        chart: {
+            type: 'area',
+            height: 350,
+            stacked: false,
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'smooth'
+        },
+        xaxis: {
+            categories: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+        },
+        yaxis: {
+            title: {
+                text: 'Cost (Millions $)'
             },
-            {
-                name: 'Phase 2',
-                data: [7, 7, 7, 7]
-            }
-        ],
-        xaxis: {
-            categories: ["Metric 1", "Metric 2", "Metric 3", "Metric 4"]
-        }
+        },
+        tooltip: {
+            x: {
+                format: 'dd/MM/yy HH:mm'
+            },
+        },
     };
 
-    var chart = new ApexCharts(document.querySelector("#" + elementId), options);
+    const chart = new ApexCharts(document.querySelector("#costOverviewChart"), options);
     chart.render();
 }
 
-function createLineChart(elementId, seriesName) {
-    var options = {
+function createScheduleProgressChart() {
+    const options = {
+        series: [{
+            data: [{
+                x: 'Planning',
+                y: [0, 7]
+            }, {
+                x: 'Shutdown',
+                y: [7, 14]
+            }, {
+                x: 'Maintenance',
+                y: [14, 35]
+            }, {
+                x: 'Startup',
+                y: [35, 38]
+            }]
+        }],
         chart: {
+            height: 350,
+            type: 'rangeBar'
+        },
+        plotOptions: {
+            bar: {
+                horizontal: true
+            }
+        },
+        xaxis: {
+            type: 'datetime'
+        },
+        fill: {
+            type: 'gradient',
+            gradient: {
+                shade: 'light',
+                type: 'vertical',
+                shadeIntensity: 0.25,
+                gradientToColors: undefined,
+                inverseColors: true,
+                opacityFrom: 1,
+                opacityTo: 1,
+                stops: [50, 0, 100, 100]
+            }
+        }
+    };
+
+    const chart = new ApexCharts(document.querySelector("#scheduleProgressChart"), options);
+    chart.render();
+}
+
+function createSafetyPerformanceChart() {
+    const options = {
+        series: [{
+            name: 'TRIR',
+            data: [0.50, 0.45, 0.40, 0.35]
+        }],
+        chart: {
+            height: 350,
             type: 'line',
-            height: 350
-        },
-        series: [
-            {
-                name: seriesName,
-                data: [50, 60, 70, 80, 90, 100]
+            zoom: {
+                enabled: false
             }
-        ],
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'straight'
+        },
+        title: {
+            text: 'Total Recordable Incident Rate Trend',
+            align: 'left'
+        },
+        grid: {
+            row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 0.5
+            },
+        },
         xaxis: {
-            categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]
+            categories: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
         }
     };
 
-    var chart = new ApexCharts(document.querySelector("#" + elementId), options);
-    chart.render();
-}
-
-function createBarChart(elementId, seriesName) {
-    var options = {
-        chart: {
-            type: 'bar',
-            height: 350
-        },
-        series: [
-            {
-                name: seriesName,
-                data: [30, 40, 45, 50, 49, 60]
-            }
-        ],
-        xaxis: {
-            categories: ["Category 1", "Category 2", "Category 3", "Category 4", "Category 5", "Category 6"]
-        }
-    };
-
-    var chart = new ApexCharts(document.querySelector("#" + elementId), options);
+    const chart = new ApexCharts(document.querySelector("#safetyPerformanceChart"), options);
     chart.render();
 }

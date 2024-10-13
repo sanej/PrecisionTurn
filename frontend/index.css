@@ -13,8 +13,7 @@ body, html {
 }
 
 .sidebar {
-    background-color: white;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    background-color: #f0f0f0;
     padding: 1rem;
     overflow-y: auto;
 }
@@ -25,7 +24,7 @@ body, html {
 }
 
 .dashboard-title {
-    font-size: 2rem;
+    font-size: 24px;
     font-weight: bold;
     color: #333;
     margin-bottom: 2rem;
@@ -33,41 +32,34 @@ body, html {
 
 .chart-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(45%, 1fr));
+    gap: 2rem;
 }
 
 .stat-card {
     background-color: #fff;
     border-radius: 8px;
     padding: 1.5rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .chart-title {
-    font-size: 1.2rem;
+    font-size: 18px;
     font-weight: 600;
-    color: #2196f3;
+    color: #2c3e50;
     margin-bottom: 1rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .app-container {
         grid-template-columns: 1fr;
     }
     
     .sidebar {
-        display: none; /* or implement a mobile-friendly sidebar */
+        display: none;
     }
-}
 
-/* New CSS file content */
-
-.section-title {
-    margin-top: 3rem;
-    margin-bottom: 1.5rem;
-}
-
-.chart-grid {
-    margin-bottom: 2rem;
+    .chart-grid {
+        grid-template-columns: 1fr;
+    }
 }
