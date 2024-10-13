@@ -12,9 +12,10 @@
     <link rel="stylesheet" href="components/sidebar/sidebar.css">
     <link rel="stylesheet" href="index.css">
 
-    
     <!-- External style references -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/3.0.0/tailwind.min.css" >
 
     <!-- Internal JS references -->
     <script src="index.js" defer></script>
@@ -23,116 +24,102 @@
 
     <!-- External JS references -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
 
 </head>
-<body>
-    <div id="app">
-        <!-- Sidebar will be dynamically loaded here -->
-        <div id="sidebar-container"></div>
 
-        <!-- Main content area where views will be rendered -->
-        <div id="view-container">
-            <!-- Dashboard and other views will be loaded here based on the routing -->
-            <div class="dashboard-container">
-                <h1 class="dashboard-title">Turnaround Performance Dashboard</h1>
-                
-                <!-- Key Performance Indicators Section -->
-                <section>
-                    <h2 class="section-title">Key Performance Indicators</h2>
-                    <div class="dashboard-grid">
-                        <div class="stat-card">
-                            <h2>Turnaround Performance Index</h2>
-                            <canvas id="tpiChart" class="chart-container"></canvas>
-                        </div>
-                        <div class="stat-card">
-                            <h2>Cost Performance Index</h2>
-                            <canvas id="cpiChart" class="chart-container"></canvas>
-                        </div>
-                        <div class="stat-card">
-                            <h2>Schedule Performance Index</h2>
-                            <canvas id="spiChart" class="chart-container"></canvas>
-                        </div>
-                        <div class="stat-card">
-                            <h2>Safety Metrics</h2>
-                            <canvas id="safetyChart" class="chart-container"></canvas>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Important Metrics Section -->
-                <section>
-                    <h2 class="section-title">Important Metrics</h2>
-                    <div class="dashboard-grid">
-                        <div class="stat-card">
-                            <h2>Resource Allocation</h2>
-                            <canvas id="resourceChart" class="chart-container"></canvas>
-                        </div>
-                        <div class="stat-card">
-                            <h2>Resource Availability</h2>
-                            <canvas id="resourceAvailabilityChart" class="chart-container"></canvas>
-                        </div>
-                        <div class="stat-card">
-                            <h2>Active Tasks</h2>
-                            <canvas id="activeTasksChart" class="chart-container"></canvas>
-                        </div>
-                        <div class="stat-card">
-                            <h2>Energy Consumption & Emissions</h2>
-                            <canvas id="energyChart" class="chart-container"></canvas>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Vendors and Teams Section -->
-                <section>
-                    <h2 class="section-title">Vendors and Teams</h2>
-                    <div class="dashboard-grid">
-                        <div class="stat-card">
-                            <h2>Top Vendor Spend</h2>
-                            <canvas id="vendorSpendChart" class="chart-container"></canvas>
-                        </div>
-                        <div class="stat-card">
-                            <h2>Tasks Progress by Team</h2>
-                            <canvas id="tasksProgressChart" class="chart-container"></canvas>
-                        </div>
-                        <div class="stat-card">
-                            <h2>Top Material Spend</h2>
-                            <canvas id="materialSpendChart" class="chart-container"></canvas>
-                        </div>
-                        <div class="stat-card">
-                            <h2>Material Usages Over Time</h2>
-                            <canvas id="materialUsageChart" class="chart-container"></canvas>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Industry Updates Section -->
-                <section>
-                    <h2 class="section-title">Industry Updates</h2>
-                    <div class="dashboard-grid">
-                        <div class="stat-card">
-                            <h2>Turnaround Alerts</h2>
-                            <canvas id="turnaroundAlertsChart" class="chart-container"></canvas>
-                        </div>
-                        <div class="stat-card">
-                            <h2>Regulatory Alerts</h2>
-                            <canvas id="regulatoryAlertsChart" class="chart-container"></canvas>
-                        </div>
-                        <div class="stat-card">
-                            <h2>Oil Price</h2>
-                            <canvas id="oilPriceChart" class="chart-container"></canvas>
-                        </div>
-                        <div class="stat-card">
-                            <h2>Weather Alert</h2>
-                            <canvas id="weatherAlertChart" class="chart-container"></canvas>
-                        </div>
-                    </div>
-                </section>
-            </div>
+<body class="bg-gray-100">
+    <div id="app" class="app-container">
+        <div id="sidebar-container" class="sidebar">
+          <!-- Sidebar content -->
         </div>
-    </div>
-
-    
+      
+        <div id="view-container" class="main-content">
+          <h1 id="turnaround-performance-dashboard" class="dashboard-title">
+            Turnaround Performance Dashboard
+          </h1>
+      
+          <div class="chart-grid">
+            <div class="stat-card">
+              <h2 class="chart-title">Turnaround Performance Index</h2>
+              <div id="turnaroundPerformanceChart"></div>
+            </div>
+            <div class="stat-card">
+              <h2 class="chart-title">Cost Performance Index</h2>
+              <div id="costPerformanceChart"></div>
+            </div>
+            <div class="stat-card">
+              <h2 class="chart-title">Schedule Performance Index</h2>
+              <div id="schedulePerformanceChart"></div>
+            </div>
+            <div class="stat-card">
+              <h2 class="chart-title">Safety Metrics</h2>
+              <div id="safetyMetricsChart"></div>
+            </div>
+          </div>
+      
+          <h2 class="section-title">Scope and Resource Management</h2>
+          <div class="chart-grid">
+            <div class="stat-card">
+              <h2 class="chart-title">Scope Definition</h2>
+              <div id="scopeDefinitionChart"></div>
+            </div>
+            <div class="stat-card">
+              <h2 class="chart-title">Resource Allocation and Availability</h2>
+              <div id="resourceAllocationChart"></div>
+            </div>
+            <div class="stat-card">
+              <h2 class="chart-title">Active Tasks</h2>
+              <div id="activeTasksChart"></div>
+            </div>
+            <div class="stat-card">
+              <h2 class="chart-title">Energy Consumption and Emissions</h2>
+              <div id="energyConsumptionChart"></div>
+            </div>
+          </div>
+      
+          <h2 class="section-title">Vendor and Material Management</h2>
+          <div class="chart-grid">
+            <div class="stat-card">
+              <h2 class="chart-title">Top Vendor</h2>
+              <div id="topVendorChart"></div>
+            </div>
+            <div class="stat-card">
+              <h2 class="chart-title">Tasks Progress by Team</h2>
+              <div id="tasksProgressChart"></div>
+            </div>
+            <div class="stat-card">
+              <h2 class="chart-title">Top Material Spend</h2>
+              <div id="materialSpendChart"></div>
+            </div>
+            <div class="stat-card">
+              <h2 class="chart-title">Material Usages Over Time</h2>
+              <div id="materialUsageChart"></div>
+            </div>
+          </div>
+      
+          <h2 class="section-title">Alerts and Market Information</h2>
+          <div class="chart-grid">
+            <div class="stat-card">
+              <h2 class="chart-title">Global Turnaround Alerts</h2>
+              <div id="globalAlertsChart"></div>
+            </div>
+            <div class="stat-card">
+              <h2 class="chart-title">Regulatory Alerts</h2>
+              <div id="regulatoryAlertsChart"></div>
+            </div>
+            <div class="stat-card">
+              <h2 class="chart-title">Energy Price</h2>
+              <div id="energyPriceChart"></div>
+            </div>
+            <div class="stat-card">
+              <h2 class="chart-title">Weather Alert</h2>
+              <div id="weatherAlertChart"></div>
+            </div>
+          </div>
+        </div>
+      </div>
 </body>
+
 </html>
