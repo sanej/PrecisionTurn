@@ -1,0 +1,152 @@
+/* responsive.css */
+
+/* Larger screens (1600px and up) */
+@media only screen and (min-width: 1600px) {
+    .chart-grid {
+        grid-template-columns: repeat(auto-fit, minmax(45%, 1fr));
+    }
+}
+
+/* Small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .app-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 1rem;
+    }
+
+    .chart-grid, .chart-container {
+        grid-template-columns: 1fr;
+    }
+
+    .kpi-container {
+        flex-direction: column;
+    }
+
+    .kpi-card {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+}
+
+/* Medium devices (tablets, 600px and up) */
+@media only screen and (min-width: 600px) and (max-width: 992px) {
+    .chart-grid, .chart-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .kpi-container {
+        flex-wrap: wrap;
+    }
+
+    .kpi-card {
+        width: 48%;
+        margin-bottom: 1rem;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .sidebar {
+        width: 250px;
+    }
+
+    .main-content {
+        margin-left: 250px;
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .chart-grid {
+        grid-template-columns: repeat(auto-fit, minmax(45%, 1fr));
+    }
+}
+
+/* Flexible images and embedded videos */
+img, video, iframe {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Add responsiveness for new common elements */
+@media only screen and (max-width: 600px) {
+    .card {
+        padding: 15px;
+    }
+
+    .section-title {
+        font-size: 18px;
+    }
+
+    .search-input, .button {
+        font-size: 12px;
+    }
+
+    table th, table td {
+        padding: 8px;
+    }
+}
+
+
+/* Font size adjustments for readability on small screens */
+@media only screen and (max-width: 600px) {
+    body {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+}
+
+/* Print styles */
+@media print {
+    .sidebar, .no-print {
+        display: none;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 0;
+    }
+}
+
+/* Additional responsive settings */
+@media (max-width: 1024px) {
+    .kpi-container {
+        flex-wrap: wrap;
+    }
+
+    .kpi-card {
+        width: 48%;
+        margin-bottom: 20px;
+    }
+
+    .chart-grid {
+        grid-template-columns: 1fr; /* Stack charts vertically */
+    }
+
+    .chart-container {
+        height: 250px; /* Adjust height for smaller screens */
+    }
+}
+
+@media (max-width: 1200px) {
+    .chart-grid {
+        grid-template-columns: 1fr; /* Stack charts vertically */
+    }
+}

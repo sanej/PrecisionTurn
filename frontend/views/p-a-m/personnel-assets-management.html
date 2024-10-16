@@ -11,6 +11,8 @@
     <!-- Precision Turn Internal style references -->
     <link rel="stylesheet" href="../../components/sidebar/sidebar.css">
     <link rel="stylesheet" href="personnel-assets-management.css">
+    <link rel="stylesheet" href="../../styles/base.css">
+    <link rel="stylesheet" href="../../styles/responsive.css">
 
     <!--   External JS refenrences -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
@@ -21,56 +23,64 @@
     <script src="personnel-assets-management.js" defer></script>
 </head>
 <body>
-    <div id="sidebar-container"></div>
-    <div class="main-content">
-        <h1>Personnel & Assets Management</h1>
-        <div class="dashboard-overview">
-            <div class="card">
-                <h2>Total Personnel</h2>
-                <p id="total-personnel">150</p>
+    <div id="app">
+    
+        <!-- Sidebar will be loaded here -->
+        <div id="sidebar-container"></div>
+        
+        <div class="main-content">
+            
+            <h1 class="dashboard-title">Personnel & Assets Management</h1>
+
+            <div class="dashboard-overview">
+                <div class="card">
+                    <h2>Total Personnel</h2>
+                    <p id="total-personnel">150</p>
+                </div>
+                <div class="card">
+                    <h2>Available Assets</h2>
+                    <p id="available-assets">75</p>
+                </div>
+                <div class="card">
+                    <h2>Resource Utilization</h2>
+                    <p id="resource-utilization">85%</p>
+                </div>
             </div>
-            <div class="card">
-                <h2>Available Assets</h2>
-                <p id="available-assets">75</p>
+        
+            <div class="management-section">
+                <h2>Personnel Management</h2>
+                <input type="text" id="personnel-search" placeholder="Search Personnel">
+                <table id="personnel-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Department</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Dynamically filled rows -->
+                    </tbody>
+                </table>
             </div>
-            <div class="card">
-                <h2>Resource Utilization</h2>
-                <p id="resource-utilization">85%</p>
+            <div class="management-section">
+                <h2>Assets Management</h2>
+                <input type="text" id="assets-search" placeholder="Search Assets">
+                <table id="assets-table">
+                    <thead>
+                        <tr>
+                            <th>Asset Name</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Dynamically filled rows -->
+                    </tbody>
+                </table>
             </div>
-        </div>
-        <div class="management-section">
-            <h2>Personnel Management</h2>
-            <input type="text" id="personnel-search" placeholder="Search Personnel">
-            <table id="personnel-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Role</th>
-                        <th>Status</th>
-                        <th>Department</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Dynamically filled rows -->
-                </tbody>
-            </table>
-        </div>
-        <div class="management-section">
-            <h2>Assets Management</h2>
-            <input type="text" id="assets-search" placeholder="Search Assets">
-            <table id="assets-table">
-                <thead>
-                    <tr>
-                        <th>Asset Name</th>
-                        <th>Type</th>
-                        <th>Status</th>
-                        <th>Location</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Dynamically filled rows -->
-                </tbody>
-            </table>
         </div>
     </div>
 

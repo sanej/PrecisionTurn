@@ -7,10 +7,16 @@
     
     <!--   External style refenrences -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+
 
     <!-- Precision Turn Internal style references -->
-    <link rel="stylesheet" href="turnaround-copilot.css">
+    <link rel="stylesheet" href="../../styles/base.css">
+    <link rel="stylesheet" href="../../styles/responsive.css">
     <link rel="stylesheet" href="../../components/sidebar/sidebar.css">
+    <link rel="stylesheet" href="turnaround-copilot.css">
+   
     
     <!--   External JS refenrences -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
@@ -31,8 +37,8 @@
 
             <!-- New voice features section -->
             <div class="voice-features">
-                <h3>Voice Assistant
-                <button @click="requestBriefing">Request Audio Briefing</button></h3>
+                <span>Voice Assistant</span>
+                <button class="request-briefing" @click="requestBriefing">Request Audio Briefing</button>                
                 <div v-if="latestAlert" class="alert">
                 <strong>Latest Alert:</strong> {{ latestAlert }}
                 </div>

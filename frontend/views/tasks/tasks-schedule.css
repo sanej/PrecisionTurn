@@ -1,105 +1,16 @@
-
-
-#app {
+.create-task-form {
     display: flex;
-    width: 100%;
-}
-
-.main-content {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-.content {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto; /* Added overflow handling */
-}
-
-h2 {
-    margin-top: 0;
-}
-
-.alert {
-    border: 1px solid #e74c3c;
-    background-color: #f2d7d5;
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-}
-
-.notify-button {
-    background-color: #e74c3c;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-.create-task {
-    margin-bottom: 20px;
-}
-
-.create-task form {
-    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
     align-items: center;
 }
 
-.create-task form input,
-.create-task form select,
-.create-task form button {
-    margin-right: 10px;
-    padding: 5px;
-    font-size: 14px;
+.create-task-form .search-input {
+    flex: 1 1 200px;
 }
 
-.create-task-button {
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-.task-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    background-color: #f8f9fa;
-}
-
-.task-table th,
-.task-table td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: left;
-}
-
-.task-table th {
-    background-color: #d6e9f9;
-    text-align: center;
-}
-
-.task-table thead th {
-    background-color: #5dade2;
-    color: white;
-}
-
-.task-table tbody tr:hover {
-    background-color: #f1f1f1;
-}
-
-.action-button {
-    padding: 5px 10px;
-    margin-right: 5px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.notify-button {
-    background-color: #27ae60;
-    color: white;
+.create-task-form label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
