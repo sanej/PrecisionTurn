@@ -7,14 +7,18 @@
    
     <!--   External style refenrences -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
 
     <!-- Precision Turn Internal style references -->
-    <link rel="stylesheet" href="../../components/sidebar/sidebar.css">
     <link rel="stylesheet" href="analytics.css">
+    <link rel="stylesheet" href="../../components/sidebar/sidebar.css">
+    <link rel="stylesheet" href="../../styles/base.css">
+    <link rel="stylesheet" href="../../styles/responsive.css">
         
     <!--   External JS refenrences -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     
     <!-- Precision Turn Internal JS references -->
     <script src="../../config.js"></script>
@@ -22,37 +26,53 @@
     <script src="analytics.js" defer></script>
     
 </head>
-<body>
+<body class="bg-gray-100">
     <div id="app">
+        
+        <!-- Sidebar will be loaded here -->
         <div id="sidebar-container"></div>
         <div class="main-content">
-            <h1 class="dashboard-title">Analytics</h1>
-
-            <!-- Filters Section -->
-            <div class="analytics-filters">
-                <select id="timeFrameSelect">
-                    <option value="last7days">Last 7 Days</option>
-                    <option value="last30days">Last 30 Days</option>
-                    <option value="last6months">Last 6 Months</option>
-                    <option value="last12months">Last 12 Months</option>
-                </select>
+            <!-- Analytics Dashboard Contents -->
+            <div class="dashboard-container">
+                <h1 class="dashboard-title">Analytics Dashboard</h1>
+            
+                <div class="filters">
+                    <select id="timeRangeFilter">
+                        <option value="7">Last 7 days</option>
+                        <option value="30">Last 30 days</option>
+                        <option value="90">Last 90 days</option>
+                    </select>
+                    <button id="applyFilters">Apply Filters</button>
+                </div>
+            
+                <div class="chart-container">
+                    <div class="chart-item">
+                        <h3>Task Completion Trend</h3>
+                        <div id="taskCompletionChart"></div>
+                    </div>
+                    <div class="chart-item">
+                        <h3>Resource Utilization</h3>
+                        <div id="resourceUtilizationChart"></div>
+                    </div>
+                    <div class="chart-item">
+                        <h3>Cost Breakdown</h3>
+                        <div id="costBreakdownChart"></div>
+                    </div>
+                    <div class="chart-item">
+                        <h3>Safety Incidents by Type</h3>
+                        <div id="safetyIncidentsChart"></div>
+                    </div>
+                    <div class="chart-item">
+                        <h3>Equipment Downtime</h3>
+                        <div id="equipmentDowntimeChart"></div>
+                    </div>
+                    <div class="chart-item">
+                        <h3>Vendor Performance</h3>
+                        <div id="vendorPerformanceChart"></div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Charts Section -->
-            <div class="charts-section">
-                <div class="chart-container">
-                    <canvas id="performanceChart"></canvas>
-                </div>
-                <div class="chart-container">
-                    <canvas id="budgetChart"></canvas>
-                </div>
-                <div class="chart-container">
-                    <canvas id="taskCompletionChart"></canvas>
-                </div>
-                <div class="chart-container">
-                    <canvas id="safetyIncidentsChart"></canvas>
-                </div>
-            </div>
         </div>
     </div>
 </body>

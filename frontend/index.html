@@ -10,15 +10,17 @@
 
     <!-- Internal style references -->
     <link rel="stylesheet" href="components/sidebar/sidebar.css">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/responsive.css">
 
     <!-- External style references -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/3.0.0/tailwind.min.css" >
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
 
     <!-- Internal JS references -->
-    <script src="index.js" defer></script>
+    <script src="dashboard.js" defer></script>
     <script src="config.js"></script>
     <script src="components/sidebar/sidebar.js"></script>
 
@@ -32,32 +34,38 @@
 <body class="bg-gray-100">
     <div id="app" class="app-container">
         <div id="sidebar-container" class="sidebar">
-            <!-- Sidebar content -->
+          <!-- Sidebar content -->
         </div>
-
-        <div id="view-container" class="main-content">
+      
+        <div class="main-content">
+         
+          <!-- Refinery Turnaround Dashboard Contents -->
+          <div class="dashboard-container">
+            
             <h1 class="dashboard-title">Refinery Turnaround Dashboard</h1>
-
+        
             <div class="chart-grid">
-                <div class="stat-card">
-                    <h2 class="chart-title">Turnaround Performance Index</h2>
-                    <div id="performanceIndexChart"></div>
-                </div>
-                <div class="stat-card">
-                    <h2 class="chart-title">Cost Overview</h2>
-                    <div id="costOverviewChart"></div>
-                </div>
-                <div class="stat-card">
-                    <h2 class="chart-title">Schedule Progress</h2>
-                    <div id="scheduleProgressChart"></div>
-                </div>
-                <div class="stat-card">
-                    <h2 class="chart-title">Safety Performance</h2>
-                    <div id="safetyPerformanceChart"></div>
-                </div>
-            </div>
+              <div class="chart-item">
+                  <h2 class="chart-title">Turnaround Performance Index</h2>
+                  <div id="performanceIndexChart" class="chart-container"></div>
+              </div>
+              <div class="chart-item">
+                  <h2 class="chart-title">Cost Overview</h2>
+                  <div id="costOverviewChart" class="chart-container"></div>
+              </div>
+              <div class="chart-item">
+                  <h2 class="chart-title">Schedule Progress</h2>
+                  <div id="scheduleProgressChart" class="chart-container"></div>
+              </div>
+              <div class="chart-item">
+                  <h2 class="chart-title">Safety Performance</h2>
+                  <div id="safetyPerformanceChart" class="chart-container"></div>
+              </div>
+          </div>
+        
         </div>
-    </div>
+        
+      </div>
 </body>
 
 </html>

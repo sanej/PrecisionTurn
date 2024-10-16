@@ -1,5 +1,31 @@
 /* turnaround-copilot.css */
 
+/* Voice Assitent Styles */
+.voice-assistant {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .voice-assistant span {
+    margin-right: 10px;
+    font-weight: bold;
+  }
+  
+  .request-briefing {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .request-briefing:hover {
+    background-color: #0056b3;
+  }
+
+/*  Chat Styles*/
 
 .copilot-container {
     display: flex;
@@ -31,10 +57,10 @@
 }
 
 .chat-input {
-    display: flex;
-    padding: 10px;
-    border-top: 1px solid #e0e0e0;
-    background-color: white; /* Ensure chat-input stays at the bottom */
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #e0e0e0;
+  background-color: white;
 }
 
 .chat-input input {
@@ -47,12 +73,16 @@
 .chat-input button {
     margin-left: 10px;
     padding: 10px 20px;
-    background-color: #2196f3;
+    background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
 }
+
+.chat-input button:hover {
+    background-color: #0056b3;
+  }
 
 /* New styles for voice features */
 .voice-features {

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turnaround Copilot - PrecisionTurn</title>
+    
+    <!--   External style refenrences -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+
+    <!-- Precision Turn Internal style references -->
+    <link rel="stylesheet" href="executive-dashboard.css">
+    <link rel="stylesheet" href="../../components/sidebar/sidebar.css">
+    <link rel="stylesheet" href="../../styles/base.css">
+    <link rel="stylesheet" href="../../styles/responsive.css">
+    
+    <!--   External JS refenrences -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <!-- Precision Turn Internal JS references -->
+    <script src="../../config.js"></script>
+    <script  src="executive-dashboard.js" defer></script>
+    <script src="../../components/sidebar/sidebar.js" defer></script>
+
+</head>
+<body class="bg-gray-100">
+    <div id="app" class="app-container">
+        
+        <div id="sidebar-container" class="sidebar">
+            <!-- Sidebar content -->
+        </div>
+
+        <div class="main-content">
+        
+            <!-- Executive Dashboard Contents -->
+            <div class="dashboard-container">
+                <h1 id="executive-dashboard" class="dashboard-title">Executive Dashboard</h1>
+            
+                <div class="multi-plant-overview">
+                    <h2>Multi-Plant Turnaround Overview</h2>
+                    <div id="multiPlantChart"></div>
+                </div>
+            
+                <div class="kpi-container">
+                    <div class="kpi-card">
+                        <h3>Total EBITDA Impact</h3>
+                        <p class="kpi-value" id="totalEbitdaImpact">+$25.7M</p>
+                    </div>
+                    <div class="kpi-card">
+                        <h3>Average NPV</h3>
+                        <p class="kpi-value" id="averageNpv">$18.3M</p>
+                    </div>
+                    <div class="kpi-card">
+                        <h3>Average IRR</h3>
+                        <p class="kpi-value" id="averageIrr">16.5%</p>
+                    </div>
+                    <div class="kpi-card">
+                        <h3>Total % of Revenue</h3>
+                        <p class="kpi-value" id="totalRevenuePercentage">4.2%</p>
+                    </div>
+                </div>
+            
+                <div class="chart-container">
+                    <div class="chart-item">
+                        <h3>Financial Metrics by Plant</h3>
+                        <div id="financialMetricsChart"></div>
+                    </div>
+                    <div class="chart-item">
+                        <h3>Schedule Performance</h3>
+                        <div id="schedulePerformanceChart"></div>
+                    </div>
+                    <div class="chart-item">
+                        <h3>Budget Performance</h3>
+                        <div id="budgetPerformanceChart"></div>
+                    </div>
+                    <div class="chart-item">
+                        <h3>Risk Assessment</h3>
+                        <div id="riskChart"></div>
+                    </div>
+                </div>
+            </div>    
+        
+        </div>
+    </div>
+</body>
+</html>
