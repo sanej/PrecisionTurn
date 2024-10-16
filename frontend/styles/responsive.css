@@ -78,6 +78,26 @@ img, video, iframe {
     height: auto;
 }
 
+/* Add responsiveness for new common elements */
+@media only screen and (max-width: 600px) {
+    .card {
+        padding: 15px;
+    }
+
+    .section-title {
+        font-size: 18px;
+    }
+
+    .search-input, .button {
+        font-size: 12px;
+    }
+
+    table th, table td {
+        padding: 8px;
+    }
+}
+
+
 /* Font size adjustments for readability on small screens */
 @media only screen and (max-width: 600px) {
     body {
