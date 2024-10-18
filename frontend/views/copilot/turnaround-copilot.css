@@ -1,31 +1,31 @@
 /* turnaround-copilot.css */
 
-/* Voice Assitent Styles */
+/* Voice Assistant Styles */
 .voice-assistant {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
-  }
-  
-  .voice-assistant span {
+}
+
+.voice-assistant span {
     margin-right: 10px;
     font-weight: bold;
-  }
-  
-  .request-briefing {
+}
+
+.request-briefing {
     background-color: #007bff;
     color: white;
     border: none;
     padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
-  }
-  
-  .request-briefing:hover {
-    background-color: #0056b3;
-  }
+}
 
-/*  Chat Styles*/
+.request-briefing:hover {
+    background-color: #0056b3;
+}
+
+/* Chat Styles */
 
 .copilot-container {
     display: flex;
@@ -57,10 +57,10 @@
 }
 
 .chat-input {
-  display: flex;
-  padding: 10px;
-  border-top: 1px solid #e0e0e0;
-  background-color: white;
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #e0e0e0;
+    background-color: white;
 }
 
 .chat-input input {
@@ -82,7 +82,7 @@
 
 .chat-input button:hover {
     background-color: #0056b3;
-  }
+}
 
 /* New styles for voice features */
 .voice-features {
@@ -135,3 +135,68 @@
 .message em {
     font-style: italic;
 }
+
+/* Add these styles to your existing CSS */
+
+.plan-summary {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.plan-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.toggle-plan {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.view-consolidated-plan {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.full-plan {
+    margin-top: 10px;
+}
+
+.gantt-chart-placeholder {
+    background-color: #e0e0e0;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-style: italic;
+}
+
+.plan-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.plan-action {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/* Add icons */
+.icon-calendar::before { content: "📅"; }
+.icon-clock::before { content: "⏰"; }
+.icon-file-text::before { content: "📄"; }

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
         el: '#app',
         data: {
             chatMessages: [
-                { id: 1, sender: "System", text: "Welcome to Turnaround Copilot. How can I assist you today?" }
+                { id: Date.now() + Math.random(), sender: "System", text: "Welcome to Turnaround Copilot. How can I assist you today?" }
             ],
             userInput: "",
             latestAlert: "" // Add this line to define the latestAlert property
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Add user's question to chat
                 this.chatMessages.push({
-                    id: Date.now(),
+                    id: Date.now() + Math.random(), // Ensure unique ID
                     sender: 'You',
                     text: this.escapeHtml(userQuestion),
                 });
@@ -28,9 +28,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Handle specific hardcoded responses
                 if (userQuestion.toLowerCase().includes("spend trend")) {
-                    const chartId = 'spendTrendChart' + this.chatMessages.length;
+                    const chartId = 'spendTrendChart' + Date.now() + Math.random(); // Ensure unique chart ID
                     const copilotMessage = { 
-                        id: this.chatMessages.length + 1, 
+                        id: Date.now() + Math.random(), // Ensure unique ID
                         sender: "Copilot", 
                         text: "Here's the spend trend over the last 6 months:",
                         chartId: chartId
@@ -58,6 +58,8 @@ document.addEventListener('DOMContentLoaded', function () {
                                 }
                             });
                             this.scrollToBottom();
+                        } else {
+                            console.error(`Canvas element with id ${chartId} not found.`);
                         }
                     });
                 } else if (userQuestion.toLowerCase().includes("standard operating procedure")) {
@@ -72,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         Always refer to the detailed SOP document for comprehensive instructions and safety precautions.
                     `;
                     const copilotMessage = { 
-                        id: this.chatMessages.length + 1, 
+                        id: Date.now() + Math.random(), // Ensure unique ID
                         sender: "Copilot", 
                         text: this.parseMarkdown(response)
                     };
@@ -90,25 +92,29 @@ document.addEventListener('DOMContentLoaded', function () {
                         These items account for approximately 74% of the total turnaround budget.
                     `;
                     const copilotMessage = { 
-                        id: this.chatMessages.length + 1, 
+                        id: Date.now() + Math.random(), // Ensure unique ID
                         sender: "Copilot", 
                         text: this.parseMarkdown(response)
                     };
                     this.chatMessages.push(copilotMessage);
                     this.$nextTick(this.scrollToBottom);
+                    // Add this block to handle the "generate plan" query
+                } else if (userQuestion.toLowerCase().startsWith('generate plan:')) {
+                    const planDetails = userQuestion.substring('generate plan:'.length).trim();
+                    await this.generatePlan(planDetails);
                 } else {
                     // Call the RAG function for other queries
                     this.callRAGFunction(userQuestion).then(data => {
                         if (data.error) {
                             const copilotMessage = { 
-                                id: this.chatMessages.length + 1, 
+                                id: Date.now() + Math.random(), // Ensure unique ID
                                 sender: "Copilot", 
                                 text: "I'm sorry, I don't have specific information about that. Can you try asking about top spend items, spend trends, or standard operating procedures?" 
                             };
                             this.chatMessages.push(copilotMessage);
                         } else {
                             const copilotMessage = { 
-                                id: this.chatMessages.length + 1, 
+                                id: Date.now() + Math.random(), // Ensure unique ID
                                 sender: "Copilot", 
                                 text: this.parseMarkdown(data.answer)
                             };
@@ -160,6 +166,90 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.error('Error:', error);
                 });
             },
+            // Method to generate a plan
+            async generatePlan(planDetails) {
+                try {
+                    const response = await fetch(`${window.config.apiUrl}/generate-plan`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ planDetails })
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to generate plan');
+                    }
+            
+                    const data = await response.json();
+                    console.log('Received plan data:', data);
+            
+                    const plan = data.plan;
+            
+                    const planMessage = {
+                        id: Date.now(),
+                        sender: "Copilot",
+                        text: "I've generated a project plan for the Richmond Refinery turnaround. Here's a summary:",
+                        planSummary: {
+                            Duration: plan.Project_Overview.Duration,
+                            "Start Date": plan.Detailed_Task_Breakdown[0].Start_Date,
+                            "Major Phases": plan.Key_Milestones.length,
+                            "Estimated Budget": plan.Project_Overview.Estimated_Budget
+                        },
+                        fullPlan: this.formatFullPlan(plan),
+                        showFullPlan: false
+                    };
+            
+                    this.chatMessages.push(planMessage);
+                    this.$nextTick(this.scrollToBottom);
+                } catch (error) {
+                    console.error('Error generating plan:', error);
+                    this.chatMessages.push({
+                        id: Date.now(),
+                        sender: "Copilot",
+                        text: "I'm sorry, there was an error generating the plan. Please try again later."
+                    });
+                }
+            },
+            formatFullPlan(plan) {
+                let formattedPlan = "";
+                for (const [section, content] of Object.entries(plan)) {
+                    formattedPlan += `<h3>${section.replace(/_/g, ' ')}</h3>`;
+                    if (Array.isArray(content)) {
+                        formattedPlan += '<ul>';
+                        content.forEach(item => {
+                            formattedPlan += `<li>${Object.entries(item).map(([k, v]) => `${k}: ${v}`).join(', ')}</li>`;
+                        });
+                        formattedPlan += '</ul>';
+                    } else if (typeof content === 'object') {
+                        formattedPlan += '<ul>';
+                        for (const [key, value] of Object.entries(content)) {
+                            formattedPlan += `<li><strong>${key}:</strong> ${value}</li>`;
+                        }
+                        formattedPlan += '</ul>';
+                    } else {
+                        formattedPlan += `<p>${content}</p>`;
+                    }
+                }
+                return formattedPlan;
+            },
+            toggleFullPlan(messageId) {
+                const message = this.chatMessages.find(m => m.id === messageId);
+                if (message) {
+                  message.showFullPlan = !message.showFullPlan;
+                  if (message.showFullPlan && message.fullPlan) {
+                    // Here you can add logic to display the full plan, possibly using a modal or expanding the message
+                    console.log('Full plan:', message.fullPlan);
+                    // For now, let's just add the full plan details to the message text
+                    message.text += `\n\nFull Plan Details:\n${JSON.stringify(message.fullPlan, null, 2)}`;
+                  }
+                }
+              },
+            viewConsolidatedPlan() {
+                // Placeholder for consolidated plan view
+                alert("Consolidated Plan view is not yet implemented.");
+            },
+            // Method to call the RAG function
             async callRAGFunction(question) {
                 const apiUrl = window.config.apiUrl;
                 console.log('API URL:' +  apiUrl);

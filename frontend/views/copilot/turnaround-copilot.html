@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Turnaround Copilot - PrecisionTurn</title>
     
-    <!--   External style refenrences -->
+    <!-- External style references -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-
 
     <!-- Precision Turn Internal style references -->
     <link rel="stylesheet" href="../../styles/base.css">
@@ -17,14 +16,13 @@
     <link rel="stylesheet" href="../../components/sidebar/sidebar.css">
     <link rel="stylesheet" href="turnaround-copilot.css">
    
-    
-    <!--   External JS refenrences -->
+    <!-- External JS references -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- Precision Turn Internal JS references -->
     <script src="../../config.js"></script>
-    <script  src="turnaround-copilot.js" defer></script>
+    <script src="turnaround-copilot.js" defer></script>
     <script src="../../components/sidebar/sidebar.js" defer></script>
 
 </head>
@@ -49,9 +47,41 @@
                     <div class="chat-messages" ref="chatMessages">
                         <div v-for="message in chatMessages" :key="message.id" class="message">
                             <strong>{{ message.sender }}:</strong>
-                             <!--  <div>{{ message.text }}</div> -->
                             <div v-html="message.text"></div>
+                            
+                            <!-- Display Chart Message -->
                             <canvas v-if="message.chartId" :id="message.chartId" class="chart-container"></canvas>
+
+                            <!-- Display Project Plan  -->
+                            <div v-if="message.planSummary" class="plan-summary">
+                                <h3>Plan Summary:</h3>
+                                <ul>
+                                    <li v-for="(value, key) in message.planSummary" :key="key">
+                                        <strong>{{ key }}:</strong> {{ value }}
+                                    </li>
+                                </ul>
+                                <button @click="message.showFullPlan = !message.showFullPlan">
+                                    {{ message.showFullPlan ? 'Hide Full Plan' : 'View Full Plan' }}
+                                </button>
+                                <div v-if="message.showFullPlan" class="full-plan" v-html="message.fullPlan"></div>
+                                <div class="plan-buttons">
+                                    <button @click="toggleFullPlan(message.id)" class="toggle-plan">
+                                      {{ message.showFullPlan ? 'Hide Full Plan' : 'View Full Plan' }}
+                                    </button>
+                                    <button @click="viewConsolidatedPlan" class="view-consolidated-plan">View Consolidated Plan</button>
+                                </div>
+                                <div v-if="message.showFullPlan" class="full-plan">
+                                  <div class="gantt-chart-placeholder">
+                                    [Gantt Chart Placeholder]
+                                  </div>
+                                  <div class="plan-actions">
+                                    <button class="plan-action"><i class="icon-calendar"></i> Add to Calendar</button>
+                                    <button class="plan-action"><i class="icon-clock"></i> Adjust Timeline</button>
+                                    <button class="plan-action"><i class="icon-file-text"></i> Export PDF</button>
+                                  </div>
+                                </div>
+                            </div>    
+
                         </div>
                     </div>
                     
@@ -63,7 +93,5 @@
             </div>
         </div>
     </div>
-
-    
 </body>
 </html>
