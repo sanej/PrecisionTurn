@@ -2,10 +2,16 @@
 import os
 import logging
 from flask import Flask, request, jsonify
+from datetime import datetime
 from flask_cors import CORS
-# Import PrecisionTurn services
+import json
 
+
+# Import PrecisionTurn services
 from services import ask_question, generate_apple_maps_token, get_tasks
+from services.plan_generation_service import generate_project_plan
+from utils.firestore_utils import store_plan, retrieve_plan, convert_to_serializable
+
 
 app = Flask(__name__)
 CORS(app)
@@ -48,6 +54,30 @@ def tasks():
     tasks = get_tasks()
     return jsonify(tasks)
 
+# Route to generate project plan
+@app.route('/generate-plan', methods=['POST'])
+def generate_plan():
+    data = request.json
+    plan_details = data.get('planDetails')
+
+    try:
+        logging.info(f"Generating plan with details: {plan_details}")
+        plan = generate_project_plan(plan_details)
+        plan_json = json.loads(plan)  # Ensure it's parsed as JSON
+        plan_id = store_plan(plan_json)
+        logging.info(f"Plan generated and stored with ID: {plan_id}")
+
+        # Convert plan_json to a serializable format
+        serializable_plan = json.loads(json.dumps(plan_json, default=convert_to_serializable))
+
+        return jsonify({
+            'plan': serializable_plan,
+            'planId': plan_id
+        })
+    except Exception as e:
+        logging.exception(f"Error generating plan: {str(e)}")
+        return jsonify({'error': 'An error occurred while generating the plan'}), 500
+        
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8001))
     app.run(host='localhost', port=port, debug=True)
