@@ -7,6 +7,9 @@
 
     <!--   External style refenrences -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+
 
     <!-- Precision Turn Internal style references -->
     <link rel="stylesheet" href="../../components/sidebar/sidebar.css">
@@ -16,6 +19,7 @@
 
     <!--   External JS refenrences -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://balkan.app/js/OrgChart.js"></script>
     
     <!--   Internal JS refenrences -->
     <script src="../../config.js"></script>
@@ -24,65 +28,73 @@
 </head>
 <body>
     <div id="app">
-    
-        <!-- Sidebar will be loaded here -->
-        <div id="sidebar-container"></div>
-        
+        <div id="sidebar-container"></div> 
         <div class="main-content">
-            
-            <h1 class="dashboard-title">Personnel & Assets Management</h1>
+            <h1 id="personnel-assets-management" class="dashboard-title">Organization & Assets</h1>
 
-            <div class="dashboard-overview">
-                <div class="card">
-                    <h2>Total Personnel</h2>
-                    <p id="total-personnel">150</p>
+            <!-- Overview Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-gray-500 text-lg mb-2">Total Personnel</h2>
+                    <p class="text-4xl font-bold text-blue-700">150</p>
                 </div>
-                <div class="card">
-                    <h2>Available Assets</h2>
-                    <p id="available-assets">75</p>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-gray-500 text-lg mb-2">Available Assets</h2>
+                    <p class="text-4xl font-bold text-blue-700">75</p>
                 </div>
-                <div class="card">
-                    <h2>Resource Utilization</h2>
-                    <p id="resource-utilization">85%</p>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-gray-500 text-lg mb-2">Resource Utilization</h2>
+                    <p class="text-4xl font-bold text-blue-700">85%</p>
                 </div>
             </div>
-        
-            <div class="management-section">
-                <h2>Personnel Management</h2>
-                <input type="text" id="personnel-search" placeholder="Search Personnel">
-                <table id="personnel-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Role</th>
-                            <th>Status</th>
-                            <th>Department</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Dynamically filled rows -->
-                    </tbody>
+
+            <!-- Tabs Section-->
+            <div class="flex space-x-4 mb-6">
+                <button class="tab active" data-target="governance">Governance Structure</button>
+                <button class="tab" data-target="personnel">Personnel & Teams</button>
+                <button class="tab" data-target="assets">Assets & Equipment</button>
+              </div>
+              
+              <div id="governance" class="management-section">
+                <div id="orgChart"></div>
+              </div>
+              
+              <div id="personnel" class="management-section active">
+                <input type="text" id="personnel-search" placeholder="Search personnel..." class="w-full p-2 mb-4 border rounded">
+                <table id="personnel-table" class="w-full">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Role</th>
+                      <th>Status</th>
+                      <th>Department</th>
+                      <th>Governance Role</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
                 </table>
-            </div>
-            <div class="management-section">
-                <h2>Assets Management</h2>
-                <input type="text" id="assets-search" placeholder="Search Assets">
-                <table id="assets-table">
-                    <thead>
-                        <tr>
-                            <th>Asset Name</th>
-                            <th>Type</th>
-                            <th>Status</th>
-                            <th>Location</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Dynamically filled rows -->
-                    </tbody>
+              </div>
+              
+              <div id="assets" class="management-section">
+                <input type="text" id="assets-search" placeholder="Search assets..." class="w-full p-2 mb-4 border rounded">
+                <table id="assets-table" class="w-full">
+                  <thead>
+                    <tr>
+                      <th>Asset Name</th>
+                      <th>Type</th>
+                      <th>Status</th>
+                      <th>Location</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
                 </table>
-            </div>
+              </div>
+              
+              
+
+            
         </div>
     </div>
-
+    
 </body>
 </html>

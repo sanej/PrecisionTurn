@@ -1,8 +1,38 @@
-
-
 .dashboard-overview {
     display: flex;
     gap: 20px;
     margin-bottom: 30px;
 }
 
+/* Tab styles */
+.tab {
+    padding: 10px 20px;
+    border: none;
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+.tab.active {
+    background-color: #ddd;
+}
+
+.tab:hover {
+    background-color: #ddd;
+}
+
+.management-section {
+    display: none;
+}
+
+.management-section.active {
+    display: block;
+}
+
+/* Org chart styles */
+#orgChart {
+    width: 100%;
+    height: calc(100vh - 200px); /* Adjust based on your layout */
+    min-height: 400px;
+    overflow: auto;
+    background-color: #f9f9f9; /* Light background for the chart area */
+}
