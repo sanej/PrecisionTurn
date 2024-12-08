@@ -19,13 +19,28 @@ const commonOptions = {
     colors: ['#2196f3', '#4caf50', '#ff9800'],
     legend: {
         position: 'top',
-        horizontalAlign: 'right',
-        fontSize: '13px'
+        horizontalAlign: 'left',
+        offsetX: 40,
+        offsetY: 10,
+        markers: {
+            width: 8,
+            height: 8,
+            radius: 4
+        },
+        itemMargin: {
+            horizontal: 15
+        },
+        onItemClick: {
+            toggleDataSeries: true
+        },
+        onItemHover: {
+            highlightDataSeries: true
+        }
     },
     grid: {
         borderColor: '#f1f1f1',
         padding: {
-            top: 10
+            top: 20
         }
     }
 };
@@ -123,12 +138,16 @@ function createScheduleProgressChart() {
     const options = {
         ...commonOptions,
         series: [{
-            name: 'Duration',
-            data: [7, 7, 21, 3]
+            name: 'Completed',
+            data: [7, 7, 15, 3]
+        }, {
+            name: 'Remaining',
+            data: [0, 0, 6, 0]
         }],
         chart: {
             type: 'bar',
             height: 300,
+            stacked: true,
             toolbar: {
                 show: false
             }
@@ -136,13 +155,32 @@ function createScheduleProgressChart() {
         plotOptions: {
             bar: {
                 horizontal: true,
-                barHeight: '50%',
-                borderRadius: 4
+                barHeight: '60%',
+                borderRadius: 4,
+                dataLabels: {
+                    total: {
+                        enabled: true,
+                        formatter: function (val) {
+                            return val + ' days';
+                        },
+                        style: {
+                            fontSize: '13px',
+                            fontWeight: 900
+                        }
+                    }
+                }
             }
         },
+        colors: ['#2196f3', '#e9ecef'],
         dataLabels: {
             enabled: true,
-            formatter: (val) => `${val} days`
+            formatter: function(val, opts) {
+                const seriesName = opts.w.globals.seriesNames[opts.seriesIndex];
+                if (seriesName === 'Completed') {
+                    return val > 0 ? val + ' days' : '';
+                }
+                return '';
+            }
         },
         xaxis: {
             categories: ['Planning', 'Shutdown', 'Maintenance', 'Startup'],
@@ -153,6 +191,20 @@ function createScheduleProgressChart() {
             xaxis: {
                 lines: { show: true }
             }
+        },
+        tooltip: {
+            shared: true,
+            intersect: false,
+            y: {
+                formatter: function(val) {
+                    return val + ' days';
+                }
+            }
+        },
+        legend: {
+            position: 'top',
+            horizontalAlign: 'left',
+            offsetX: 40
         }
     };
 
