@@ -1,119 +1,100 @@
+// Initialize Value Pulse Dashboard
 document.addEventListener('DOMContentLoaded', function() {
     initializeValuePulse();
+    startRealTimeUpdates();
 });
 
 function initializeValuePulse() {
-    renderInsightCards();
-    renderRecommendations();
+    renderValueTimeline();
+    initializeValueUpdates();
 }
 
-const insightCardsData = [
-    {
-        icon: 'chart-line',
-        title: 'Predictive Cost Alert',
-        description: 'AI detected potential valve failure in Unit 3',
-        value: '$2.1M',
-        detail: 'Early intervention vs emergency repair',
-        class: 'blue'
-    },
-    {
-        icon: 'clock',
-        title: 'Schedule Impact',
-        description: 'ML-optimized critical path',
-        value: '4.5 Days Saved',
-        detail: '$3.2M production value recovered',
-        class: 'green'
-    },
-    {
-        icon: 'exclamation-triangle',
-        title: 'Risk Prevention',
-        description: 'ML identified 3 high-risk activities',
-        value: '$1.8M Risk Mitigated',
-        detail: 'Based on historical incident costs',
-        class: 'yellow'
-    },
-    {
-        icon: 'shield-alt',
-        title: 'Safety Enhancement',
-        description: 'Automated compliance monitoring',
-        value: '40% Incident Reduction',
-        detail: '$800K savings in safety-related costs',
-        class: 'purple'
-    }
-];
+function renderValueTimeline() {
+    const timelineData = [
+        {
+            time: '2 min ago',
+            action: 'Early valve failure detection',
+            value: 'Saved $450K in potential damage',
+            type: 'savings'
+        },
+        {
+            time: '15 min ago',
+            action: 'Resource reallocation completed',
+            value: 'Optimization value: $85K',
+            type: 'optimization'
+        },
+        {
+            time: '1 hour ago',
+            action: 'High-risk activity identified',
+            value: 'Potential impact: $120K',
+            type: 'risk'
+        }
+    ];
 
-const recommendationsData = [
-    {
-        priority: 'high',
-        title: 'Critical Path Impact Alert',
-        description: 'Predicted delay in heat exchanger maintenance could impact restart timeline',
-        impact: '$450K per day',
-        confidence: '92%',
-        action: 'View Resolution Plan'
-    },
-    {
-        priority: 'approved',
-        title: 'Resource Optimization',
-        description: 'ML suggests reallocating 3 specialized welders from Unit 2 to Unit 4',
-        impact: '$85K',
-        confidence: '89%',
-        action: 'Implement Change'
-    },
-    {
-        priority: 'low',
-        title: 'Preventive Action Required',
-        description: 'Valve degradation detected in cooling system - Schedule replacement within 48hrs',
-        impact: '$120K',
-        confidence: '94%',
-        action: 'Schedule Maintenance'
-    }
-];
+    const timelineContainer = document.getElementById('valueTimeline');
+    if (!timelineContainer) return;
 
-function renderInsightCards() {
-    const container = document.querySelector('.insights-grid');
-    if (!container) return;
-
-    container.innerHTML = insightCardsData.map(card => `
-        <div class="insight-card ${card.class}">
-            <div class="card-icon">
-                <i class="fas fa-${card.icon}"></i>
-            </div>
-            <div class="card-content">
-                <h3>${card.title}</h3>
-                <p>${card.description}</p>
-                <div class="metric">
-                    <div class="metric-value">${card.value}</div>
-                    <div class="metric-label">${card.detail}</div>
-                </div>
+    timelineContainer.innerHTML = timelineData.map(item => `
+        <div class="timeline-item">
+            <div class="timeline-time">${item.time}</div>
+            <div class="timeline-marker ${item.type}"></div>
+            <div class="timeline-content">
+                <div class="timeline-action">${item.action}</div>
+                <div class="timeline-value ${item.type}">${item.value}</div>
             </div>
         </div>
     `).join('');
 }
 
-function renderRecommendations() {
-    const container = document.querySelector('.recommendations-list');
-    if (!container) return;
-
-    container.innerHTML = recommendationsData.map(rec => `
-        <div class="recommendation ${rec.priority}">
-            <div class="rec-marker"></div>
-            <div class="rec-content">
-                <div class="rec-header">
-                    <h3>${rec.title}</h3>
-                    <span class="priority-badge ${rec.priority}">${rec.priority}</span>
-                </div>
-                <p>${rec.description}</p>
-                <div class="rec-footer">
-                    <div class="impact">Impact: ${rec.impact}</div>
-                    <button class="action-btn" onclick="handleAction('${rec.action}')">${rec.action}</button>
-                    <span class="confidence">AI Confidence: ${rec.confidence}</span>
-                </div>
-            </div>
-        </div>
-    `).join('');
+function initializeValueUpdates() {
+    // Initialize real-time counters and updates
+    updateValueCounters();
+    setInterval(updateValueCounters, 60000); // Update every minute
 }
 
-function handleAction(action) {
-    // Placeholder for action handling
-    console.log(`Action clicked: ${action}`);
+function updateValueCounters() {
+    // Simulate real-time value updates
+    const updates = {
+        'real-time-value': formatCurrency(Math.random() * 1000000),
+        'cost-avoidance': formatCurrency(Math.random() * 2000000),
+        'risk-protected': formatCurrency(Math.random() * 500000),
+        'efficiency-gains': formatCurrency(Math.random() * 300000)
+    };
+
+    // Update the DOM with new values
+    Object.entries(updates).forEach(([id, value]) => {
+        const element = document.querySelector(`#${id}`);
+        if (element) {
+            element.textContent = value;
+            animateValueUpdate(element);
+        }
+    });
 }
+
+function formatCurrency(value) {
+    return `$${(value / 1000000).toFixed(1)}M`;
+}
+
+function animateValueUpdate(element) {
+    element.classList.add('value-updated');
+    setTimeout(() => element.classList.remove('value-updated'), 2000);
+}
+
+function startRealTimeUpdates() {
+    // Update last updated timestamp
+    setInterval(() => {
+        const lastUpdated = document.querySelector('.last-updated');
+        if (lastUpdated) {
+            const minutes = Math.floor(Math.random() * 5) + 1;
+            lastUpdated.textContent = `Last updated: ${minutes}m ago`;
+        }
+    }, 30000); // Update every 30 seconds
+}
+
+// Handle value card interactions
+document.querySelectorAll('.value-card').forEach(card => {
+    card.addEventListener('click', function() {
+        // Handle card click - could show detailed breakdown
+        console.log('Value card clicked:', this.querySelector('h3').textContent);
+    });
+});

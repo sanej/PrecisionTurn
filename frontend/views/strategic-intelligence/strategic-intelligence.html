@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
 
     <!-- Precision Turn Internal style references -->
-    <link rel="stylesheet" href="executive-dashboard.css">
+    <link rel="stylesheet" href="strategic-intelligence.css">
     <link rel="stylesheet" href="../../components/sidebar/sidebar.css">
     <link rel="stylesheet" href="../../styles/base.css">
     <link rel="stylesheet" href="../../styles/responsive.css">
@@ -22,68 +22,101 @@
 
     <!-- Precision Turn Internal JS references -->
     <script src="../../config.js"></script>
-    <script  src="executive-dashboard.js" defer></script>
+    <script  src="strategic-intelligence.js" defer></script>
     <script src="../../components/sidebar/sidebar.js" defer></script>
 
 </head>
-<body>
-    <div id="app" class="app-container">
-        
-        <div id="sidebar-container" class="sidebar">
-            <!-- Sidebar content -->
-        </div>
 
+<body>
+
+    <div id="app" class="app-container">
+        <div id="sidebar-container" class="sidebar">
+        </div>
+    
         <div class="main-content">
-        
-            <!-- Executive Dashboard Contents -->
-            <div  class="dashboard-container">
-                <h1 id="executive-dashboard" class="dashboard-title">Executive Dashboard</h1>
-            
+            <div class="dashboard-container">
+                <h1 class="dashboard-title">Strategic Turnaround Intelligence</h1>
+    
+                <div class="ai-insights-container">
+                    <h2>AI-Driven Insights</h2>
+                    <div id="aiInsights" class="insights-grid">
+                        <!-- AI insights will be dynamically inserted here -->
+                    </div>
+                </div>
+    
                 <div class="multi-plant-overview">
                     <h2>Multi-Plant Turnaround Overview</h2>
                     <div id="multiPlantChart"></div>
                 </div>
-            
+    
                 <div class="kpi-container">
                     <div class="kpi-card">
                         <h3>Total EBITDA Impact</h3>
-                        <p class="kpi-value" id="totalEbitdaImpact">+$25.7M</p>
+                        <div class="kpi-value">+$25.7M</div>
+                        <div class="trend-indicator positive">↑ 2.3%</div>
                     </div>
+    
                     <div class="kpi-card">
                         <h3>Average NPV</h3>
-                        <p class="kpi-value" id="averageNpv">$18.3M</p>
+                        <div class="kpi-value">$18.3M</div>
+                        <div class="trend-indicator positive">↑ 1.8%</div>
                     </div>
+    
                     <div class="kpi-card">
                         <h3>Average IRR</h3>
-                        <p class="kpi-value" id="averageIrr">16.5%</p>
+                        <div class="kpi-value">16.5%</div>
+                        <div class="trend-indicator positive">↑ 0.5%</div>
                     </div>
+    
                     <div class="kpi-card">
                         <h3>Total % of Revenue</h3>
-                        <p class="kpi-value" id="totalRevenuePercentage">4.2%</p>
+                        <div class="kpi-value">4.2%</div>
+                        <div class="trend-indicator neutral">→ 0.0%</div>
                     </div>
                 </div>
-            
+    
                 <div class="chart-container">
                     <div class="chart-item">
                         <h3>Financial Metrics by Plant</h3>
                         <div id="financialMetricsChart"></div>
                     </div>
+    
                     <div class="chart-item">
                         <h3>Schedule Performance</h3>
                         <div id="schedulePerformanceChart"></div>
                     </div>
+    
                     <div class="chart-item">
-                        <h3>Budget Performance</h3>
-                        <div id="budgetPerformanceChart"></div>
-                    </div>
-                    <div class="chart-item">
-                        <h3>Risk Assessment</h3>
+                        <h3>Dynamic Risk Assessment</h3>
                         <div id="riskChart"></div>
                     </div>
+    
+                    <div class="chart-item">
+                        <h3>Cross-Plant Learning</h3>
+                        <div id="crossPlantLearningChart"></div>
+                    </div>
                 </div>
-            </div>    
-        
+    
+                <div class="scenario-planning-container">
+                    <h2>Interactive Scenario Planning</h2>
+                    <div class="scenario-controls">
+                        <div class="control-group">
+                            <label>Budget Adjustment</label>
+                            <input type="range" id="budgetSlider" min="-20" max="20" value="0" title="Adjust Budget">
+                            <span class="slider-value">0%</span>
+                        </div>
+                        <div class="control-group">
+                            <label>Timeline Shift</label>
+                            <input type="range" id="timelineSlider" min="-30" max="30" value="0" title="Adjust Timeline">
+                            <span class="slider-value">0 days</span>
+                        </div>
+                        <button id="simulateScenario" class="primary-button">Simulate Impact</button>
+                    </div>
+                    <div id="scenarioResults" class="scenario-results"></div>
+                </div>
+            </div>
         </div>
     </div>
+
 </body>
 </html>

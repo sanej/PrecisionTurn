@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
 
     <!-- Precision Turn Internal style references -->
-    <link rel="stylesheet" href="analytics.css">
+    <link rel="stylesheet" href="operational-intelligence.css">
     <link rel="stylesheet" href="../../components/sidebar/sidebar.css">
     <link rel="stylesheet" href="../../styles/base.css">
     <link rel="stylesheet" href="../../styles/responsive.css">
@@ -23,57 +23,67 @@
     <!-- Precision Turn Internal JS references -->
     <script src="../../config.js"></script>
     <script src="../../components/sidebar/sidebar.js" defer></script>
-    <script src="analytics.js" defer></script>
+    <script src="operational-intelligence.js" defer></script>
     
 </head>
 <body>
+    
     <div id="app">
-        
-        <!-- Sidebar will be loaded here -->
         <div id="sidebar-container"></div>
+    
         <div class="main-content">
-            <!-- Analytics Dashboard Contents -->
             <div class="dashboard-container">
-                <h1 class="dashboard-title">Analytics Dashboard</h1>
-            
+                <h1 id="analytics-dashboard" class="dashboard-title">Analytics Dashboard</h1>
+    
                 <div class="filters">
                     <select id="timeRangeFilter">
-                        <option value="7">Last 7 days</option>
-                        <option value="30">Last 30 days</option>
-                        <option value="90">Last 90 days</option>
+                        <option value="7d">Last 7 days</option>
+                        <option value="30d">Last 30 days</option>
+                        <option value="90d">Last 90 days</option>
                     </select>
                     <button id="applyFilters">Apply Filters</button>
                 </div>
-            
+    
                 <div class="chart-container">
+                    <!-- 1. Vendor Performance -->
                     <div class="chart-item">
-                        <h3>Task Completion Trend</h3>
-                        <div id="taskCompletionChart"></div>
+                        <h3 class="chart-title">Vendor Performance</h3>
+                        <div id="vendorPerformanceChart"></div>
                     </div>
+    
+                    <!-- 2. Safety Incidents -->
                     <div class="chart-item">
-                        <h3>Resource Utilization</h3>
-                        <div id="resourceUtilizationChart"></div>
-                    </div>
-                    <div class="chart-item">
-                        <h3>Cost Breakdown</h3>
-                        <div id="costBreakdownChart"></div>
-                    </div>
-                    <div class="chart-item">
-                        <h3>Safety Incidents by Type</h3>
+                        <h3 class="chart-title">Safety Incidents by Type</h3>
                         <div id="safetyIncidentsChart"></div>
                     </div>
+    
+                    <!-- 3. Cost Breakdown -->
                     <div class="chart-item">
-                        <h3>Equipment Downtime</h3>
+                        <h3 class="chart-title">Cost Breakdown</h3>
+                        <div id="costBreakdownChart"></div>
+                    </div>
+    
+                    <!-- 4. Resource Utilization -->
+                    <div class="chart-item">
+                        <h3 class="chart-title">Resource Utilization</h3>
+                        <div id="resourceUtilizationChart"></div>
+                    </div>
+    
+                    <!-- 5. Equipment Downtime -->
+                    <div class="chart-item">
+                        <h3 class="chart-title">Equipment Downtime (Hours)</h3>
                         <div id="equipmentDowntimeChart"></div>
                     </div>
+    
+                    <!-- 6. Task Completion -->
                     <div class="chart-item">
-                        <h3>Vendor Performance</h3>
-                        <div id="vendorPerformanceChart"></div>
+                        <h3 class="chart-title">Task Completion Trend</h3>
+                        <div id="taskCompletionChart"></div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
+
 </body>
 </html>

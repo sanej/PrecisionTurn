@@ -28,70 +28,110 @@
 </head>
 <body>
     <div id="app" class="app-container">
-        
-        <div id="sidebar-container" class="sidebar">
-            <!-- Sidebar content -->
-        </div>
+      
+        <div id="sidebar-container"></div>
+            
+            <div class="main-content">
+                <div class="dashboard-container">
+                    <h1 class="dashboard-title">Value Pulse</h1>
 
-        <div class="main-content">
-        
-        <!-- Add after your existing chart-grid section -->
-            <div class="insights-section">
-                <h1 id="value-pulse" class="dashboard-title"> Value Pulse </h1>
-                               
-                <div class="value-pulse-container">
-                    <!-- Value Insights Section -->
-                    <section class="value-insights-section">
-                        <div class="section-header">
-                            <h2>AI-Driven Value Insights</h2>
+                    <div class="value-pulse-header">
+                       
+                        <div class="header-meta">
+                            <span class="last-updated">Last updated: 5m ago</span>
                             <span class="live-badge">Live Updates</span>
                         </div>
-                        
-                        <div class="insights-grid">
-                            <!-- Cards will be inserted by JS -->
-                        </div>
-            
-                        <div class="insights-summary">
-                            <div class="summary-left">
-                                <h3>Total Value Generated</h3>
-                                <span class="period">Last 30 Days</span>
+                    </div>
+    
+                    <!-- Real-time Value Trackers -->
+                    <div class="value-trackers-grid">
+                        <div class="value-card predictive">
+                            <div class="card-icon">
+                                <i class="fas fa-chart-line"></i>
                             </div>
-                            <div class="summary-right">
-                                <span class="value">$7.9M</span>
-                                <span class="trend">+12% vs. Last Period</span>
-                            </div>
-                        </div>
-                    </section>
-            
-                    <!-- Action Recommendations Section -->
-                    <section class="recommendations-section">
-                        <div class="section-header">
-                            <h2>AI Action Recommendations</h2>
-                        </div>
-                        
-                        <div class="recommendations-list">
-                            <!-- Recommendations will be inserted by JS -->
-                        </div>
-            
-                        <div class="recommendations-summary">
-                            <div class="summary-left">
-                                <h3>Total Value at Risk</h3>
-                                <span class="period">Next 7 Days</span>
-                            </div>
-                            <div class="summary-right">
-                                <span class="value">$655K</span>
-                                <span class="actions">3 Critical Actions Required</span>
+                            <div class="card-content">
+                                <h3>Real-Time Value Creation</h3>
+                                <div class="value-amount" id="real-time-value">$2.1M</div>
+                                <div class="value-source">Early valve failure detection</div>
+                                <div class="value-impact">+$450K vs traditional detection</div>
                             </div>
                         </div>
-                    </section>
+    
+                        <div class="value-card optimization">
+                            <div class="card-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Cost Avoidance</h3>
+                                <div class="value-amount" id="cost-avoidance">$3.2M</div>
+                                <div class="value-source">ML-optimized critical path</div>
+                                <div class="value-impact">4.5 days of production saved</div>
+                            </div>
+                        </div>
+    
+                        <div class="value-card risk">
+                            <div class="card-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Risk Value Protected</h3>
+                                <div class="value-amount" id="risk-protected">$1.8M</div>
+                                <div class="value-source">Automated risk detection</div>
+                                <div class="value-impact">3 high-risk activities mitigated</div>
+                            </div>
+                        </div>
+    
+                        <div class="value-card efficiency">
+                            <div class="card-icon">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Efficiency Gains</h3>
+                                <div class="value-amount" id="efficiency-gains">$800K</div>
+                                <div class="value-source">Resource reallocation</div>
+                                <div class="value-impact">40% improvement in utilization</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- Value Impact Timeline -->
+                    <div class="value-timeline-section">
+                        <h2>Value Impact Timeline</h2>
+                        <div class="timeline-container" id="valueTimeline">
+                            <!-- Timeline items will be inserted by JavaScript -->
+                        </div>
+                    </div>
+    
+                    <!-- Financial Summary -->
+                    <div class="financial-summary-grid">
+                        <div class="summary-card total-value">
+                            <div class="summary-content">
+                                <div class="summary-header">
+                                    <h3>Total Value Generated</h3>
+                                    <span class="period">Last 30 Days</span>
+                                </div>
+                                <div class="summary-figures">
+                                    <div class="primary-value">$7.9M</div>
+                                    <div class="trend positive">+12% vs. Last Period</div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="summary-card value-risk">
+                            <div class="summary-content">
+                                <div class="summary-header">
+                                    <h3>Value at Risk</h3>
+                                    <span class="period">Next 7 Days</span>
+                                </div>
+                                <div class="summary-figures">
+                                    <div class="primary-value warning">$655K</div>
+                                    <div class="actions">3 Critical Actions Required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                        
-                    
-            </div> <!-- insights-section -->
-        
-        </div> <!-- main-content -->
- 
-    </div> <!-- app-container -->
+            </div>
+        </div> 
 </body>
 </html>
