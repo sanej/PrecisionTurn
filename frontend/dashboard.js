@@ -5,23 +5,28 @@ document.addEventListener('DOMContentLoaded', function() {
     createSafetyPerformanceChart();
 });
 
+// Common options for all charts
 const commonOptions = {
     chart: {
-        fontFamily: 'Arial, sans-serif',
+        fontFamily: 'Inter, sans-serif',
         toolbar: {
             show: false
+        },
+        zoom: {
+            enabled: false
         }
     },
-    dataLabels: {
-        enabled: false
+    colors: ['#2196f3', '#4caf50', '#ff9800'],
+    legend: {
+        position: 'top',
+        horizontalAlign: 'right',
+        fontSize: '13px'
     },
-    stroke: {
-        curve: 'smooth',
-        width: 2
-    },
-    xaxis: {
-        axisBorder: { show: false },
-        axisTicks: { show: false }
+    grid: {
+        borderColor: '#f1f1f1',
+        padding: {
+            top: 10
+        }
     }
 };
 
@@ -29,8 +34,12 @@ function createPerformanceIndexChart() {
     const options = {
         ...commonOptions,
         series: [{
-            name: 'Performance',
+            name: 'Current',
             data: [85, 92, 88, 95, 90]
+        }, {
+            name: 'Benchmark',
+            data: [75, 82, 78, 85, 80],
+            dashArray: 5
         }],
         chart: {
             type: 'radar',
@@ -40,7 +49,9 @@ function createPerformanceIndexChart() {
             categories: ['Overall', 'Cost', 'Schedule', 'Safety', 'Quality']
         },
         yaxis: {
-            show: false
+            show: false,
+            min: 0,
+            max: 100
         },
         markers: {
             size: 4
@@ -56,26 +67,51 @@ function createPerformanceIndexChart() {
 function createCostOverviewChart() {
     const options = {
         ...commonOptions,
-        series: [
-            { name: 'Actual Cost', data: [30, 60, 100, 140] },
-            { name: 'Budget', data: [35, 70, 105, 150] }
-        ],
+        series: [{
+            name: 'Actual Cost',
+            data: [30, 60, 100, 140]
+        }, {
+            name: 'Budget',
+            data: [35, 70, 105, 150]
+        }, {
+            name: 'AI Forecast',
+            data: [null, null, null, 140, 155],
+            dashArray: 5
+        }],
         chart: {
             type: 'area',
-            height: 300
+            height: 300,
+            stacked: false
         },
-        xaxis: {
-            categories: ['Week 1', 'Week 2', 'Week 3', 'Week 4']
+        stroke: {
+            curve: 'smooth',
+            width: [2, 2, 2]
         },
-        yaxis: {
-            title: { text: 'Cost (Millions $)' },
-            labels: {
-                formatter: (value) => `${value}M`
+        fill: {
+            type: 'gradient',
+            gradient: {
+                shadeIntensity: 1,
+                opacityFrom: 0.7,
+                opacityTo: 0.3
             }
         },
-        tooltip: {
-            y: {
-                formatter: (value) => `$${value} Million`
+        xaxis: {
+            categories: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5'],
+            axisBorder: { show: false },
+            axisTicks: { show: false }
+        },
+        yaxis: {
+            title: {
+                text: 'Cost (Millions $)'
+            },
+            labels: {
+                formatter: (value) => `$${value}M`
+            }
+        },
+        markers: {
+            size: 4,
+            hover: {
+                size: 6
             }
         }
     };
@@ -87,29 +123,35 @@ function createScheduleProgressChart() {
     const options = {
         ...commonOptions,
         series: [{
+            name: 'Duration',
             data: [7, 7, 21, 3]
         }],
         chart: {
             type: 'bar',
-            height: 300
+            height: 300,
+            toolbar: {
+                show: false
+            }
         },
         plotOptions: {
             bar: {
                 horizontal: true,
-                dataLabels: {
-                    position: 'top'
-                }
+                barHeight: '50%',
+                borderRadius: 4
             }
         },
         dataLabels: {
             enabled: true,
-            formatter: (val) => `${val} days`,
-            offsetX: 30
+            formatter: (val) => `${val} days`
         },
         xaxis: {
             categories: ['Planning', 'Shutdown', 'Maintenance', 'Startup'],
-            labels: {
-                formatter: (value) => `${value} days`
+            axisBorder: { show: false },
+            axisTicks: { show: false }
+        },
+        grid: {
+            xaxis: {
+                lines: { show: true }
             }
         }
     };
@@ -123,28 +165,47 @@ function createSafetyPerformanceChart() {
         series: [{
             name: 'TRIR',
             data: [0.50, 0.45, 0.40, 0.35]
+        }, {
+            name: 'Industry Average',
+            data: [0.55, 0.52, 0.50, 0.48],
+            dashArray: 5
         }],
         chart: {
             type: 'line',
             height: 300
         },
-        title: {
-            text: 'Total Recordable Incident Rate Trend',
-            align: 'left'
+        stroke: {
+            curve: 'smooth',
+            width: [3, 2]
         },
         xaxis: {
             categories: ['Week 1', 'Week 2', 'Week 3', 'Week 4']
         },
         yaxis: {
-            title: { text: 'TRIR' },
+            title: {
+                text: 'Total Recordable Incident Rate'
+            },
             min: 0.30,
-            max: 0.55,
+            max: 0.60,
             tickAmount: 5,
             labels: {
                 formatter: (value) => value.toFixed(2)
+            }
+        },
+        markers: {
+            size: 4,
+            hover: {
+                size: 6
             }
         }
     };
 
     new ApexCharts(document.querySelector("#safetyPerformanceChart"), options).render();
 }
+
+// Handle benchmark region changes
+document.getElementById('benchmarkRegion').addEventListener('change', function(e) {
+    const region = e.target.value;
+    // Update charts with new benchmark data
+    // This would be implemented based on your data structure
+});

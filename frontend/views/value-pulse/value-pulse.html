@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turnaround Copilot - PrecisionTurn</title>
+    
+    <!--   External style refenrences -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+
+    <!-- Precision Turn Internal style references -->
+    <link rel="stylesheet" href="value-pulse.css">
+    <link rel="stylesheet" href="../../components/sidebar/sidebar.css">
+    <link rel="stylesheet" href="../../styles/base.css">
+    <link rel="stylesheet" href="../../styles/responsive.css">
+    
+    <!--   External JS refenrences -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <!-- Precision Turn Internal JS references -->
+    <script src="../../config.js"></script>
+    <script  src="value-pulse.js" defer></script>
+    <script src="../../components/sidebar/sidebar.js" defer></script>
+
+</head>
+<body>
+    <div id="app" class="app-container">
+        
+        <div id="sidebar-container" class="sidebar">
+            <!-- Sidebar content -->
+        </div>
+
+        <div class="main-content">
+        
+        <!-- Add after your existing chart-grid section -->
+            <div class="insights-section">
+                <h1 id="value-pulse" class="dashboard-title"> Value Pulse </h1>
+                               
+                <div class="value-pulse-container">
+                    <!-- Value Insights Section -->
+                    <section class="value-insights-section">
+                        <div class="section-header">
+                            <h2>AI-Driven Value Insights</h2>
+                            <span class="live-badge">Live Updates</span>
+                        </div>
+                        
+                        <div class="insights-grid">
+                            <!-- Cards will be inserted by JS -->
+                        </div>
+            
+                        <div class="insights-summary">
+                            <div class="summary-left">
+                                <h3>Total Value Generated</h3>
+                                <span class="period">Last 30 Days</span>
+                            </div>
+                            <div class="summary-right">
+                                <span class="value">$7.9M</span>
+                                <span class="trend">+12% vs. Last Period</span>
+                            </div>
+                        </div>
+                    </section>
+            
+                    <!-- Action Recommendations Section -->
+                    <section class="recommendations-section">
+                        <div class="section-header">
+                            <h2>AI Action Recommendations</h2>
+                        </div>
+                        
+                        <div class="recommendations-list">
+                            <!-- Recommendations will be inserted by JS -->
+                        </div>
+            
+                        <div class="recommendations-summary">
+                            <div class="summary-left">
+                                <h3>Total Value at Risk</h3>
+                                <span class="period">Next 7 Days</span>
+                            </div>
+                            <div class="summary-right">
+                                <span class="value">$655K</span>
+                                <span class="actions">3 Critical Actions Required</span>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                        
+                    
+            </div> <!-- insights-section -->
+        
+        </div> <!-- main-content -->
+ 
+    </div> <!-- app-container -->
+</body>
+</html>

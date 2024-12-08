@@ -32,40 +32,102 @@
 </head>
 
 <body>
-    <div id="app" class="app-container">
+
+      <div id="app" class="app-container">
         <div id="sidebar-container" class="sidebar">
-          <!-- Sidebar content -->
         </div>
-      
+
         <div class="main-content">
-         
-          <!-- Refinery Turnaround Dashboard Contents -->
-          <div class="dashboard-container">
-            
-            <h1 class="dashboard-title">Refinery Turnaround Dashboard</h1>
-        
-            <div class="chart-grid">
-              <div class="chart-item">
-                  <h2 class="chart-title">Turnaround Performance Index</h2>
-                  <div id="performanceIndexChart" class="chart-container"></div>
-              </div>
-              <div class="chart-item">
-                  <h2 class="chart-title">Cost Overview</h2>
-                  <div id="costOverviewChart" class="chart-container"></div>
-              </div>
-              <div class="chart-item">
-                  <h2 class="chart-title">Schedule Progress</h2>
-                  <div id="scheduleProgressChart" class="chart-container"></div>
-              </div>
-              <div class="chart-item">
-                  <h2 class="chart-title">Safety Performance</h2>
-                  <div id="safetyPerformanceChart" class="chart-container"></div>
-              </div>
-          </div>
-        
+            <div class="dashboard-container">
+                
+                    <h1 id="refinery-turnaround-dashboard" class="dashboard-title">
+                        Refinery Turnaround Dashboard
+                    </h1>
+                <div class="dashboard-header">
+                    <!-- AI Status & Benchmark Controls -->
+                    <div class="controls-container">
+                        <div class="ai-status">
+                            <i class="fas fa-robot"></i> AI Insights Active
+                        </div>
+                        <div class="benchmark-controls">
+                            <label for="benchmarkRegion">Benchmark Region:</label>
+                            <select id="benchmarkRegion">
+                                <option value="global">Global Average</option>
+                                <option value="regional">Regional Average</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-grid">
+                    <!-- Performance Index Chart -->
+                    <div class="chart-item">
+                        <div class="chart-header">
+                            <h2 id="turnaround-performance-index" class="chart-title">
+                                Turnaround Performance Index
+                                <div class="performance-badge positive">
+                                    <i class="fas fa-arrow-up"></i> Industry Rank: Top 15%
+                                </div>
+                            </h2>
+                        </div>
+                        <div id="performanceIndexChart" class="chart-container"></div>
+                        <div class="insight-badge">
+                            <i class="fas fa-lightbulb"></i> Performance trending 8% above industry average
+                        </div>
+                    </div>
+
+                    <!-- Cost Overview Chart -->
+                    <div class="chart-item">
+                        <div class="chart-header">
+                            <h2 id="cost-overview" class="chart-title">
+                                Cost Overview
+                                <div class="ai-forecast">
+                                    <i class="fas fa-chart-line"></i> AI Forecast: $155M
+                                </div>
+                            </h2>
+                        </div>
+                        <div id="costOverviewChart" class="chart-container"></div>
+                        <div class="insight-badge warning">
+                            <i class="fas fa-exclamation-triangle"></i> Projected 5% cost overrun - Action required
+                        </div>
+                    </div>
+
+                    <!-- Schedule Progress Chart -->
+                    <div class="chart-item">
+                        <div class="chart-header">
+                            <h2 id="schedule-progress" class="chart-title">
+                                Schedule Progress
+                                <div class="performance-badge positive">
+                                    <i class="fas fa-clock"></i> 2 days ahead of benchmark
+                                </div>
+                            </h2>
+                        </div>
+                        <div id="scheduleProgressChart" class="chart-container"></div>
+                        <div class="insight-badge">
+                            <i class="fas fa-lightbulb"></i> Optimized critical path identified
+                        </div>
+                    </div>
+
+                    <!-- Safety Performance Chart -->
+                    <div class="chart-item">
+                        <div class="chart-header">
+                            <h2 id="safety-performance" class="chart-title">
+                                Safety Performance
+                                <div class="performance-badge positive">
+                                    <i class="fas fa-shield-alt"></i> 10% better than industry average
+                                </div>
+                            </h2>
+                        </div>
+                        <div id="safetyPerformanceChart" class="chart-container"></div>
+                        <div class="insight-badge">
+                            <i class="fas fa-lightbulb"></i> AI predicts continued positive trend
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-      </div>
+    </div>
+
 </body>
 
 </html>
