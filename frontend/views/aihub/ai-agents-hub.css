@@ -1,96 +1,116 @@
-.agent-list {
+/* General Styles */
+.main-content {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dashboard-title {
+    text-align: center;
+    margin-bottom: 16px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.subtitle {
+    text-align: center;
+    margin-bottom: 24px;
+    font-size: 16px;
+    color: #666;
+}
+
+/* Active Agents Section */
+.active-agents-section {
+    margin-bottom: 24px;
+    background: #f8f9fe;
+    padding: 16px;
+    border-radius: 8px;
+}
+
+.active-agents-section h2 {
+    margin-bottom: 8px;
+    font-size: 20px;
+    color: #333;
+}
+
+.active-agents {
     display: flex;
+    gap: 10px;
     flex-wrap: wrap;
-    gap: 20px;
-    justify-content: flex-start;
+}
+
+.agent-badge {
+    padding: 8px 12px;
+    background: #e0f7fa;
+    color: #00796b;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+}
+
+/* Agent Categories */
+.agent-categories {
+    margin-top: 20px;
+}
+
+.category {
+    margin-bottom: 24px;
+}
+
+.category h3 {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+.agent-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
 }
 
 .agent-card {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
+    background: white;
+    padding: 16px;
     border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: calc(33.333% - 13.33px); /* Adjusted to ensure three agents per row */
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-    transition: box-shadow 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
 }
 
 .agent-card:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-4px);
 }
 
-.agent-card h3 {
-    margin-top: 0;
-    color: #2196f3;
-    display: flex;
-    align-items: center;
+.agent-card .icon {
+    font-size: 36px;
+    color: #0066cc;
+    margin-bottom: 8px;
 }
 
-.agent-card h3::before {
-    content: '🔹'; /* Example icon */
-    margin-right: 8px;
+.agent-card .content h4 {
+    font-size: 18px;
+    margin-bottom: 8px;
 }
 
-.agent-card p {
-    flex-grow: 1;
+.agent-card .metrics span {
+    display: block;
+    font-size: 14px;
+    color: #757575;
+    margin-top: 8px;
 }
 
-.agent-card button {
-    background-color: #2196f3;
-    color: #ffffff;
-    border: none;
-    padding: 10px 15px;
+.agent-card .btn-activate {
+    margin-top: 16px;
+    padding: 8px 12px;
+    background: #0066cc;
+    color: white;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-    align-self: flex-start;
+    transition: background 0.2s;
 }
 
-.agent-card button.active {
-    background-color: #f44336;
-}
-
-.agent-card button:hover {
-    background-color: #1976d2;
-    transform: scale(1.05);
-}
-
-/* Responsive adjustments */
-@media (max-width: 1200px) {
-    .agent-card {
-        width: calc(50% - 10px); /* Ensure two agents per row for medium screens */
-    }
-}
-
-@media (max-width: 768px) {
-    .agent-card {
-        width: 100%; /* Full width for small screens */
-    }
-}
-
-/* Ensure last row aligns properly */
-.agent-list::after {
-    content: "";
-    flex: 0 1 calc(33.333% - 13.33px); /* Adjusted to ensure three agents per row */
-}
-
-@media (max-width: 1200px) {
-    .agent-list::after {
-        flex: 0 1 calc(50% - 10px); /* Ensure two agents per row for medium screens */
-    }
-}
-
-@media (max-width: 768px) {
-    .agent-list::after {
-        display: none; /* No need for alignment fix on small screens */
-    }
-}
-
-.agent-category h2 {
-    border-bottom: 2px solid #2196f3;
-    padding-bottom: 5px;
-    margin-bottom: 20px;
+.agent-card .btn-activate.active {
+    background: #e53935;
 }

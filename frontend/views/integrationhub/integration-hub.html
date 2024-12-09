@@ -28,6 +28,18 @@
         <div class="main-content">
             <h1 class="dashboard-title">Integration Hub</h1>
             <p>Manage and monitor all system integrations with PrecisionTurn.</p>
+
+            <div class="search-and-filter">
+                <input type="text" placeholder="Search integrations..." class="search-bar" v-model="searchTerm" />
+                <div class="filter-buttons">
+                    <button class="btn" @click="setFilter('Connected')">Connected</button>
+                    <button class="btn" @click="setFilter('Not Connected')">Not Connected</button>
+                    <button class="btn" @click="setFilter('Error')">Error</button>
+                </div>
+            </div>
+            
+
+
             <div class="integration-list">
                 <div v-for="integration in integrations" :key="integration.id" class="integration-card">
                     <h3>{{ integration.name }}</h3>

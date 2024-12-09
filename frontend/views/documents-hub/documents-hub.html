@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documents - PrecisionTurn</title>
+
+     <!--   External style refenrences -->
+     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+     <!-- Precision Turn Internal style references -->
+     <link rel="stylesheet" href="../../components/sidebar/sidebar.css">
+     <link rel="stylesheet" href="documents-hub.css">
+     <link rel="stylesheet" href="../../styles/base.css">
+     <link rel="stylesheet" href="../../styles/responsive.css">
+
+ 
+     <!--   External JS refenrences -->
+     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+     
+     <!--   External JS refenrences -->
+     <script src="../../config.js"></script>
+     <script src="documents-hub.js" defer></script>
+     <script src="../../components/sidebar/sidebar.js" defer></script>
+
+</head>
+
+<body>
+    
+    <div id="app">
+        <div id="sidebar-container"></div>
+    
+        <div class="main-content">
+            <!-- Header -->
+            <h1 class="dashboard-title">Document Intelligence Hub</h1>
+    
+            <!-- Insights Section -->
+            <div class="insights-grid">
+                <div class="insight-card urgent">
+                    <i class="material-icons">warning</i>
+                    <div class="content">
+                        <h3>2 Documents Need Review</h3>
+                        <p>Based on recent regulatory changes</p>
+                    </div>
+                </div>
+                <div class="insight-card reviewed">
+                    <i class="material-icons">check_circle</i>
+                    <div class="content">
+                        <h3>5 Documents Reviewed</h3>
+                        <p>Compliance tasks completed this week</p>
+                    </div>
+                </div>
+                <div class="insight-card activity">
+                    <i class="material-icons">timeline</i>
+                    <div class="content">
+                        <h3>12 Activities Logged</h3>
+                        <p>Recent actions on documents</p>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Search and Filter Section -->
+            <div class="search-section">
+                <div class="search-box">
+                    <i class="material-icons">search</i>
+                    <input 
+                        type="text" 
+                        class="search-input" 
+                        placeholder="Search documents or ask questions..." 
+                        v-model="searchTerm">
+                </div>
+                <div class="filter-buttons">
+                    <button 
+                        class="btn" 
+                        v-for="category in categories" 
+                        :class="{ active: activeCategory === category.id }" 
+                        @click="setCategory(category.id)">
+                        {{ category.label }}
+                    </button>
+                </div>
+            </div>
+    
+            <!-- Document List -->
+            <div class="documents-list">
+                <div class="document-card" v-for="doc in filteredDocuments" :key="doc.id">
+                    <div class="doc-header">
+                        <h3>{{ doc.name }}</h3>
+                        <p class="doc-meta">{{ doc.type }} • Uploaded {{ doc.uploadDate }}</p>
+                        <p class="doc-tags"><span :class="doc.tag">{{ doc.tag }}</span></p>
+                    </div>
+                    <div class="doc-body">
+                        <p>{{ doc.aiInsights }}</p>
+                    </div>
+                    <div class="doc-actions">
+                        <button class="btn-view" @click="viewDocument(doc.id)">View</button>
+                        <button class="btn-download" @click="downloadDocument(doc.id)">Download</button>
+                        <button class="btn-review">Mark as Reviewed</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>   
+
+
+</body>
+
+</html>

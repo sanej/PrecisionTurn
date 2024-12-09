@@ -1,0 +1,28 @@
+.map-container {
+  width: 100%;
+  height: 500px;
+  margin: 20px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.map-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.map-controls select,
+.map-controls input {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.map-controls select {
+  cursor: pointer;
+}
+
+.map-controls input {
+  flex: 1;
+}

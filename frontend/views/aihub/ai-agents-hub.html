@@ -25,18 +25,43 @@
 <body>
     <div id="app">
         <div id="sidebar-container"></div>
+
         <div class="main-content">
+            <!-- Header -->
             <h1 class="dashboard-title">AI Agents Hub</h1>
+            <p class="subtitle">Activate and monitor LLM-based agents to enhance productivity and efficiency.</p>
+
+            <!-- Active Agents Overview -->
+            <div class="active-agents-section">
+                <h2>Active Agents</h2>
+                <div class="active-agents">
+                    <p v-if="activeAgents.length === 0">No agents are currently active.</p>
+                    <div class="agent-badge" v-for="agent in activeAgents" :key="agent.id">
+                        <i class="material-icons">check_circle</i> {{ agent.name }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agent Categories -->
             <div class="agent-categories">
-                <div v-for="(agents, category) in groupedAgents" :key="category" class="agent-category">
-                    <h2>{{ category }}</h2>
-                    <div class="agent-list">
-                        <div v-for="agent in agents" :key="agent.id" class="agent-card">
-                            <h3>{{ agent.name }}</h3>
-                            <p>{{ agent.description }}</p>
-                            <button @click="toggleAgent(agent)" :class="{ 'active': agent.active }">
-                                {{ agent.active ? 'Deactivate' : 'Activate' }}
-                            </button>
+                <div class="category" v-for="(category, index) in groupedAgents" :key="index">
+                    <h3>{{ category.name }}</h3>
+                    <div class="agent-cards">
+                        <div class="agent-card" v-for="agent in category.agents" :key="agent.id">
+                            <div class="icon"><i class="material-icons">{{ agent.icon }}</i></div>
+                            <div class="content">
+                                <h4>{{ agent.name }}</h4>
+                                <p>{{ agent.description }}</p>
+                                <div class="metrics">
+                                    <span v-if="agent.tasksCompleted">Tasks Automated: {{ agent.tasksCompleted }}%</span>
+                                    <span v-if="agent.efficiencyGain">Efficiency Gain: {{ agent.efficiencyGain }}%</span>
+                                </div>
+                                <button 
+                                    :class="['btn-activate', { active: agent.active }]" 
+                                    @click="toggleAgent(agent)">
+                                    {{ agent.active ? 'Deactivate' : 'Activate' }}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

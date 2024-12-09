@@ -15,7 +15,18 @@ new Vue({
             { id: 11, name: 'Operational Technology (OT) Systems', examples: [], status: 'Connected', lastSync: '2023-10-01 12:30:00' },
             { id: 12, name: 'Human Resources Management (HRM) Systems', examples: [], status: 'Connected', lastSync: '2023-10-01 13:00:00' },
             { id: 13, name: 'Collaboration Tools', examples: ['Slack', 'Teams'], status: 'Not Connected', lastSync: 'N/A' }
-        ]
+        ],
+        searchTerm: '', // Declare the reactive property
+        filter: null // For filtering integrations by status
+    },
+    computed: {
+        filteredIntegrations() {
+            return this.integrations.filter((integration) => {
+                const matchesSearch = integration.name.toLowerCase().includes(this.searchTerm.toLowerCase());
+                const matchesFilter = this.filter ? integration.status === this.filter : true;
+                return matchesSearch && matchesFilter;
+            });
+        }
     },
     methods: {
         statusClass(status) {
@@ -44,6 +55,12 @@ new Vue({
         viewLogs(integration) {
             // Handle viewing logs
             alert(`Viewing logs for ${integration.name}`);
+        },
+        setFilter(status) {
+            this.filter = status;
+        },
+        resetFilter() {
+            this.filter = null;
         }
     }
 });

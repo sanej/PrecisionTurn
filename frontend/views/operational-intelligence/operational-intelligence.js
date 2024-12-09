@@ -36,6 +36,19 @@ function enhanceCharts() {
     });
 }
 
+
+function addChartInteractivity(chartId) {
+    // Example implementation of adding interactivity to a chart
+    const chartElement = document.getElementById(chartId);
+    if (chartElement) {
+        chartElement.addEventListener('click', () => {
+            console.log(`Chart ${chartId} clicked`);
+            // Add more interactivity logic here
+        });
+    }
+}
+
+
 function setupEventListeners() {
     // Plant selector change
     document.getElementById('plantSelector').addEventListener('change', function(e) {
