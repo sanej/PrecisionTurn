@@ -23,7 +23,8 @@ index_endpoint = aiplatform.MatchingEngineIndexEndpoint(
 def query_index(query, num_neighbors=5):
     query_embedding = embeddings.embed_query(query)
     matched_items = index_endpoint.find_neighbors(
-        deployed_index_id="turnaround_docs_index_depl_1724102948484",
+        #deployed_index_id="turnaround_docs_index_depl_1724102948484",
+        deployed_index_id="turnaround_docs_index_depl_1733699702881",
         queries=[query_embedding],
         num_neighbors=num_neighbors
     )

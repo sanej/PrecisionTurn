@@ -12,7 +12,7 @@ createApp({
                 notify: false,
                 completed: false
             },
-            tasks: [], // Ensure tasks is initialized as an empty array
+            tasks: [],
             stageTitles: {
                 'pre-shutdown-admin': 'Pre-Shutdown Administrative Planning',
                 'pre-shutdown-safety': 'Pre-Shutdown Safety Planning',
@@ -35,31 +35,42 @@ createApp({
                 }
             });
             return stages;
+        },
+        criticalTasks() {
+            return this.tasks.filter(task => 
+                task.priority === 'high' && !task.completed
+            );
         }
     },
     methods: {
-        fetchTasks() {
-            fetch(window.config.endpoints.tasks)
-                .then(response => {
-                    console.log('Response:', response);
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // Flatten the tasks by stages into a single array of tasks
-                    this.tasks = Object.entries(data).flatMap(([stage, tasks]) => 
-                        tasks.map(task => ({...task, stage}))
-                    );
-                })
-                .catch(error => console.error('Error fetching tasks:', error));
+        formatDate(date) {
+            return new Date(date).toLocaleDateString();
+        },
+        async fetchTasks() {
+            try {
+                const response = await fetch(window.config.endpoints.tasks);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const data = await response.json();
+                this.tasks = Object.entries(data).flatMap(([stage, tasks]) => 
+                    tasks.map(task => ({...task, stage, id: crypto.randomUUID()}))
+                );
+            } catch (error) {
+                console.error('Error fetching tasks:', error);
+            }
         },
         addTask() {
-            const newTaskCopy = { ...this.newTask };
+            const newTaskCopy = { 
+                ...this.newTask,
+                id: crypto.randomUUID(),
+                created_at: new Date().toISOString()
+            };
             this.tasks.push(newTaskCopy);
-    
-            // Clear form fields
+            
+            if(newTaskCopy.notify) {
+                this.notifyLead(newTaskCopy);
+            }
+
+            // Reset form
             this.newTask = {
                 name: '',
                 date: '',
@@ -70,12 +81,59 @@ createApp({
                 completed: false
             };
         },
-        notifyLead(task) {
-            console.log(`Notifying site lead about task: ${task.name}`);
-            // Placeholder for SMS notification logic
+        async notifyLead(task) {
+            try {
+                const response = await fetch(window.config.endpoints.notify, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        task_id: task.id,
+                        task_name: task.name,
+                        priority: task.priority
+                    })
+                });
+                
+                if (!response.ok) throw new Error('Notification failed');
+                
+                // Show success notification
+                alert(`Notification sent for task: ${task.name}`);
+            } catch (error) {
+                console.error('Error sending notification:', error);
+                alert('Failed to send notification. Please try again.');
+            }
         },
+        // Add to existing methods
+        getStageStatus(stage) {
+            const tasks = this.tasksByStage[stage];
+            if (!tasks || tasks.length === 0) return 'pending';
+            
+            const completedCount = tasks.filter(t => t.completed).length;
+            if (completedCount === tasks.length) return 'completed';
+            if (completedCount > 0) return 'in-progress';
+            return 'pending';
+        },
+        getStageProgress(stage) {
+            const tasks = this.tasksByStage[stage];
+            if (!tasks || tasks.length === 0) return '0/0 tasks';
+            
+            const completedCount = tasks.filter(t => t.completed).length;
+            return `${completedCount}/${tasks.length} tasks`;
+        },
+    
+        getProgressPercentage(stage) {
+            const tasks = this.tasksByStage[stage];
+            if (!tasks || tasks.length === 0) return 0;
+            
+            const completedCount = tasks.filter(t => t.completed).length;
+            return (completedCount / tasks.length) * 100;
+        }
     },
     mounted() {
-        this.fetchTasks(); // Fetch tasks when the component is mounted
+        this.fetchTasks();
+        
+        // Refresh tasks every 5 minutes
+        setInterval(this.fetchTasks, 300000);
     }
 }).mount('#app');

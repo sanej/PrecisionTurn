@@ -14,3 +14,221 @@
     align-items: center;
     gap: 5px;
 }
+
+/* Enhacements */
+.main-content {
+    padding: 20px;
+}
+
+.high-alert {
+    background-color: #fee2e2;
+    border: 1px solid #ef4444;
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 24px;
+}
+
+.alert-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.critical-count {
+    background-color: #ef4444;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.875rem;
+}
+
+.stage-section {
+    margin-bottom: 32px;
+}
+
+.stage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.tasks-table {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.priority-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.875rem;
+}
+
+.priority-badge.high {
+    background-color: #fee2e2;
+    color: #ef4444;
+}
+
+.priority-badge.medium {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+.priority-badge.low {
+    background-color: #e0f2fe;
+    color: #0284c7;
+}
+
+.create-task-section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-bottom: 24px;
+}
+
+.form-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.create-btn {
+    background-color: #2563eb;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
+.notify-btn {
+    background-color: #6b7280;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Enhancements V2 */
+
+.turnaround-progress {
+    margin: 20px 20px 30px 20px;  /* Added left/right margin */
+    padding: 20px 40px;  /* Increased horizontal padding */
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.timeline {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    padding: 20px 40px;  /* Increased horizontal padding */
+    margin: 0 20px;      /* Added margin to prevent text overlap */
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #e5e7eb;
+    z-index: 1;
+}
+
+.stage-marker {
+    position: relative;
+    z-index: 2;
+    background: white;
+    padding: 10px;
+    border: 2px solid #e5e7eb;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+}
+
+.stage-marker.completed {
+    border-color: #22c55e;
+    background: #22c55e;
+}
+
+.stage-marker.in-progress {
+    border-color: #3b82f6;
+    background: #3b82f6;
+}
+
+.stage-marker.pending {
+    border-color: #e5e7eb;
+    background: white;
+}
+
+.marker-content {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    margin-top: 8px;
+    text-align: center;
+    font-size: 0.75rem;  /* Slightly reduced font size */
+    max-width: 150px;    /* Limit text width */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.stage-name {
+    display: block;
+    font-size: 0.75rem;
+    color: #4b5563;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;    /* Adjust based on your needs */
+}
+
+.stage-stats {
+    display: block;
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+/* Enhancements V3 */
+
+.dependent-task {
+    position: relative;
+}
+
+.dependent-task::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    width: 10px;
+    height: 2px;
+    background: #6b7280;
+}
+
+.highlighted-dependency {
+    background: rgba(59, 130, 246, 0.1);
+}

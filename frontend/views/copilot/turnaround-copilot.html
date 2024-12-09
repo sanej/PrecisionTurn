@@ -86,8 +86,19 @@
                     </div>
                     
                     <div class="chat-input">
-                        <input v-model="userInput" @keyup.enter="sendMessage" placeholder="Ask about turnaround procedures, data, or documents...">
-                        <button @click="sendMessage">Send</button>
+                        <div class="input-group">
+                            <button class="icon-button" title="Voice Input" disabled>
+                                <i class="fas fa-microphone"></i>
+                            </button>
+                            <button class="icon-button" title="Upload Image" disabled>
+                                <i class="fas fa-image"></i>
+                            </button>
+                            <button class="icon-button" title="Attach File" disabled>
+                                <i class="fas fa-paperclip"></i>
+                            </button>
+                            <input v-model="userInput" @keyup.enter="sendMessage" placeholder="Ask about turnaround procedures, data, or documents...">
+                            <button class="send-button" @click="sendMessage">Send</button>
+                        </div>
                     </div>
                 </div>
             </div>
