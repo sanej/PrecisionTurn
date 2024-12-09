@@ -25,12 +25,12 @@
 <body>
     <div id="app">
         <div id="sidebar-container"></div>
-
+    
         <div class="main-content">
             <!-- Header -->
             <h1 class="dashboard-title">AI Agents Hub</h1>
             <p class="subtitle">Activate and monitor LLM-based agents to enhance productivity and efficiency.</p>
-
+    
             <!-- Active Agents Overview -->
             <div class="active-agents-section">
                 <h2>Active Agents</h2>
@@ -41,32 +41,42 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Agent Categories -->
-            <div class="agent-categories">
-                <div class="category" v-for="(category, index) in groupedAgents" :key="index">
-                    <h3>{{ category.name }}</h3>
-                    <div class="agent-cards">
-                        <div class="agent-card" v-for="agent in category.agents" :key="agent.id">
-                            <div class="icon"><i class="material-icons">{{ agent.icon }}</i></div>
-                            <div class="content">
-                                <h4>{{ agent.name }}</h4>
-                                <p>{{ agent.description }}</p>
-                                <div class="metrics">
-                                    <span v-if="agent.tasksCompleted">Tasks Automated: {{ agent.tasksCompleted }}%</span>
-                                    <span v-if="agent.efficiencyGain">Efficiency Gain: {{ agent.efficiencyGain }}%</span>
-                                </div>
-                                <button 
-                                    :class="['btn-activate', { active: agent.active }]" 
-                                    @click="toggleAgent(agent)">
-                                    {{ agent.active ? 'Deactivate' : 'Activate' }}
-                                </button>
+    
+            <!-- Tab Navigation -->
+            <div class="tabs">
+                <button 
+                    v-for="(category, index) in groupedAgents" 
+                    :key="index" 
+                    :class="['tab-button', { active: activeTab === category.name }]" 
+                    @click="activeTab = category.name">
+                    {{ category.name }}
+                </button>
+            </div>
+    
+            <!-- Tab Content -->
+            <div class="tab-content">
+                <div class="agent-cards">
+                    <div v-for="agent in filteredAgents" :key="agent.id" class="agent-card">
+                        <div class="icon">
+                            <i class="material-icons">{{ agent.icon }}</i>
+                        </div>
+                        <div class="content">
+                            <h4>{{ agent.name }}</h4>
+                            <p>{{ agent.description }}</p>
+                            <div class="metrics" v-if="agent.tasksCompleted || agent.efficiencyGain">
+                                <span v-if="agent.tasksCompleted">Tasks Automated: {{ agent.tasksCompleted }}%</span>
+                                <span v-if="agent.efficiencyGain">Efficiency Gain: {{ agent.efficiencyGain }}%</span>
                             </div>
+                            <button @click="toggleAgent(agent)" :class="{ active: agent.active }">
+                                {{ agent.active ? 'Deactivate' : 'Activate' }}
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
+            
         </div>
     </div>
+    
 </body>
 </html>

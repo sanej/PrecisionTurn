@@ -1,9 +1,4 @@
 /* General Styles */
-.main-content {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
 
 .dashboard-title {
     text-align: center;
@@ -133,18 +128,6 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Search Section */
-.search-section {
-    display: flex;
-    flex-direction: column;
-    gap: 16px; /* Adds spacing between search bar and buttons */
-    margin-bottom: 20px;
-    background: #f9f9f9; /* Light background for separation */
-    padding: 16px;
-    border-radius: 12px; /* Rounded corners for a modern look */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
-}
-
 /* Search Box */
 .search-box {
     display: flex;
@@ -152,8 +135,9 @@
     border: 1px solid #ccc;
     border-radius: 20px;
     padding: 8px 16px;
-    background: white;
+    background: #f9f9f9;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 16px; /* Add space after the search box */
 }
 
 .search-box i {
@@ -170,31 +154,23 @@
     background: transparent;
 }
 
-/* Filter Buttons (Tabs) */
-.filter-buttons {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
+/* Document Tags */
+.doc-tags span {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 12px;
+    text-transform: uppercase;
+    margin-top: 8px;
 }
 
-.filter-buttons .btn {
-    padding: 8px 16px;
-    border-radius: 20px;
-    border: none;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    background: #f5f5f5;
-    color: #333;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.filter-buttons .btn:hover {
-    background: #e0e0e0;
-}
-
-.filter-buttons .btn.active {
-    background: #0066cc;
+.doc-tags span.Urgent {
+    background: #ff6f61;
     color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.doc-tags span.Reviewed {
+    background: #4caf50;
+    color: white;
 }

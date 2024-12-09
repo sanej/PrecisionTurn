@@ -1,11 +1,17 @@
+/* Dashboard Title */
 h1.dashboard-title {
     color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
 }
 
+/* General Text Styling */
 p {
     color: #666;
+    line-height: 1.5;
 }
 
+/* Integration List */
 .integration-list {
     display: flex;
     flex-wrap: wrap;
@@ -21,7 +27,7 @@ p {
     border-radius: 12px;
     padding: 16px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: calc(33.333% - 13.33px);
+    width: calc(33.333% - 13.33px); /* Ensure cards fit neatly in a row */
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
@@ -36,10 +42,12 @@ p {
 .integration-card h3 {
     margin-top: 0;
     color: #2196f3;
+    font-size: 18px;
 }
 
 .integration-card p {
     flex-grow: 1;
+    margin-bottom: 12px;
 }
 
 /* Status Indicators */
@@ -54,7 +62,7 @@ p {
     content: "✔";
     color: #4caf50;
     margin-right: 5px;
-    font-size: 16px; /* Status Indicators */
+    font-size: 16px;
 }
 
 .status-not-connected {
@@ -68,7 +76,7 @@ p {
     content: "✖";
     color: #f44336;
     margin-right: 5px;
-    font-size: 16px; /* Status Indicators */
+    font-size: 16px;
 }
 
 .status-error {
@@ -82,12 +90,12 @@ p {
     content: "⚠";
     color: #ff9800;
     margin-right: 5px;
-    font-size: 16px; /* Status Indicators */
+    font-size: 16px;
 }
 
 /* Buttons */
 .actions button {
-    background-color: #2196f3; /* Improved Button Styling */
+    background-color: #2196f3;
     color: #ffffff;
     border: none;
     border-radius: 8px;
@@ -95,24 +103,26 @@ p {
     font-size: 14px;
     transition: background-color 0.3s ease, transform 0.2s;
     cursor: pointer;
-    margin-right: 10px; /* Improved Button Styling */
+    margin-right: 10px;
 }
 
 .actions button:hover {
-    background-color: #1976d2; /* Improved Button Styling */
+    background-color: #1976d2;
     transform: translateY(-2px);
 }
 
 /* Search Bar */
 .search-bar {
+    flex-grow: 1;
+    max-width: calc(100% - 20px); /* Prevent overflow */
+    margin-right: 20px;
     border: 1px solid #ccc;
     border-radius: 20px;
     padding: 8px 16px;
     font-size: 14px;
-    width: 100%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 16px;
 }
+
 
 /* Filter Buttons */
 .filter-buttons .btn {
@@ -120,10 +130,9 @@ p {
     border: 1px solid #ccc;
     border-radius: 20px;
     padding: 8px 16px;
-    margin-right: 10px;
     font-size: 14px;
-    transition: background-color 0.3s ease, transform 0.2s;
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
 }
 
 .filter-buttons .btn:hover {
@@ -136,10 +145,15 @@ p {
 }
 
 .filter-buttons {
-    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
 }
 
-/* Additional Spacing */
+/* Spacing Fixes */
 .search-and-filter {
-    margin-bottom: 16px;
+    display: flex;
+    flex-wrap: wrap; /* Ensure content wraps to the next line if needed */
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
 }

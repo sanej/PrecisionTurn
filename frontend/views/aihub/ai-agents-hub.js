@@ -22,7 +22,9 @@ new Vue({
             // Post-Turnaround
             { id: 12, name: 'Knowledge Transfer Facilitator', description: 'Captures lessons learned for future turnarounds.', active: false, category: 'Post-Turnaround', icon: 'school' },
             { id: 13, name: 'Post-Turnaround Analysis Agent', description: 'Conducts comprehensive analysis of turnaround performance.', active: false, category: 'Post-Turnaround', icon: 'analytics' },
-        ]
+        ],
+        activeTab: 'Pre-Turnaround', // Default tab
+
     },
     computed: {
         groupedAgents() {
@@ -32,6 +34,9 @@ new Vue({
                 { name: 'Cross-Phase', agents: this.agents.filter(agent => agent.category === 'Cross-Phase') },
                 { name: 'Post-Turnaround', agents: this.agents.filter(agent => agent.category === 'Post-Turnaround') },
             ];
+        },
+        filteredAgents() {
+            return this.agents.filter(agent => agent.category === this.activeTab);
         },
         activeAgents() {
             return this.agents.filter(agent => agent.active);
