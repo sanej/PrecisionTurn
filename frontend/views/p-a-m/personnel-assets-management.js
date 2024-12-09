@@ -54,6 +54,33 @@ function initOrgChart() {
     chart.fit();
 }
 
+// Function to animate metric values
+function animateMetrics() {
+    const metrics = document.querySelectorAll('.metric-value');
+    metrics.forEach(metric => {
+        const value = parseInt(metric.textContent);
+        let current = 0;
+        const increment = value / 30;
+        const animation = setInterval(() => {
+            current += increment;
+            if (current >= value) {
+                metric.textContent = value;
+                clearInterval(animation);
+            } else {
+                metric.textContent = Math.round(current);
+            }
+        }, 30);
+    });
+}
+
+// Add smooth transitions for tab switching
+function enhanceTabTransitions() {
+    const sections = document.querySelectorAll('.management-section');
+    sections.forEach(section => {
+        section.style.transition = 'opacity 0.3s ease-in-out';
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Personnel data with Governance Role added
     const personnelData = [
@@ -73,6 +100,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fetch personnel and assets table body elements
     const personnelTable = document.getElementById('personnel-table').getElementsByTagName('tbody')[0];
     const assetsTable = document.getElementById('assets-table').getElementsByTagName('tbody')[0];
+
+    animateMetrics();
+    enhanceTabTransitions();
 
     // Populate personnel table
     personnelData.forEach(person => {
@@ -152,6 +182,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    
 
     // Initialize org chart and show Governance Structure by default
     document.querySelector('.tab[data-target="governance"]').classList.add('active');

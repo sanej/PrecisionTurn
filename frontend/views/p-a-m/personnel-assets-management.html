@@ -32,32 +32,46 @@
         <div class="main-content">
             <h1 id="personnel-assets-management" class="dashboard-title">Organization & Assets</h1>
 
+            <!-- New Alert Section -->
+            <div class="alert-banner">
+              <span class="alert-icon">⚠️</span>
+              <span class="alert-text">Critical Resource Alert: Skill gap identified in night shift maintenance team</span>
+              <button class="alert-action">View Details</button>
+            </div>
+
             <!-- Overview Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h2 class="text-gray-500 text-lg mb-2">Total Personnel</h2>
-                    <p class="text-4xl font-bold text-blue-700">150</p>
+             <!-- Enhanced Metrics Grid -->
+             <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-header">Total Personnel</div>
+                    <div class="metric-value highlight">150</div>
+                    <div class="metric-trend positive">+5% from last month</div>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h2 class="text-gray-500 text-lg mb-2">Available Assets</h2>
-                    <p class="text-4xl font-bold text-blue-700">75</p>
+                
+                <div class="metric-card">
+                    <div class="metric-header">Available Assets</div>
+                    <div class="metric-value highlight">75</div>
+                    <div class="metric-trend warning">-2% utilization</div>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h2 class="text-gray-500 text-lg mb-2">Resource Utilization</h2>
-                    <p class="text-4xl font-bold text-blue-700">85%</p>
+                
+                <div class="metric-card">
+                    <div class="metric-header">Resource Utilization</div>
+                    <div class="metric-value highlight">85%</div>
+                    <div class="metric-trend positive">Above target</div>
                 </div>
             </div>
 
             <!-- Tabs Section-->
-            <div class="flex space-x-4 mb-6">
-                <button class="tab active" data-target="governance">Governance Structure</button>
-                <button class="tab" data-target="personnel">Personnel & Teams</button>
-                <button class="tab" data-target="assets">Assets & Equipment</button>
-              </div>
+            <div class="nav-tabs">
+              <button class="tab active" data-target="governance">Governance Structure</button>
+              <button class="tab" data-target="personnel">Personnel & Teams</button>
+              <button class="tab" data-target="assets">Assets & Equipment</button>
+            </div>
               
-              <div id="governance" class="management-section">
-                <div id="orgChart"></div>
-              </div>
+               <!-- Keep existing sections -->
+            <div id="governance" class="management-section active">
+              <div id="orgChart"></div>
+            </div>
               
               <div id="personnel" class="management-section active">
                 <input type="text" id="personnel-search" placeholder="Search personnel..." class="w-full p-2 mb-4 border rounded">

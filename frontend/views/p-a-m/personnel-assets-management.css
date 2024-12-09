@@ -36,3 +36,113 @@
     overflow: auto;
     background-color: #f9f9f9; /* Light background for the chart area */
 }
+
+/* Add these new styles to your existing CSS file */
+
+.alert-banner {
+    background-color: #fff8e6;
+    border-left: 4px solid #ffc107;
+    padding: 16px;
+    margin-bottom: 24px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.alert-icon {
+    font-size: 20px;
+    margin-right: 12px;
+}
+
+.alert-text {
+    flex-grow: 1;
+    color: #664d03;
+}
+
+.alert-action {
+    background-color: #ffc107;
+    color: #664d03;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.metric-card {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.metric-header {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-bottom: 8px;
+}
+
+.metric-value.highlight {
+    color: #1d4ed8;
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 8px 0;
+}
+
+.metric-trend {
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.metric-trend.positive {
+    color: #059669;
+}
+
+.metric-trend.warning {
+    color: #d97706;
+}
+
+/* Enhance existing tab styles */
+.nav-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 2px;
+}
+
+.tab {
+    border: none;
+    background: none;
+    padding: 12px 24px;
+    cursor: pointer;
+    color: #6b7280;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.tab.active {
+    color: #1d4ed8;
+    border-bottom-color: #1d4ed8;
+    background: none;
+}
+
+.tab:hover {
+    color: #1d4ed8;
+    background: none;
+}
