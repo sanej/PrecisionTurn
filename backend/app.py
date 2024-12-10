@@ -14,7 +14,7 @@ from utils.firestore_utils import store_plan, retrieve_plan, convert_to_serializ
 
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})  # Allow all origins for all routes
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
