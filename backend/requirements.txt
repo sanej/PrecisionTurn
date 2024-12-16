@@ -7,3 +7,4 @@ gunicorn
 pyjwt
 cryptography
 pyyaml
+openai
