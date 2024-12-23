@@ -22,7 +22,7 @@ const menuSections = [
   {
     title: 'TURNAROUND MANAGEMENT',
     items: [
-      { id: 'navigator', label: 'Turnaround Navigator', icon: Brain, path: '/navigator' },
+      { id: 'navigator', label: 'Turnaround Navigator', icon: Brain, path: '/turnaround-navigator' },
       { id: 'tasks', label: 'Tasks & Schedule', icon: Clock, path: '/tasks' },
       { id: 'organization', label: 'Organization & Assets', icon: Wrench, path: '/organization' },
       { id: 'map', label: 'Map View', icon: Map, path: '/map' },
