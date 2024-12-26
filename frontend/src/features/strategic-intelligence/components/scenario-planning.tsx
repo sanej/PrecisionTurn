@@ -56,6 +56,7 @@ export function ScenarioPlanning() {
             value={selectedPlant}
             onChange={(e) => setSelectedPlant(e.target.value)}
             className="w-full px-3 py-2 bg-white border rounded-md text-gray-700"
+            title="Select Plant"
           >
             {scenarioPlanningData.plants.map((plant) => (
               <option key={plant} value={plant}>{plant}</option>
@@ -76,6 +77,7 @@ export function ScenarioPlanning() {
             value={budget}
             onChange={(e) => setBudget(Number(e.target.value))}
             className="w-full"
+            title="Budget Adjustment"
           />
           <div className="text-sm text-gray-600 text-right">{budget}%</div>
         </div>
@@ -93,6 +95,7 @@ export function ScenarioPlanning() {
             value={timeline}
             onChange={(e) => setTimeline(Number(e.target.value))}
             className="w-full"
+            title="timelineShift"
           />
           <div className="text-sm text-gray-600 text-right">{timeline} days</div>
         </div>

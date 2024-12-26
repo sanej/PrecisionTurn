@@ -31,6 +31,7 @@ export default function OpsIntelligence() {
               value={timeRange}
               onChange={(e) => setTimeRange(e.target.value)}
               className="px-3 py-2 bg-white border rounded-md text-gray-600 text-sm"
+              title="timeRange"
             >
               <option value="7d">Last 7 days</option>
               <option value="30d">Last 30 days</option>

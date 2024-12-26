@@ -157,6 +157,7 @@ export function PerformanceOverview() {
           value={selectedView}
           onChange={(e) => setSelectedView(e.target.value)}
           className="px-3 py-1.5 bg-white border rounded-md text-sm text-gray-600"
+          title='SelectedView'
         >
           <option value="all">All Plants</option>
           <option value="critical">Critical Only</option>
