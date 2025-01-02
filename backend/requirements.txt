@@ -1,0 +1,8 @@
+flask
+flask-cors
+python-dotenv
+boto3
+langchain
+langchain-aws
+kendra-langchain
+anthropic
