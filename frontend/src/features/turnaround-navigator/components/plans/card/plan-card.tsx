@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from "@/lib/utils";
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import { 
   DropdownMenu,
@@ -14,131 +15,87 @@ import {
   Pencil, 
   Copy, 
   Trash2, 
-  CheckCircle2 
+  CheckCircle2,
+  DollarSign // Add this import
 } from 'lucide-react';
-import { Plan } from '../../../types/plans';
+import { Plan, PlanStatus } from '../../../types/plans'; // Update the import statement
+import { formatCurrency } from '@/utils/formatCurrency'; // Update the import path
+
+const statusColors: { [key: string]: string } = {
+  draft: 'bg-gray-200 text-gray-800',
+  active: 'bg-blue-200 text-blue-800',
+  completed: 'bg-green-200 text-green-800',
+};
+
+const getStatusColor = (status: PlanStatus) => {
+  switch (status) {
+    case 'draft': return 'bg-yellow-100 text-yellow-800';
+    case 'approved': return 'bg-blue-100 text-blue-800';
+    case 'in_progress': return 'bg-green-100 text-green-800';
+    case 'completed': return 'bg-gray-100 text-gray-800';
+    default: return 'bg-gray-100 text-gray-800';
+  }
+};
 
 interface PlanCardProps {
   plan: Plan;
-  onEdit?: (plan: Plan) => void;
-  onDuplicate?: (plan: Plan) => void;
-  onDelete?: (plan: Plan) => void;
-  onStatusChange?: (plan: Plan, status: 'draft' | 'active' | 'completed') => void;
+  onEdit: (plan: Plan) => void;
+  onDuplicate: (plan: Plan) => void;
+  onDelete: (plan: Plan) => void;
+  onStatusChange: (plan: Plan, status: PlanStatus) => void; // Update the prop type
+  onClick: (plan: Plan) => void; // Add this prop
 }
 
-const statusColors = {
-  draft: 'bg-yellow-100 text-yellow-800',
-  active: 'bg-green-100 text-green-800',
-  completed: 'bg-blue-100 text-blue-800'
-};
-
-export const PlanCard = ({ 
+// features/turnaround-navigator/components/plans/card/plan-card.tsx
+export function PlanCard({
   plan,
   onEdit,
-  onDuplicate,
   onDelete,
-  onStatusChange
-}: PlanCardProps) => {
-  const formatBudget = (budget: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(budget);
-  };
-
-  const handleDropdownClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent card click when clicking dropdown
-  };
-
+  onDuplicate,
+  onStatusChange,
+  onClick,
+}: PlanCardProps) {
   return (
-    <Card className="hover:shadow-md transition-shadow cursor-pointer relative" onClick={() => onEdit?.(plan)}>
-      <CardHeader className="pb-2">
-        <div className="flex justify-between items-center">
-          {/* Status Label */}
-          <span
-            className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${statusColors[plan.status]}`}
-          >
-            {plan.status.charAt(0).toUpperCase() + plan.status.slice(1)}
-          </span>
-
-          {/* Title */}
-          <h3 className="font-medium text-lg text-center truncate flex-1 mx-2">
+    <div 
+      onClick={() => onClick(plan)}
+      className={cn(
+        "relative rounded-lg border bg-white shadow-sm transition-all duration-200",
+        "hover:shadow-md hover:border-blue-200 cursor-pointer",
+        "active:scale-[0.99] active:shadow-sm"
+      )}
+    >
+      <div className="p-4"> {/* Reduced padding from p-6 to p-4 */}
+        <div className="flex justify-between items-start mb-4">
+          <h3 className="text-lg font-medium text-gray-900 truncate pr-2">
             {plan.title}
           </h3>
+          <span className={cn(
+            "px-2 py-1 rounded-full text-xs font-medium",
+            getStatusColor(plan.status)
+          )}>
+            {plan.status.charAt(0).toUpperCase() + plan.status.slice(1)}
+          </span>
+        </div>
 
-          {/* Action Menu */}
-          <div className="relative" onClick={handleDropdownClick}>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-8 w-8">
-                  <MoreVertical className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {onEdit && (
-                  <DropdownMenuItem onClick={() => onEdit(plan)}>
-                    <Pencil className="h-4 w-4 mr-2" />
-                    Edit
-                  </DropdownMenuItem>
-                )}
-                {onDuplicate && (
-                  <DropdownMenuItem onClick={() => onDuplicate(plan)}>
-                    <Copy className="h-4 w-4 mr-2" />
-                    Duplicate
-                  </DropdownMenuItem>
-                )}
-                {onStatusChange && plan.status !== 'completed' && (
-                  <DropdownMenuItem onClick={() => onStatusChange(plan, 'completed')}>
-                    <CheckCircle2 className="h-4 w-4 mr-2" />
-                    Mark as Complete
-                  </DropdownMenuItem>
-                )}
-                {onDelete && (
-                  <DropdownMenuItem
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onDelete(plan);
-                    }}
-                    className="text-red-600 hover:text-red-600 hover:bg-red-50"
-                  >
-                    <Trash2 className="h-4 w-4 mr-2" />
-                    Delete
-                  </DropdownMenuItem>
-                )}
-              </DropdownMenuContent>
-            </DropdownMenu>
+        <div className="flex justify-between items-center mb-3">
+          <div className="flex items-center text-gray-500">
+            <Clock className="w-4 h-4 mr-1" />
+            <span>{plan.details.duration} days</span>
+          </div>
+          <div className="flex items-center text-gray-500">
+            <DollarSign className="w-4 h-4 mr-1" />
+            <span>{formatCurrency(plan.details.budget)}</span>
           </div>
         </div>
-      </CardHeader>
 
-      <CardContent>
-        <div className="space-y-3">
-          <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
-            <div className="flex items-center">
-              <Clock className="w-4 h-4 mr-2" />
-              <span>{plan.details.duration} days</span>
-            </div>
-            <div className="flex items-center">
-              <FileText className="w-4 h-4 mr-2" />
-              <span>{formatBudget(plan.details.budget)}</span>
-            </div>
-          </div>
-          
-          <div className="text-sm text-gray-600">
-            <p className="line-clamp-2">{plan.details.scope}</p>
-          </div>
+        <p className="text-sm text-gray-600 line-clamp-2 mb-3">
+          {plan.details.scope}
+        </p>
 
-          {plan.details.constraints && (
-            <div className="text-sm text-gray-500 italic">
-              <p className="line-clamp-1">
-                Constraints: {plan.details.constraints}
-              </p>
-            </div>
-          )}
-        </div>
-      </CardContent>
-    </Card>
+        <p className="text-xs text-gray-500 italic line-clamp-1">
+          {plan.details.constraints}
+        </p>
+      </div>
+    </div>
   );
-};
+}

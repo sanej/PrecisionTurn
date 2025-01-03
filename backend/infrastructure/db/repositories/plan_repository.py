@@ -73,8 +73,32 @@ class PlanRepository:
     def delete(self, plan_id: str) -> bool:
         """Delete a plan"""
         try:
-            self.table.delete_item(Key={'id': plan_id})
+            logger.info(f"Starting delete operation for plan {plan_id}")
+            
+            # First get the plan to retrieve its createdAt
+            response = self.table.query(
+                KeyConditionExpression='id = :id',
+                ExpressionAttributeValues={':id': plan_id}
+            )
+            
+            if not response['Items']:
+                logger.info(f"Plan {plan_id} not found")
+                return False
+                
+            plan_item = response['Items'][0]
+            logger.info(f"Found plan to delete: {plan_item}")
+            
+            # Delete using both primary key attributes
+            delete_response = self.table.delete_item(
+                Key={
+                    'id': plan_id,
+                    'createdAt': plan_item['createdAt']  # Use the exact createdAt from the item
+                }
+            )
+            
+            logger.info(f"Delete response: {delete_response}")
             return True
+            
         except Exception as e:
             logger.error(f"Failed to delete plan: {str(e)}")
             raise

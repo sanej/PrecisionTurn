@@ -29,7 +29,7 @@ const LoadingIndicator = () => (
 export const ChatInterface = () => {
   const [messages, setMessages] = useState<ChartMessage[]>([{
     id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-    sender: "System",
+    sender: "Navigator",
     text: "Welcome to Turnaround Navigator. How can I assist you today?"
   }]);
   const [userInput, setUserInput] = useState('');
@@ -63,7 +63,7 @@ export const ChatInterface = () => {
 
       setMessages(prev => [...prev, {
         id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-        sender: 'Copilot',
+        sender: 'Navigator',
         text: response.answer,
         source_documents: response.source_documents
       }]);
@@ -120,7 +120,7 @@ export const ChatInterface = () => {
                 ? "bg-blue-600 text-white" 
                 : "bg-gray-100 text-gray-900"
             )}>
-              {message.sender === "Copilot" && 'source_documents' in message ? (
+              {message.sender === "Navigator" && 'source_documents' in message ? (
                 <AnswerDisplay 
                   answer={message.text} 
                   sources={message.source_documents} 

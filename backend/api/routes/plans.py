@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 plans_bp = Blueprint('plans', __name__)
 plan_service = TurnaroundPlanService()
 
+# Generate a new plan
 @plans_bp.route('/generate', methods=['POST'])
 def generate_plan():
     try:
@@ -36,6 +37,7 @@ def generate_plan():
             'details': str(e)
         }), 500
 
+# List all plans
 @plans_bp.route('/', methods=['GET'])
 def list_plans():
     try:
@@ -46,6 +48,7 @@ def list_plans():
         logger.error(f"Error listing plans: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
+# Get a specific plan
 @plans_bp.route('/<plan_id>', methods=['GET'])
 def get_plan(plan_id):
     try:
@@ -57,3 +60,16 @@ def get_plan(plan_id):
     except Exception as e:
         logger.error(f"Error retrieving plan: {str(e)}")
         return jsonify({'error': str(e)}), 500
+    
+# Delete a plan
+@plans_bp.route('/<plan_id>', methods=['DELETE'])
+def delete_plan(plan_id):
+    try:
+        logger.info(f"Attempting to delete plan with ID: {plan_id}")
+        success = plan_service.delete_plan(plan_id)
+        if success:
+            return jsonify({'message': 'Plan deleted successfully'}), 200
+        return jsonify({'error': 'Plan not found'}), 404
+    except Exception as e:
+        logger.error(f"Error deleting plan with ID {plan_id}: {str(e)}")
+        return jsonify({'error': 'Failed to delete plan'}), 500

@@ -1,12 +1,17 @@
-import React, { useState, useMemo } from "react";
+// features/turnaround-navigator/components/plans/list/plans-list.tsx
+
+import React, { useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { PlanCard } from "../card/plan-card";
 import { PlanGenerator } from "../generator/plan-generator";
 import { PlanActions } from "../actions/plan-actions";
 import { Plan } from "../../../types/plans";
-import { Search, Filter, SortAsc, AlertCircle } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Search, Filter, SortAsc, AlertCircle, Plus } from "lucide-react";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { useRouter } from 'next/navigation';
+import { LoadingOverlay } from '@/components/ui/loading-overlay';
+import { Button } from "@/components/ui/button";
 
 interface PlansListProps {
   plans: Plan[];
@@ -14,6 +19,7 @@ interface PlansListProps {
   onDeletePlan: (plan: Plan) => void;
   onDuplicatePlan: (plan: Plan) => void;
   onStatusChange: (plan: Plan, status: "draft" | "active" | "completed") => void;
+  onCreatePlan: (plan: Plan) => void;
 }
 
 export const PlansList = ({
@@ -22,15 +28,22 @@ export const PlansList = ({
   onDeletePlan,
   onDuplicatePlan,
   onStatusChange,
+  onCreatePlan,
 }: PlansListProps) => {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [sortBy, setSortBy] = useState<"date" | "title" | "budget">("date");
   const [isGeneratorOpen, setIsGeneratorOpen] = useState(false);
-  const [localPlans, setLocalPlans] = useState<Plan[]>(plans);
 
   const handleCreatePlan = () => {
     setIsGeneratorOpen(true);
+  };
+
+  const handlePlanClick = async (plan: Plan) => {
+    setIsLoading(true);
+    router.push(`/turnaround-navigator/plans/${plan.id}`);
   };
 
   const handleImportPlan = () => {
@@ -42,7 +55,7 @@ export const PlansList = ({
   };
 
   const filteredAndSortedPlans = useMemo(() => {
-    return localPlans
+    return plans
       .filter((plan) => {
         const matchesSearch =
           plan.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -62,11 +75,13 @@ export const PlansList = ({
             return 0;
         }
       });
-  }, [localPlans, searchQuery, statusFilter, sortBy]);
+  }, [plans, searchQuery, statusFilter, sortBy]);
 
   return (
     <div className="space-y-6">
-      {/* Header with PlanActions */}
+      {isLoading && <LoadingOverlay />}
+      
+      {/* Header and actions */}
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-semibold text-gray-900">Turnaround Plans</h2>
         <PlanActions
@@ -76,16 +91,13 @@ export const PlansList = ({
         />
       </div>
 
-      {/* Dialog */}
+      {/* Plan Generator Dialog */}
       <Dialog open={isGeneratorOpen} onOpenChange={setIsGeneratorOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Create New Turnaround Plan</DialogTitle>
-          </DialogHeader>
+        <DialogContent className="sm:max-w-4xl">
           <PlanGenerator 
             onClose={() => setIsGeneratorOpen(false)}
             onPlanCreated={(plan) => {
-              setLocalPlans(prev => [...prev, plan]);
+              onCreatePlan(plan);
               setIsGeneratorOpen(false);
             }}
           />
@@ -114,7 +126,8 @@ export const PlansList = ({
             <SelectContent>
               <SelectItem value="all">All Status</SelectItem>
               <SelectItem value="draft">Draft</SelectItem>
-              <SelectItem value="active">Active</SelectItem>
+              <SelectItem value="approved">Approved</SelectItem>
+              <SelectItem value="in_progress">In Progress</SelectItem>
               <SelectItem value="completed">Completed</SelectItem>
             </SelectContent>
           </Select>
@@ -143,7 +156,8 @@ export const PlansList = ({
               onEdit={() => onEditPlan(plan)}
               onDelete={() => onDeletePlan(plan)}
               onDuplicate={() => onDuplicatePlan(plan)}
-              onStatusChange={(plan, newStatus) => onStatusChange(plan, newStatus)}
+              onStatusChange={(newStatus) => onStatusChange(plan, newStatus)}
+              onClick={() => handlePlanClick(plan)}
             />
           ))}
         </div>
