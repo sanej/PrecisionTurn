@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-
+  pageExtensions: ['ts', 'tsx'],
+  
   async headers() {
     return [
       {
@@ -27,9 +28,6 @@ const nextConfig: NextConfig = {
       }
     ];
   }
-
 };
-
-
 
 export default nextConfig;

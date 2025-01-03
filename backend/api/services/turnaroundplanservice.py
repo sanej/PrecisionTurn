@@ -53,33 +53,34 @@ class TurnaroundPlanService:
                 Scope: {plan_details['scope']}
                 Constraints: {plan_details.get('constraints', 'None specified')}
 
-                Please analyze and provide a comprehensive plan with:
+                Generate a structured turnaround plan with:
 
-                1. Risk Assessment:
-                - Identify potential risks and challenges
-                - Suggest mitigation strategies
-                - Rate risks by severity and likelihood
+                1. Milestones: Break down into phases, each with:
+                - Title of the phase
+                - Duration in days
+                - Key deliverables
+                - Dependencies on other phases
 
-                2. Project Schedule:
-                - Break down into major phases
-                - List key activities per phase
-                - Define critical milestones
-                - Consider sequence dependencies
+                2. Resource Requirements:
+                - Personnel with roles, count needed, and required skills
+                - Equipment with types and quantities
 
-                3. Resource Allocation:
-                - Required personnel by role and skill
-                - Equipment and machinery needs
-                - Material requirements
-                - Support services needed
+                3. Risk Assessment:
+                - High-risk items with titles
+                - Detailed descriptions
+                - Mitigation strategies
 
-                4. Budget Breakdown:
-                - Labor costs by phase
-                - Equipment and rental costs
-                - Material costs
-                - Contingency allocation
+                4. Cost Breakdown:
+                - Category of expense
+                - Amount allocated
+                - Additional details
 
-                Format the response as a structured JSON object."""
+                5. Safety Plan:
+                - Required permits and certifications
+                - Safety protocols and procedures
 
+                Format your response exactly according to this schema:
+                {self._get_plan_schema()}"""
 
         
     def analyze_scope(self, plan_details: Dict[str, Any]) -> Dict[str, Any]:
@@ -138,43 +139,48 @@ class TurnaroundPlanService:
     def _get_plan_schema(self) -> str:
         return """
         {
-            "project_overview": {
-                "title": string,
-                "objective": string,
-                "duration": number,
-                "estimated_budget": number,
-                "scope_summary": string
-            },
             "milestones": [
                 {
                     "title": string,
-                    "target_date": string,
-                    "dependencies": array,
-                    "deliverables": array
+                    "duration": number,
+                    "deliverables": [string],
+                    "dependencies": [string]
                 }
             ],
             "resources": {
-                "personnel": array,
-                "equipment": array,
-                "materials": array,
-                "peak_manning": number
+                "personnel": [
+                    {
+                        "role": string,
+                        "count": number,
+                        "skills": string
+                    }
+                ],
+                "equipment": [
+                    {
+                        "type": string,
+                        "quantity": number
+                    }
+                ]
             },
             "risk_assessment": {
-                "high_risks": array,
-                "mitigation_strategies": array
+                "high_risks": [
+                    {
+                        "title": string,
+                        "description": string,
+                        "mitigation": string
+                    }
+                ]
             },
-            "critical_path": {
-                "activities": array,
-                "optimization_opportunities": array
-            },
+            "cost_breakdown": [
+                {
+                    "category": string,
+                    "amount": number,
+                    "details": string
+                }
+            ],
             "safety_plan": {
-                "key_considerations": array,
-                "required_permits": array,
-                "safety_protocols": array
-            },
-            "innovation_opportunities": {
-                "digital_tools": array,
-                "modern_methods": array
+                "required_permits": [string],
+                "safety_protocols": [string]
             }
         }
         """
@@ -224,11 +230,25 @@ class TurnaroundPlanService:
     def _format_unstructured_response(self, response: str) -> Dict[str, Any]:
         """Format unstructured LLM response into consistent JSON structure"""
         return {
-            "project_overview": {
-                "title": "Generated Plan",
-                "scope_summary": response
+            "TurnaroundProject": {
+                "ProjectSchedule": {
+                    "MajorPhases": []
+                },
+                "ResourceAllocation": {
+                    "RequiredPersonnel": [],
+                    "EquipmentNeeds": []
+                },
+                "RiskAssessment": {
+                    "PotentialRisks": []
+                },
+                "BudgetBreakdown": {
+                    "LaborCosts": 0,
+                    "EquipmentCosts": 0,
+                    "MaterialCosts": 0
+                },
+                "Constraints": []
             },
-            "warning": "Response was not in expected format, minimal structuring applied"
+            "warning": "Response was not in expected format, applying default structure"
         }
 
 
@@ -269,23 +289,27 @@ class TurnaroundPlanService:
             prompt = self.generate_prompt(plan_details)
             ai_response = self.llm.invoke(prompt)
             
-            # Log raw response for debugging
-            logger.info(f"Raw AI Response: {ai_response}")
-            
             if isinstance(ai_response, AIMessage):
                 content = ai_response.content
             else:
                 content = str(ai_response)
                 
-            # Try to extract JSON from the response
+            # Extract and parse JSON
             try:
-                # Find JSON content between curly braces
                 start_idx = content.find('{')
                 end_idx = content.rfind('}') + 1
                 if start_idx != -1 and end_idx != -1:
                     json_str = content[start_idx:end_idx]
-                    # Load JSON with float values
-                    return json.loads(json_str)
+                    generated_plan = json.loads(json_str)
+                    
+                    # Add directly to plan details instead of nesting under generated_plan
+                    plan_details['milestones'] = generated_plan.get('milestones', [])
+                    plan_details['resources'] = generated_plan.get('resources', {})
+                    plan_details['risk_assessment'] = generated_plan.get('risk_assessment', {})
+                    plan_details['cost_breakdown'] = generated_plan.get('cost_breakdown', [])
+                    plan_details['safety_plan'] = generated_plan.get('safety_plan', {})
+                    
+                    return plan_details
                 else:
                     return self._format_unstructured_response(content)
             except json.JSONDecodeError as je:
@@ -308,9 +332,26 @@ class TurnaroundPlanService:
         return [plan.to_dynamodb_item() for plan in plans]
 
     def update_plan(self, plan_id: str, updates: Dict[str, Any]) -> Dict[str, Any]:
-        """Update an existing plan"""
-        plan = self.plan_repository.update(plan_id, updates)
-        return plan.to_dynamodb_item() if plan else None
+        current_plan = self.get_plan(plan_id)
+        if current_plan.status in ['approved', 'completed']:
+            raise ValueError("Cannot edit approved or completed plans")
+        
+        # Validate status transition
+        if 'status' in updates:
+            new_status = updates['status']
+            if not self._is_valid_status_transition(current_plan.status, new_status):
+                raise ValueError(f"Invalid status transition from {current_plan.status} to {new_status}")
+        
+        return self.plan_repository.update(plan_id, updates)
+
+    def _is_valid_status_transition(self, current: str, new: str) -> bool:
+        valid_transitions = {
+            'draft': ['approved'],
+            'approved': ['in_progress'],
+            'in_progress': ['completed'],
+            'completed': []
+        }
+        return new in valid_transitions.get(current, [])
 
     def delete_plan(self, plan_id: str) -> bool:
         """Delete a plan"""

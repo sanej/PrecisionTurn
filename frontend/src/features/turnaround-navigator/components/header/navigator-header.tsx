@@ -1,6 +1,7 @@
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { FileText, History } from 'lucide-react';
+import { FileText, History, MessageSquare } from 'lucide-react';
 
 interface NavigatorHeaderProps {
   activeTab: string;
@@ -11,6 +12,13 @@ const NavigatorHeader = ({
   activeTab,
   onTabChange
 }: NavigatorHeaderProps) => {
+  const router = useRouter();
+
+  const handleTabChange = (value: string) => {
+    router.push(`/turnaround-navigator?tab=${value}`);
+    onTabChange(value);
+  };
+
   return (
     <div className="border-b">
       <div className="px-4 lg:px-6 py-4">
@@ -18,17 +26,18 @@ const NavigatorHeader = ({
           Turnaround Navigator
         </h1>
         
-        <Tabs value={activeTab} onValueChange={onTabChange}>
+        <Tabs value={activeTab} onValueChange={handleTabChange}>
           <TabsList>
-            <TabsTrigger value="assistant">
+            <TabsTrigger value="assistant" className="gap-2">
+              <MessageSquare className="h-4 w-4" />
               AI Assistant
             </TabsTrigger>
-            <TabsTrigger value="plans">
-              <FileText className="w-4 h-4 mr-2" />
+            <TabsTrigger value="plans" className="gap-2">
+              <FileText className="h-4 w-4" />
               Plans
             </TabsTrigger>
-            <TabsTrigger value="history">
-              <History className="w-4 h-4 mr-2" />
+            <TabsTrigger value="history" className="gap-2">
+              <History className="h-4 w-4" />
               History
             </TabsTrigger>
           </TabsList>

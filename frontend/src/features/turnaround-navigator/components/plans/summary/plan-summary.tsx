@@ -14,9 +14,9 @@ import {
   AlertTriangle,
   Users,
   CheckCircle2,
-  Tool
+  Wrench // Updated icon name
 } from 'lucide-react';
-import { Plan } from '../../types/plans';
+import { Plan } from '@/features/turnaround-navigator/types/plans';
 
 interface PlanSummaryProps {
   plan: Plan;
@@ -147,7 +147,7 @@ export const PlanSummary = ({ plan, variant = 'default' }: PlanSummaryProps) => 
               <AccordionItem value="resources">
                 <AccordionTrigger>
                   <div className="flex items-center">
-                    <Tool className="w-4 h-4 mr-2" />
+                    <Wrench className="w-4 h-4 mr-2" />
                     Resources
                   </div>
                 </AccordionTrigger>
