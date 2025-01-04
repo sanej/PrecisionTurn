@@ -1,2 +1,15 @@
-node_modules
+# Ignore node_modules for frontend
+node_modules/
+
+# Ignore enviroment variables
 .env
+
+# Ignore Python bytecode files
+__pycache__/
+*.py[cod]
+
+# Ignore log files
+*.log
+
+# Ignore OS-specific files
+.DS_Store
